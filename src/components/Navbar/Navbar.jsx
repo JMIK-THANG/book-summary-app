@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ openLogin, openRegister }) => {
   return (
     <nav className="navbar">
       <h2 className="logo">BookSummary</h2>
@@ -19,11 +19,13 @@ const Navbar = () => {
 
       <ul className="nav-right">
         <li>
-          <Link to="/login">Login</Link>
+          <button className="login-btn" onClick={openLogin}>
+            Login
+          </button>
         </li>
 
-        <li>
-          <Link to="/register">Register</Link>
+        <li className="register-btn">
+          <Link to="/register" onClick={openRegister}>Register</Link>
         </li>
       </ul>
     </nav>
