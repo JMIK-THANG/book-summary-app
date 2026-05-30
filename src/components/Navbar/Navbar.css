@@ -10,9 +10,29 @@
 
 .logo {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  background: linear-gradient(
+    135deg,
+    #111 0%,
+    #444 50%,
+    #111 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
 }
 
+.logo:hover {
+  transform: scale(1.05);
+}
+.logo-link{ 
+  text-decoration:none;
+}
 .nav-center,
 .nav-right {
   display: flex;
@@ -27,9 +47,46 @@
   font-weight: 500;
 }
 
-.nav-center a:hover,
-.nav-right a:hover {
-  color: #2563eb;
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+}
+
+.nav-center a {
+  position: relative;
+
+  text-decoration: none;
+  color: #555;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  transition: all 0.3s ease;
+}
+
+.nav-center a:hover {
+  color: #000;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.nav-center a::after {
+  content: "";
+  position: absolute;
+  left: 20%;
+  bottom: 6px;
+  width: 0;
+  height: 2px;
+  background: #000;
+  transition: width 0.3s ease;
+}
+
+.nav-center a:hover::after {
+  width: 60%;
 }
 .nav-right {
   display: flex;

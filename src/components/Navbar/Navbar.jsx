@@ -5,7 +5,9 @@ import "./Navbar.css";
 const Navbar = ({ openLogin, openRegister }) => {
   return (
     <nav className="navbar">
-      <h2 className="logo">BookSummary</h2>
+      <Link to="/"  className="logo logo-link">
+        <h2>CabuSim</h2>
+      </Link>
 
       <ul className="nav-center">
         <li>
@@ -25,7 +27,9 @@ const Navbar = ({ openLogin, openRegister }) => {
         </li>
 
         <li className="register-btn">
-          <Link to="/register" onClick={openRegister}>Register</Link>
+          <Link to="/register" onClick={openRegister}>
+            Register
+          </Link>
         </li>
       </ul>
     </nav>
