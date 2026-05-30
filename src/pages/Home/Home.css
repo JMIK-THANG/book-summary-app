@@ -1,0 +1,27 @@
+.home {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.home h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.home p {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.home-buttons button {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+}
