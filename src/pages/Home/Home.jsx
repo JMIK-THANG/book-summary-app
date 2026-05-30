@@ -1,21 +1,36 @@
-import React from "react";
 import "./Home.css";
+import homepage from "../../assets/homepage.jpg";
 
 const Home = () => {
   return (
-    <div className="home">
-      <h1>Learn Faster Through Book Summaries</h1>
+    <main className="home">
+      <section className="hero">
+        <div className="hero-text">
+          <p className="hero-label">BOOK SUMMARY APP</p>
 
-      <p>
-        A simple platform for organizing book insights, tracking reading
-        progress, and reviewing key takeaways.
-      </p>
+          <h1>Read Less. Learn More.</h1>
 
-      <div className="home-buttons">
-        <button>View Library</button>
-        <button>Add Summary</button>
-      </div>
-    </div>
+          <p className="hero-description">
+            Save your favorite book summaries, organize key ideas, and review
+            important lessons anytime.
+          </p>
+
+          <button className="hero-button">Explore Library</button>
+        </div>
+
+        <div className="hero-image">
+          <img src={homepage} alt="Library books" />
+        </div>
+      </section>
+
+      <section className="home-info">
+        <h2>Build your personal knowledge library</h2>
+        <p>
+          Keep all your book notes, summaries, and takeaways in one simple place
+          so you can remember what you read.
+        </p>
+      </section>
+    </main>
   );
 };
 
