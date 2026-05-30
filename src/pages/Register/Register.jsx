@@ -68,9 +68,13 @@ const Register = ({ onClose, openLogin }) => {
 
           <p className="auth-switch">
             Already have an account?{" "}
-            <span onClick={openLogin}>
-              Login
-            </span>
+            <button
+    type="button"
+    className="switch-btn"
+    onClick={openLogin}
+  >
+    Login
+  </button>
           </p>
         </form>
       </div>
