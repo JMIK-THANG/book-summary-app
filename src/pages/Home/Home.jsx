@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'; 
 import "./Home.css";
 import homepage from "../../assets/homepage.jpg";
 
@@ -15,7 +16,9 @@ const Home = () => {
             important lessons anytime.
           </p>
 
-          <button className="hero-button">Explore Library</button>
+        <Link to="/library" className="hero-button">
+  Explore Library
+</Link>
         </div>
 
         <div className="hero-image">

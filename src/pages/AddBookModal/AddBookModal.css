@@ -1,0 +1,110 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2000;
+}
+
+.add-book-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 550px;
+
+  background: #ffffff;
+  border-radius: 20px;
+
+  padding: 32px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.close-btn {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+
+  border: none;
+  background: transparent;
+
+  font-size: 28px;
+  cursor: pointer;
+
+  color: #16213e;
+}
+
+.add-book-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.add-book-modal h2 {
+  color: #16213e;
+  margin-bottom: 8px;
+  font-size: 32px;
+}
+
+.add-book-modal input,
+.add-book-modal textarea {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border: 1px solid #ddd;
+  border-radius: 12px;
+
+  font-size: 16px;
+  font-family: inherit;
+
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+.add-book-modal input:focus,
+.add-book-modal textarea:focus {
+  border-color: #16213e;
+}
+
+.add-book-modal textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.add-book-modal button[type="submit"] {
+  padding: 14px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #16213e;
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.add-book-modal button[type="submit"]:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .add-book-modal {
+    width: 90%;
+    padding: 24px;
+  }
+
+  .add-book-modal h2 {
+    font-size: 28px;
+  }
+}

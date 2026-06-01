@@ -1,9 +1,76 @@
-import React from 'react'
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import AddBookModal from "../AddBookModal/AddBookModal";
+import "./Library.css";
 
-const Library = () => {
+const Library = ({ books, addBook}) => {
+  const [isAddBookOpen, setIsAddBookOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
-    <div>Library</div>
-  )
-}
+    <main className="library">
+      <div className="library-header">
+        <div>
+          <h1>My Library</h1>
+          <p>Siar Mal. Zir Tam</p>
+        </div>
 
-export default Library
+        <button
+          className="add-book-btn"
+          onClick={() => setIsAddBookOpen(true)}
+        >
+          + Add Book
+        </button>
+      </div>
+
+      <input
+        className="search-input"
+        type="text"
+        placeholder="Search books..."
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+      />
+
+      <div className="book-list">
+        {filteredBooks.length === 0 ? (
+          <p>No books found.</p>
+        ) : (
+          filteredBooks.map((book) => (
+            <div className="book-card" key={book.id}>
+              <img
+                src={
+                  book.image ||
+                  "https://via.placeholder.com/300x400?text=Book"
+                }
+                alt={book.title}
+              />
+
+              <h2>{book.title}</h2>
+              <h4>{book.author}</h4>
+              <p>{book.summary.slice(0, 100)}...</p>
+
+              <div className="book-actions">
+                <Link to={`/library/${book.id}`}>Read More</Link>
+
+               
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {isAddBookOpen && (
+        <AddBookModal
+          onClose={() => setIsAddBookOpen(false)}
+          addBook={addBook}
+        />
+      )}
+    </main>
+  );
+};
+
+export default Library;
