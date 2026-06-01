@@ -1,13 +1,21 @@
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  padding: 1rem 3rem;
-  border-bottom: 1px solid #e5e7eb;
-  background: white;
-}
+  padding: 1rem 5rem;
 
+  background: rgba(250, 248, 244, 0.9);
+  backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
 .logo {
   font-size: 1.5rem;
   font-weight: 900;

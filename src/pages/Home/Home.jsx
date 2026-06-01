@@ -8,7 +8,7 @@ const Home = () => {
         <div className="hero-text">
           <p className="hero-label">BOOK SUMMARY APP</p>
 
-          <h1>Read Less. Learn More.</h1>
+          <h1>Siar Mal • Zir Tam</h1>
 
           <p className="hero-description">
             Save your favorite book summaries, organize key ideas, and review

@@ -9,9 +9,10 @@ const Register = ({ onClose, openLogin }) => {
   });
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
@@ -23,11 +24,7 @@ const Register = ({ onClose, openLogin }) => {
   return (
     <div className="modal-overlay">
       <div className="login">
-        <button
-          type="button"
-          className="close-btn"
-          onClick={onClose}
-        >
+        <button type="button" className="close-btn" onClick={onClose}>
           ×
         </button>
 
@@ -62,19 +59,13 @@ const Register = ({ onClose, openLogin }) => {
             onChange={handleChange}
           />
 
-          <button type="submit">
-            Create Account
-          </button>
+          <button type="submit">Create Account</button>
 
           <p className="auth-switch">
             Already have an account?{" "}
-            <button
-    type="button"
-    className="switch-btn"
-    onClick={openLogin}
-  >
-    Login
-  </button>
+            <button type="button" className="switch-btn" onClick={openLogin}>
+              Login
+            </button>
           </p>
         </form>
       </div>
