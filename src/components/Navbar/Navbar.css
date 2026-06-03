@@ -74,15 +74,14 @@
 @media (max-width: 768px) {
   .menu-btn {
     display: block;
+    transition: transform 0.3s ease;
   }
-
+  
   .nav-menu {
     position: absolute;
     top: 70px;
     left: 0;
-
     width: 100%;
-    display: none;
     flex-direction: column;
     align-items: center;
     gap: 24px;
@@ -90,10 +89,19 @@
     padding: 28px 0;
     background: #f7f3ea;
     border-bottom: 1px solid #e5e0d8;
+
+    /* Animation */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-15px);
+
+    transition: all 0.3s ease;
   }
 
   .nav-menu.active {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
   }
 
   .nav-center,

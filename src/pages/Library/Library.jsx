@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import AddBookModal from "../AddBookModal/AddBookModal";
 import "./Library.css";
 
-const Library = ({ books, addBook}) => {
+const Library = ({ books, addBook, currentUser }) => {
   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
-
+  const isAdmin = currentUser?.role === "admin";
   const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(searchText.toLowerCase())
+    book.title.toLowerCase().includes(searchText.toLowerCase()),
   );
 
   return (
@@ -18,13 +18,14 @@ const Library = ({ books, addBook}) => {
           <h1>My Library</h1>
           <p>Siar Mal. Zir Tam</p>
         </div>
-
-        <button
-          className="add-book-btn"
-          onClick={() => setIsAddBookOpen(true)}
-        >
-          + Add Book
-        </button>
+        {isAdmin && (
+          <button
+            className="add-book-btn"
+            onClick={() => setIsAddBookOpen(true)}
+          >
+            + Add Book
+          </button>
+        )}
       </div>
 
       <input
@@ -43,8 +44,7 @@ const Library = ({ books, addBook}) => {
             <div className="book-card" key={book.id}>
               <img
                 src={
-                  book.image ||
-                  "https://via.placeholder.com/300x400?text=Book"
+                  book.image || "https://via.placeholder.com/300x400?text=Book"
                 }
                 alt={book.title}
               />
@@ -55,15 +55,13 @@ const Library = ({ books, addBook}) => {
 
               <div className="book-actions">
                 <Link to={`/library/${book.id}`}>Read More</Link>
-
-               
               </div>
             </div>
           ))
         )}
       </div>
 
-      {isAddBookOpen && (
+      {isAdmin && isAddBookOpen && (
         <AddBookModal
           onClose={() => setIsAddBookOpen(false)}
           addBook={addBook}

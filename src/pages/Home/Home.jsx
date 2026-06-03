@@ -12,8 +12,7 @@ const Home = () => {
           <h1>Siar Mal • Zir Tam</h1>
 
           <p className="hero-description">
-            Save your favorite book summaries, organize key ideas, and review
-            important lessons anytime.
+            Ni tin thil thar pakhatkhat zir aw. 
           </p>
 
         <Link to="/library" className="hero-button">
@@ -27,10 +26,9 @@ const Home = () => {
       </section>
 
       <section className="home-info">
-        <h2>Build your personal knowledge library</h2>
+        <h2>Na zirnak khawlkhawmnak</h2>
         <p>
-          Keep all your book notes, summaries, and takeaways in one simple place
-          so you can remember what you read.
+          Cabu tha pawl ih ruahnak thupi pawl hmu suak aw, ni tin zirnak nun nei nak thawn. 
         </p>
       </section>
     </main>

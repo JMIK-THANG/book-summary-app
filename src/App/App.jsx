@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import Home from "../pages/Home/Home";
 import Library from "../pages/Library/Library";
 import BookDetails from "../pages/BookDetails/BookDetails";
@@ -11,11 +10,21 @@ import Navbar from "../components/Navbar/Navbar";
 import "./App.css";
 
 function App() {
-  const [books, setBooks] = useState([]);
-
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState({ role: "admin" });
+  const [books, setBooks] = useState(() => {
+    const savedBooks = localStorage.getItem("books");
+    return savedBooks ? JSON.parse(savedBooks) : [];
+  });
 
+  useEffect(() => {
+    localStorage.setItem("books", JSON.stringify(books));
+  }, [books]);
+
+  const addBook = (newBooks) => {
+    setBooks((prevBooks) => [{ id: Date.now(), ...newBooks }, ...prevBooks]);
+  };
   const openLogin = () => {
     setIsLoginOpen(true);
     setIsRegisterOpen(false);
@@ -31,10 +40,6 @@ function App() {
     setIsRegisterOpen(false);
   };
 
-  const addBook = (newBook) => {
-    setBooks((prev) => [newBook, ...prev]);
-  };
-
   return (
     <>
       <Navbar openLogin={openLogin} openRegister={openRegister} />
@@ -46,12 +51,24 @@ function App() {
       {isRegisterOpen && (
         <Register onClose={closeModals} openLogin={openLogin} />
       )}
+      <button onClick={() => setCurrentUser({ role: "admin" })}>
+        Admin View
+      </button>
 
+      <button onClick={() => setCurrentUser({ role: "user" })}>
+        User View
+      </button>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
           path="/library"
-          element={<Library books={books} addBook={addBook} />}
+          element={
+            <Library
+              books={books}
+              addBook={addBook}
+              currentUser={currentUser}
+            />
+          }
         />
         <Route path="/library/:id" element={<BookDetails books={books} />} />
       </Routes>
