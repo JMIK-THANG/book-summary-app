@@ -51,13 +51,13 @@ function App() {
       {isRegisterOpen && (
         <Register onClose={closeModals} openLogin={openLogin} />
       )}
-      <button onClick={() => setCurrentUser({ role: "admin" })}>
+      {/* <button onClick={() => setCurrentUser({ role: "admin" })}>
         Admin View
       </button>
 
       <button onClick={() => setCurrentUser({ role: "user" })}>
         User View
-      </button>
+      </button> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
