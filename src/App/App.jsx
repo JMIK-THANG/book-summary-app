@@ -30,8 +30,16 @@ function App() {
     getBooks();
   }, []);
 
-  const addBook = (newBooks) => {
-    setBooks((prevBooks) => [{ id: Date.now(), ...newBooks }, ...prevBooks]);
+  const addBook = async (newBooks) => {
+    const response = await fetch("http://localhost:5000/books", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newBooks),
+    });
+    const bookData = await response.json();
+    if (bookData.status === "success") {
+      setBooks((prevBooks) => [bookData.data, ...prevBooks]);
+    }
   };
   const openLogin = () => {
     setIsLoginOpen(true);

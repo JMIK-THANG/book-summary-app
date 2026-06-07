@@ -3,14 +3,14 @@ import "./Login.css";
 
 const Login = ({ onClose, openRegister, setCurrentUser }) => {
   const [formData, setFormData] = useState({
-    email: "",
+    name: "",
     password: "",
   });
 
   const checkLogin = async () => {
     const response = await fetch("http://localhost:5000/login", {
       method: "POST",
-      header: {
+      headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name: "jmik", password: "jmik" }),
@@ -46,10 +46,10 @@ const Login = ({ onClose, openRegister, setCurrentUser }) => {
           <p className="subtitle">Welcome back to your personal library.</p>
 
           <input
-            type="email"
-            name="email"
-            placeholder="Enter Email"
-            value={formData.email}
+            type="text"
+            name="name"
+            placeholder="Enter Name"
+            value={formData.name}
             onChange={handleChange}
           />
 
