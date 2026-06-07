@@ -1,11 +1,23 @@
 import { useState } from "react";
 import "./Login.css";
 
-const Login = ({ onClose, openRegister }) => {
+const Login = ({ onClose, openRegister, setCurrentUser }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const checkLogin = async () => {
+    const response = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: "jmik", password: "jmik" }),
+    });
+    const userDetail = await response.json();
+    setCurrentUser(userDetail.data.role);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,6 +30,7 @@ const Login = ({ onClose, openRegister }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    checkLogin();
   };
 
   return (

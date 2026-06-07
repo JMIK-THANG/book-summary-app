@@ -18,39 +18,18 @@ function App() {
     return savedBooks ? JSON.parse(savedBooks) : [];
   });
 
-  // useEffect(() => {
-  //   localStorage.setItem("books", JSON.stringify(books));
-  // }, [books]);
+  const getBooks = async () => {
+    const response = await fetch("http://localhost:5000/books");
+    const bookData = await response.json();
 
+    if (bookData.status === "success") {
+      setBooks(bookData.data);
+    }
+  };
   useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: "jmik",
-            password: "jmik",
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Login failed");
-        }
-
-        const data = await response.json();
-
-        setCurrentUser(data.data.role);
-        console.log(data);
-      } catch (error) {
-        console.error("Login failed:", error);
-      }
-    };
-
-    checkLogin();
+    getBooks();
   }, []);
+
   const addBook = (newBooks) => {
     setBooks((prevBooks) => [{ id: Date.now(), ...newBooks }, ...prevBooks]);
   };
@@ -74,19 +53,17 @@ function App() {
       <Navbar openLogin={openLogin} openRegister={openRegister} />
 
       {isLoginOpen && (
-        <Login onClose={closeModals} openRegister={openRegister} />
+        <Login
+          onClose={closeModals}
+          openRegister={openRegister}
+          setCurrentUser={setCurrentUser}
+        />
       )}
 
       {isRegisterOpen && (
         <Register onClose={closeModals} openLogin={openLogin} />
       )}
-      {/* <button onClick={() => setCurrentUser({ role: "admin" })}>
-        Admin View
-      </button>
 
-      <button onClick={() => setCurrentUser({ role: "user" })}>
-        User View
-      </button> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
