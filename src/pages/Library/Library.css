@@ -40,9 +40,9 @@
 
 .book-list {
   display: grid;
-  grid-template-columns: repeat(4, 180px);
+  grid-template-columns: repeat(6, 180px);
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .book-card {

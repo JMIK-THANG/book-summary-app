@@ -50,21 +50,58 @@
 .hero-image {
   flex: 1;
 }
-
 .hero-image img {
   width: 100%;
-  height: 420px;
+  height: 500px;
   object-fit: cover;
   border-radius: 28px;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
 }
 
+.hero-image {
+  position: relative;
+  display: inline-block;
+}
+
+.main-hero-image {
+  width: 100%;
+  display: block;
+}
+
+.hero-image .floating-book {
+  position: absolute;
+  width: 150px;
+  height: 220px;
+  object-fit: cover;
+}
+.book-1 {
+  top: 20px;
+  left: 20px;
+}
+
+.book-2 {
+  top: 20px;
+  left: 210px;
+}
+
+.book-3 {
+  top: 20px;
+  left: 400px;
+}
+
+.book-4 {
+  bottom: 20px;
+  left: 110px;
+}
+.book-5 {
+  bottom: 20px;
+  right: 110px;
+}
 /*  Home features */
 .home-info {
   text-align: center;
   padding: 3rem 8% 5rem;
 }
-
 
 .home-info p {
   font-size: 1.125rem;
@@ -85,7 +122,7 @@
 
 .home-info h2 {
   font-family: "Poppins", sans-serif;
-  font-size: 3rem; 
+  font-size: 3rem;
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: 2px;
@@ -149,6 +186,56 @@
   display: block;
   border-radius: 28px;
 }
+@media (max-width: 1024px) {
+  .hero {
+    gap: 2rem;
+    padding: 4rem 5%;
+  }
+
+  .hero-image {
+    width: 460px;
+  }
+
+  .hero-image img {
+    height: 400px;
+  }
+
+  .hero-image .floating-book {
+    width: 90px;
+    height: 150px;
+  }
+
+  .book-1 {
+    top: 25px;
+    left: 25px;
+  }
+
+  .book-2 {
+    top: 25px;
+    left: 170px;
+  }
+
+  .book-3 {
+    top: 25px;
+    left: 315px;
+  }
+
+  .book-4 {
+    bottom: 25px;
+    left: 95px;
+  }
+
+  .book-5 {
+    bottom: 25px;
+    right: 95px;
+  }
+
+  .home-features {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
@@ -157,10 +244,93 @@
   }
 
   .hero-text h1 {
-    font-size: 2.8rem;
+    font-size: 2.4rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-image {
+    width: 100%;
+    max-width: 360px;
   }
 
   .hero-image img {
-    height: 300px;
+    height: 320px;
+  }
+
+  .hero-image .floating-book {
+    width: 65px;
+    height: 105px;
+    border-radius: 8px;
+  }
+
+  .book-1 {
+    top: 25px;
+    left: 20px;
+  }
+
+  .book-2 {
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .book-3 {
+    top: 25px;
+    left: auto;
+    right: 20px;
+  }
+
+  .book-4 {
+    bottom: 25px;
+    left: 70px;
+  }
+
+  .book-5 {
+    bottom: 25px;
+    right: 70px;
+  }
+
+  .home-info h2 {
+    font-size: 2rem;
+  }
+
+  .home-features {
+    padding: 30px 1.5rem 70px;
+  }
+
+  .feature-list {
+    gap: 36px;
+  }
+
+  .feature-preview {
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-image {
+    max-width: 320px;
+  }
+
+  .hero-image img {
+    height: 290px;
+  }
+
+  .hero-image .floating-book {
+    width: 58px;
+    height: 92px;
+  }
+
+  .book-4 {
+    left: 55px;
+  }
+
+  .book-5 {
+    right: 55px;
   }
 }

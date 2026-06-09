@@ -16,31 +16,45 @@ const BookDetails = ({ books }) => {
   }
 
   return (
-   <main className="book-details">
-  <Link to="/library" className="back-link">
-    ← Back to Library
-  </Link>
+    <main className="book-details">
+      <Link to="/library" className="back-link">
+        ← Back to Library
+      </Link>
 
-  <div className="book-header">
-    <div className="book-title-area">
-      <h1>{book.title}</h1>
-      <h3>{book.author}</h3>
-    </div>
+      <section className="book-hero">
+        <div className="book-content">
+          <p className="book-label">Book Summary</p>
+          <h1>{book.title}</h1>
+          <h3>by {book.author}</h3>
 
-    {book.image && (
-      <img
-        src={book.image}
-        alt={book.title}
-        className="book-cover"
-      />
-    )}
-  </div>
+          <p className="book-intro">
+           Hi cabu ih ruahnak thupi pawl le zirnak man nei pawl cu olte in siar aw
+          </p>
 
-  <section className="summary-section">
-    <h2>Summary</h2>
-    <p>{book.summary}</p>
-  </section>
-</main>
+          <div className="book-buttons">
+            <a href="#summary" className="primary-btn">
+              Start Reading
+            </a>
+          </div>
+        </div>
+
+        {book.image && (
+          <div className="cover-wrapper">
+            <img src={book.image} alt={book.title} className="book-cover" />
+          </div>
+        )}
+      </section>
+
+      <section className="summary-section" id="summary">
+        <h2>Summary</h2>
+        <p>{book.summary}</p>
+      </section>
+      <section>
+        <Link to="/library" className="secondary-btn">
+          Explore More Books
+        </Link>
+      </section>
+    </main>
   );
 };
 

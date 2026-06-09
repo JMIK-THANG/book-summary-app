@@ -1,105 +1,199 @@
 .admin-page {
   min-height: 100vh;
-  background: #f5f2ea;
-  padding: 50px 8%;
+  padding: 60px 8%;
+  background: #f7f5ef;
+  color: #1f2933;
 }
 
 .admin-hero {
-  background: #00324f;
-  color: white;
-  border-radius: 24px;
-  padding: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 30px;
+  background: #ffffff;
+  padding: 36px;
+  border-radius: 24px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.07);
+  margin-bottom: 32px;
 }
 
 .admin-label {
-  color: #f4c95d;
-  font-weight: 700;
+  font-size: 13px;
   letter-spacing: 2px;
+  font-weight: 700;
+  color: #8a6f3d;
+  margin-bottom: 10px;
 }
 
 .admin-hero h1 {
-  font-size: 48px;
-  margin: 10px 0;
+  font-size: 42px;
+  margin: 0 0 10px;
+  color: #102a43;
+}
+
+.admin-hero p {
+  color: #667085;
+  font-size: 17px;
+  margin: 0;
 }
 
 .admin-add-btn {
-  background: #f4c95d;
-  color: #00324f;
   border: none;
-  padding: 14px 24px;
+  background: #102a43;
+  color: white;
+  padding: 15px 24px;
   border-radius: 999px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  transition: 0.25s ease;
+  white-space: nowrap;
+}
+
+.admin-add-btn:hover {
+  transform: translateY(-2px);
+  background: #1d3d5c;
+  box-shadow: 0 12px 25px rgba(16, 42, 67, 0.25);
 }
 
 .admin-stats {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
-  margin: 35px 0;
+  margin-bottom: 36px;
 }
 
 .stat-card {
-  background: white;
+  background: #ffffff;
   padding: 28px;
-  border-radius: 18px;
-  flex: 1;
-  box-shadow: 0 10px 30px rgba(0, 50, 79, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
 }
 
 .stat-card h3 {
-  font-size: 36px;
-  color: #00324f;
+  font-size: 34px;
+  margin: 0 0 6px;
+  color: #102a43;
+}
+
+.stat-card p {
+  margin: 0;
+  color: #7b8794;
+  font-weight: 600;
 }
 
 .admin-books {
-  background: white;
-  padding: 30px;
+  background: #ffffff;
+  padding: 32px;
   border-radius: 24px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
 }
 
 .admin-books h2 {
-  color: #00324f;
-  margin-bottom: 20px;
+  font-size: 28px;
+  margin: 0 0 24px;
+  color: #102a43;
+}
+
+.admin-table {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .admin-row {
   display: grid;
-  grid-template-columns: 70px 1fr auto auto;
+  grid-template-columns: 72px 1fr auto auto;
   align-items: center;
   gap: 20px;
-  padding: 16px 0;
-  border-bottom: 1px solid #eee;
+  padding: 18px;
+  border: 1px solid #edf0f2;
+  border-radius: 18px;
+  background: #fbfaf7;
+  transition: 0.25s ease;
+}
+
+.admin-row:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
 }
 
 .admin-row img {
-  width: 60px;
-  height: 80px;
+  width: 72px;
+  height: 96px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
+  background: #e5e7eb;
+}
+
+.admin-row h3 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  color: #102a43;
+}
+
+.admin-row p {
+  margin: 0;
+  color: #7b8794;
 }
 
 .admin-row button {
   border: none;
   padding: 10px 16px;
-  border-radius: 10px;
+  border-radius: 999px;
+  font-weight: 700;
   cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.admin-row button:first-of-type {
+  background: #edf2f7;
+  color: #102a43;
+}
+
+.admin-row button:last-of-type {
+  background: #fff1f0;
+  color: #b42318;
+}
+
+.admin-row button:hover {
+  transform: translateY(-1px);
+  opacity: 0.85;
 }
 
 @media (max-width: 768px) {
+  .admin-page {
+    padding: 32px 20px;
+  }
+
   .admin-hero {
     flex-direction: column;
     align-items: flex-start;
+    padding: 28px;
+  }
+
+  .admin-hero h1 {
+    font-size: 32px;
+  }
+
+  .admin-add-btn {
+    width: 100%;
   }
 
   .admin-stats {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+
+  .admin-books {
+    padding: 22px;
   }
 
   .admin-row {
-    grid-template-columns: 60px 1fr;
+    grid-template-columns: 64px 1fr;
+  }
+
+  .admin-row button {
+    width: 100%;
   }
 }
