@@ -1,0 +1,105 @@
+.admin-page {
+  min-height: 100vh;
+  background: #f5f2ea;
+  padding: 50px 8%;
+}
+
+.admin-hero {
+  background: #00324f;
+  color: white;
+  border-radius: 24px;
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.admin-label {
+  color: #f4c95d;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.admin-hero h1 {
+  font-size: 48px;
+  margin: 10px 0;
+}
+
+.admin-add-btn {
+  background: #f4c95d;
+  color: #00324f;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-stats {
+  display: flex;
+  gap: 24px;
+  margin: 35px 0;
+}
+
+.stat-card {
+  background: white;
+  padding: 28px;
+  border-radius: 18px;
+  flex: 1;
+  box-shadow: 0 10px 30px rgba(0, 50, 79, 0.08);
+}
+
+.stat-card h3 {
+  font-size: 36px;
+  color: #00324f;
+}
+
+.admin-books {
+  background: white;
+  padding: 30px;
+  border-radius: 24px;
+}
+
+.admin-books h2 {
+  color: #00324f;
+  margin-bottom: 20px;
+}
+
+.admin-row {
+  display: grid;
+  grid-template-columns: 70px 1fr auto auto;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-row img {
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.admin-row button {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .admin-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-stats {
+    flex-direction: column;
+  }
+
+  .admin-row {
+    grid-template-columns: 60px 1fr;
+  }
+}

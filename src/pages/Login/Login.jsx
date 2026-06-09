@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = ({ onClose, openRegister, setCurrentUser }) => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     password: "",
@@ -13,14 +16,26 @@ const Login = ({ onClose, openRegister, setCurrentUser }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name: "jmik", password: "jmik" }),
+      body: JSON.stringify(formData),
     });
+
     const userDetail = await response.json();
-    setCurrentUser(userDetail.data.role);
+
+    if (userDetail.status === "success") {
+      setCurrentUser(userDetail.data);
+      onClose();
+
+      if (userDetail.data.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/library");
+      }
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -29,7 +44,6 @@ const Login = ({ onClose, openRegister, setCurrentUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     checkLogin();
   };
 
@@ -62,6 +76,7 @@ const Login = ({ onClose, openRegister, setCurrentUser }) => {
           />
 
           <button type="submit">Login</button>
+
           <p className="auth-switch">
             New here?
             <button type="button" className="switch-btn" onClick={openRegister}>

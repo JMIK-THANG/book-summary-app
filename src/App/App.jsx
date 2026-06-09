@@ -6,6 +6,7 @@ import BookDetails from "../pages/BookDetails/BookDetails";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import Navbar from "../components/Navbar/Navbar";
+import Admin from "../pages/Admin/Admin";
 
 import "./App.css";
 
@@ -13,10 +14,7 @@ function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({ role: "admin" });
-  const [books, setBooks] = useState(() => {
-    const savedBooks = localStorage.getItem("books");
-    return savedBooks ? JSON.parse(savedBooks) : [];
-  });
+  const [books, setBooks] = useState([]);
 
   const getBooks = async () => {
     const response = await fetch("http://localhost:5000/books");
@@ -58,7 +56,11 @@ function App() {
 
   return (
     <>
-      <Navbar openLogin={openLogin} openRegister={openRegister} />
+      <Navbar
+        openLogin={openLogin}
+        openRegister={openRegister}
+        currentUser={currentUser}
+      />
 
       {isLoginOpen && (
         <Login
@@ -85,6 +87,11 @@ function App() {
           }
         />
         <Route path="/library/:id" element={<BookDetails books={books} />} />
+
+        <Route
+          path="/admin"
+          element={<Admin books={books} addBook={addBook} />}
+        />
       </Routes>
     </>
   );

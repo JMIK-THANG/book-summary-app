@@ -22,7 +22,6 @@ const AddBookModal = ({ onClose, addBook }) => {
     e.preventDefault();
 
     const newBook = {
-      id: Date.now(),
       title: formData.title,
       author: formData.author,
       image: formData.image,

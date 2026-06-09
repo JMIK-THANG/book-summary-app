@@ -7,7 +7,7 @@ const Library = ({ books, addBook, currentUser }) => {
   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   // const isAdmin = currentUser?.role === "admin";
-  const isAdmin = currentUser === "admin" ? true : false;
+  const isAdmin = currentUser === "admin";
   const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchText.toLowerCase()),
   );
@@ -18,14 +18,6 @@ const Library = ({ books, addBook, currentUser }) => {
         <div>
           <h1>My Library</h1>
         </div>
-        {isAdmin && (
-          <button
-            className="add-book-btn"
-            onClick={() => setIsAddBookOpen(true)}
-          >
-            + Add Book
-          </button>
-        )}
       </div>
 
       <input

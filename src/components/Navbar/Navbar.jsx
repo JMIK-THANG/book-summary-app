@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {Menu, X} from "lucide-react"; 
+import { Menu, X } from "lucide-react";
 import "./Navbar.css";
 
-const Navbar = ({ openLogin, openRegister }) => {
+const Navbar = ({ openLogin, openRegister, currentUser }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => {
@@ -20,7 +20,7 @@ const Navbar = ({ openLogin, openRegister }) => {
         className={`menu-btn ${isMenuOpen ? "open" : ""}`}
         onClick={() => setIsMenuOpen(!isMenuOpen)}
       >
-        {isMenuOpen ? <X size={28}/> : <Menu size={28}/>}
+        {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
 
       <div className={`nav-menu ${isMenuOpen ? "active" : ""}`}>
@@ -36,6 +36,7 @@ const Navbar = ({ openLogin, openRegister }) => {
               Library
             </Link>
           </li>
+         
         </ul>
 
         <ul className="nav-right">
