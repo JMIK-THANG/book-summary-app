@@ -42,13 +42,15 @@ const Admin = ({ books, addBook }) => {
             <div className="admin-row" key={book.id}>
               <img src={book.image} alt={book.title} />
 
-              <div>
+              <div className="book-info">
                 <h3>{book.title}</h3>
                 <p>{book.author}</p>
               </div>
 
-              <button>Edit</button>
-              <button>Delete</button>
+              <div className="book-actions">
+                <button>Edit</button>
+                <button>Delete</button>
+              </div>
             </div>
           ))}
         </div>

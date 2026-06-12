@@ -27,15 +27,6 @@ const BookDetails = ({ books }) => {
           <h1>{book.title}</h1>
           <h3>by {book.author}</h3>
 
-          <p className="book-intro">
-           Hi cabu ih ruahnak thupi pawl le zirnak man nei pawl cu olte in siar aw
-          </p>
-
-          <div className="book-buttons">
-            <a href="#summary" className="primary-btn">
-              Start Reading
-            </a>
-          </div>
         </div>
 
         {book.image && (

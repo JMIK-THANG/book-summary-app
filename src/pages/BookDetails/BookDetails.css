@@ -41,18 +41,6 @@
   margin: 0 0 24px;
 }
 
-.book-intro {
-  max-width: 580px;
-  font-size: 18px;
-  line-height: 1.8;
-  color: #4b5563;
-  margin-bottom: 34px;
-}
-
-.book-buttons {
-  margin-top: 40px;
-}
-
 .primary-btn {
   display: inline-flex;
   align-items: center;
