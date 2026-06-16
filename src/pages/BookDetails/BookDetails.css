@@ -1,153 +1,94 @@
 .book-details {
-  min-height: 100vh;
-  padding: 40px 8% 80px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
   background: #ffffff;
-  color: #081f3d;
+  color: #071931;
 }
 
 .back-link {
   display: inline-block;
-  margin-bottom: 40px;
-  color: #4b5563;
+  margin-bottom: 26px;
   text-decoration: none;
+  color: #536273;
+  font-size: 16px;
   font-weight: 600;
 }
 
-.book-hero {
+.book-top {
   display: grid;
-  grid-template-columns: 1fr 420px;
+  grid-template-columns: 235px 1fr;
+  gap: 32px;
   align-items: center;
-  gap: 70px;
-  margin-bottom: 80px;
+  margin-bottom: 70px;
 }
 
-.book-label {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #081f3d;
-}
-
-.book-content h1 {
-  font-size: 56px;
-  line-height: 1.15;
-  margin: 0 0 14px;
-  max-width: 650px;
-}
-
-.book-content h3 {
-  font-size: 24px;
-  font-weight: 500;
-  color: #5b6472;
-  margin: 0 0 24px;
-}
-
-.primary-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 220px;
-  height: 58px;
-  background: #ffc400;
-  color: #081f3d;
-  text-decoration: none;
-  border-radius: 999px;
-  font-weight: 700;
-}
-
-.secondary-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 220px;
-  height: 58px;
-  border: 1px solid #d4d4d4;
-  background: white;
-  color: #081f3d;
-  text-decoration: none;
-  border-radius: 999px;
-  font-weight: 700;
-  margin-top: 20px;
-}
-
-.cover-wrapper {
-  position: relative;
+.book-image-card {
+  width: 235px;
+  height: 335px;
+  border-radius: 12px;
+  background: #f7dadd;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.book-cover {
-  width: 320px;
-  height: 430px;
+.book-image-card img {
+  width: 155px;
+  height: 215px;
   object-fit: cover;
-  border-radius: 24px;
-  box-shadow: 0 24px 45px rgba(0, 0, 0, 0.16);
-  position: relative;
-  z-index: 2;
+  border-radius: 10px;
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.18);
 }
 
-
-.summary-section {
-  max-width: 850px;
-  padding-top: 30px;
-}
-
-.summary-section h2 {
-  font-size: 36px;
-  margin-bottom: 20px;
-}
-
-.summary-section p {
-  font-size: 18px;
-  line-height: 1.9;
+.book-category {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
   color: #374151;
+  margin-bottom: 24px;
 }
 
-@media (max-width: 850px) {
-  .book-details {
-    padding: 28px 7% 60px;
-  }
+.book-info h1 {
+  max-width: 620px;
+  font-size: 34px;
+  line-height: 1.35;
+  margin: 0 0 12px;
+}
 
-  .book-hero {
+.book-author {
+  font-size: 18px;
+  color: #536273;
+}
+
+.about-book {
+  max-width: 960px;
+}
+
+.about-book h2 {
+  font-size: 26px;
+  margin-bottom: 14px;
+}
+
+.about-book p {
+  font-size: 18px;
+  line-height: 1.75;
+  color: #4b5563;
+}
+
+@media (max-width: 700px) {
+  .book-top {
     grid-template-columns: 1fr;
-    gap: 45px;
+    justify-items:center;
   }
 
-  .book-content h1 {
-    font-size: 36px;
+  .book-image-card {
+    width: 100%;
+    max-width: 260px;
   }
 
-  .book-content h3 {
-    font-size: 20px;
-  }
-
-  .book-intro {
-    font-size: 16px;
-  }
-
-  .cover-wrapper {
-    order: 2;
-  }
-
-  .book-cover {
-    width: 230px;
-    height: 320px;
-  }
-
-  .book-buttons {
-    flex-direction: column;
-  }
-
-  .primary-btn,
-  .secondary-btn {
-    text-align: center;
-  }
-
-  .summary-section h2 {
+  .book-info h1 {
     font-size: 30px;
-  }
-
-  .summary-section p {
-    font-size: 16px;
   }
 }

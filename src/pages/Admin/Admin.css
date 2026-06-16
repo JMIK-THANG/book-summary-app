@@ -294,8 +294,3 @@
     font-size: 13px;
   }
 }
-@media (max-width: 336px) {
-  .admin-table {
-    grid-template-columns: 1fr;
-  }
-}

@@ -3,14 +3,15 @@ import "./BookDetails.css";
 
 const BookDetails = ({ books }) => {
   const { id } = useParams();
-
   const book = books.find((book) => book.id === Number(id));
 
   if (!book) {
     return (
       <main className="book-details">
+        <Link to="/library" className="back-link">
+          ‹ Back to Books
+        </Link>
         <h1>Book not found</h1>
-        <Link to="/library">Back to Library</Link>
       </main>
     );
   }
@@ -18,32 +19,24 @@ const BookDetails = ({ books }) => {
   return (
     <main className="book-details">
       <Link to="/library" className="back-link">
-        ← Back to Library
+        ‹ Back to Books
       </Link>
 
-      <section className="book-hero">
-        <div className="book-content">
-          <p className="book-label">Book Summary</p>
-          <h1>{book.title}</h1>
-          <h3>by {book.author}</h3>
-
+      <section className="book-top">
+        <div className="book-image-card">
+          <img src={book.image} alt={book.title} />
         </div>
 
-        {book.image && (
-          <div className="cover-wrapper">
-            <img src={book.image} alt={book.title} className="book-cover" />
-          </div>
-        )}
+        <div className="book-info">
+          <p className="book-category">BOOK SUMMARY</p>
+          <h1>{book.title}</h1>
+          <p className="book-author">By {book.author}</p>
+        </div>
       </section>
 
-      <section className="summary-section" id="summary">
-        <h2>Summary</h2>
+      <section className="about-book">
+        <h2>About Book</h2>
         <p>{book.summary}</p>
-      </section>
-      <section>
-        <Link to="/library" className="secondary-btn">
-          Explore More Books
-        </Link>
       </section>
     </main>
   );
