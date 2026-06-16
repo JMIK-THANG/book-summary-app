@@ -2,7 +2,7 @@ import AddBookModal from "../../pages/AddBookModal/AddBookModal";
 import { useState } from "react";
 import "./Admin.css";
 
-const Admin = ({ books, addBook }) => {
+const Admin = ({ books, addBook, deleteBook}) => {
   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
 
   return (
@@ -49,7 +49,7 @@ const Admin = ({ books, addBook }) => {
 
               <div className="book-actions">
                 <button>Edit</button>
-                <button>Delete</button>
+               <button onClick={() => deleteBook(book.id)}>Delete</button>
               </div>
             </div>
           ))}

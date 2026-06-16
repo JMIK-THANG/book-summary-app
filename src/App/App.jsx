@@ -39,6 +39,17 @@ function App() {
       setBooks((prevBooks) => [bookData.data, ...prevBooks]);
     }
   };
+  const deleteBook = async (id) => {
+    const response = await fetch(`http://localhost:5000/books/${id}`, {
+      method: "DELETE",
+    });
+
+    const bookData = await response.json();
+
+    if (bookData.status === "success") {
+      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+    }
+  };
   const openLogin = () => {
     setIsLoginOpen(true);
     setIsRegisterOpen(false);
@@ -90,7 +101,9 @@ function App() {
 
         <Route
           path="/admin"
-          element={<Admin books={books} addBook={addBook} />}
+          element={
+            <Admin books={books} addBook={addBook} deleteBook={deleteBook} />
+          }
         />
       </Routes>
     </>
