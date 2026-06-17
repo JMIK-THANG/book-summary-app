@@ -1,9 +1,12 @@
 import AddBookModal from "../../pages/AddBookModal/AddBookModal";
+import EditBookModal from "../../pages/EditBookModal/EditBookModal";
 import { useState } from "react";
 import "./Admin.css";
 
-const Admin = ({ books, addBook, deleteBook}) => {
+const Admin = ({ books, addBook, deleteBook, editBook }) => {
   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
+  const [isEditBookOpen, setIsEditBookOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
 
   return (
     <main className="admin-page">
@@ -48,8 +51,16 @@ const Admin = ({ books, addBook, deleteBook}) => {
               </div>
 
               <div className="book-actions">
-                <button>Edit</button>
-               <button onClick={() => deleteBook(book.id)}>Delete</button>
+                <button
+                  onClick={() => {
+                    setSelectedBook(book);
+                    setIsEditBookOpen(true);
+                  }}
+                >
+                  Edit
+                </button>
+
+                <button onClick={() => deleteBook(book.id)}>Delete</button>
               </div>
             </div>
           ))}
@@ -60,6 +71,17 @@ const Admin = ({ books, addBook, deleteBook}) => {
         <AddBookModal
           onClose={() => setIsAddBookOpen(false)}
           addBook={addBook}
+        />
+      )}
+
+      {isEditBookOpen && selectedBook && (
+        <EditBookModal
+          book={selectedBook}
+          editBook={editBook}
+          onClose={() => {
+            setIsEditBookOpen(false);
+            setSelectedBook(null);
+          }}
         />
       )}
     </main>

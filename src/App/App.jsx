@@ -39,7 +39,23 @@ function App() {
       setBooks((prevBooks) => [bookData.data, ...prevBooks]);
     }
   };
+  const editBook = async (id, updatedBook) => {
+    const response = await fetch(`http://localhost:5000/books/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedBook),
+    });
+
+    const bookData = await response.json();
+
+    if (bookData.status === "success") {
+      setBooks((prevBooks) =>
+        prevBooks.map((book) => (book.id === id ? bookData.data : book)),
+      );
+    }
+  };
   const deleteBook = async (id) => {
+    console.log(id);
     const response = await fetch(`http://localhost:5000/books/${id}`, {
       method: "DELETE",
     });
@@ -102,7 +118,12 @@ function App() {
         <Route
           path="/admin"
           element={
-            <Admin books={books} addBook={addBook} deleteBook={deleteBook} />
+            <Admin
+              books={books}
+              addBook={addBook}
+              deleteBook={deleteBook}
+              editBook={editBook}
+            />
           }
         />
       </Routes>
