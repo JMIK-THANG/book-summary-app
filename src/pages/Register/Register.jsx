@@ -16,9 +16,26 @@ const Register = ({ onClose, openLogin }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (data.status === "success") {
+        alert("User registered successfully!");
+        onClose();
+      } else {
+        alert("Error registering user.");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
   };
 
   return (
@@ -43,13 +60,13 @@ const Register = ({ onClose, openLogin }) => {
             onChange={handleChange}
           />
 
-          <input
+          {/* <input
             type="email"
             name="email"
             placeholder="Enter Email"
             value={formData.email}
             onChange={handleChange}
-          />
+          /> */}
 
           <input
             type="password"

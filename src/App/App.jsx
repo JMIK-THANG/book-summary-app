@@ -113,7 +113,10 @@ function App() {
             />
           }
         />
-        <Route path="/library/:id" element={<BookDetails books={books} />} />
+        <Route
+          path="/library/:id"
+          element={<BookDetails books={books} currentUser={currentUser} />}
+        />
 
         <Route
           path="/admin"

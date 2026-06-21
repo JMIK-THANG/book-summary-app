@@ -77,6 +77,78 @@
   color: #4b5563;
 }
 
+/* Comment section */
+.comments-section {
+  margin-top: 60px;
+}
+
+.comments-section h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+.comments-section textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  resize: vertical;
+  font-size: 16px;
+  font-family: inherit;
+  color: #071931;
+  background: #fafafa;
+  margin-bottom: 16px;
+}
+
+.comments-section textarea:focus {
+  outline: none;
+  border-color: #071931;
+  box-shadow: 0 0 0 3px rgba(7, 25, 49, 0.1);
+}
+
+.comments-section button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 999px;
+  background: #071931;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.comments-section button:hover {
+  transform: translateY(-1px);
+}
+
+.comments-list {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comment-card {
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fafafa;
+}
+
+.comment-card h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+  color: #071931;
+}
+
+.comment-card p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.7;
+}
+
 @media (max-width: 700px) {
   .book-top {
     grid-template-columns: 1fr;
