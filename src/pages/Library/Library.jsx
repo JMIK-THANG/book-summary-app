@@ -6,8 +6,8 @@ import "./Library.css";
 const Library = ({ books, addBook, currentUser }) => {
   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
-  // const isAdmin = currentUser?.role === "admin";
-  const isAdmin = currentUser.role === "admin";
+  const isAdmin = currentUser?.role === "admin";
+  // const isAdmin = currentUser.role === "admin";
   const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchText.toLowerCase()),
   );

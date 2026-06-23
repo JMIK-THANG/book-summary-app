@@ -10,7 +10,6 @@ const BookDetails = ({ books, currentUser }) => {
   const [comment, setComment] = useState("");
 
   const getComments = async () => {
-  
     try {
       const response = await fetch(`http://localhost:5000/comments/${id}`);
       const data = await response.json();
@@ -29,8 +28,11 @@ const BookDetails = ({ books, currentUser }) => {
 
   const addComment = async (e) => {
     e.preventDefault();
-    console.log("currentUser: ", currentUser?.id); 
-    console.log("user id:", currentUser?.id)
+
+    if (!currentUser?.id) {
+      alert("Please login first");
+      return;
+    }
 
     if (!comment.trim()) return;
 

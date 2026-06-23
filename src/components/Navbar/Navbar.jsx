@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import "./Navbar.css";
 
-const Navbar = ({ openLogin, openRegister, currentUser }) => {
+const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => {
@@ -36,33 +36,62 @@ const Navbar = ({ openLogin, openRegister, currentUser }) => {
               Library
             </Link>
           </li>
-         
         </ul>
 
         <ul className="nav-right">
-          <li>
-            <button
-              className="login-btn"
-              onClick={() => {
-                openLogin();
-                closeMenu();
-              }}
-            >
-              Login
-            </button>
-          </li>
+          {currentUser ? (
+            <>
+              {currentUser.role === "admin" && (
+                <li>
+                  <Link to="/admin" onClick={closeMenu}>
+                    Admin
+                  </Link>
+                </li>
+              )}
 
-          <li>
-            <button
-              className="register-btn"
-              onClick={() => {
-                openRegister();
-                closeMenu();
-              }}
-            >
-              Register
-            </button>
-          </li>
+              <li>
+                <span className="user-name">Hi, {currentUser.name}</span>
+              </li>
+
+              <li>
+                <button
+                  className="login-btn"
+                  onClick={() => {
+                    logout();
+                    closeMenu();
+                  }}
+                >
+                  Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <button
+                  className="login-btn"
+                  onClick={() => {
+                    openLogin();
+                    closeMenu();
+                  }}
+                >
+                  Login
+                </button>
+              </li>
+
+              <li>
+                <button
+                  className="register-btn"
+                  onClick={() => {
+                    openRegister();
+                    closeMenu();
+                  }}
+                >
+                  Register
+                </button>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </nav>

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "../pages/Home/Home";
 import Library from "../pages/Library/Library";
@@ -13,9 +13,15 @@ import "./App.css";
 function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState({ role: "admin" });
+  // const [currentUser, setCurrentUser] = useState({ role: "admin" });
+  const [currentUser, setCurrentUser] = useState(null);
   const [books, setBooks] = useState([]);
 
+  const navigate = useNavigate();
+  const logout = () => {
+    setCurrentUser(null);
+    navigate("/");
+  };
   const getBooks = async () => {
     const response = await fetch("http://localhost:5000/books");
     const bookData = await response.json();
@@ -87,6 +93,7 @@ function App() {
         openLogin={openLogin}
         openRegister={openRegister}
         currentUser={currentUser}
+        logout={logout}
       />
 
       {isLoginOpen && (
@@ -121,12 +128,16 @@ function App() {
         <Route
           path="/admin"
           element={
-            <Admin
-              books={books}
-              addBook={addBook}
-              deleteBook={deleteBook}
-              editBook={editBook}
-            />
+            currentUser?.role === "admin" ? (
+              <Admin
+                books={books}
+                addBook={addBook}
+                deleteBook={deleteBook}
+                editBook={editBook}
+              />
+            ) : (
+              <h1>Access Denied</h1>
+            )
           }
         />
       </Routes>
