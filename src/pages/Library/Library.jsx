@@ -33,7 +33,7 @@ const Library = ({ books, addBook, currentUser }) => {
           <p>No books found.</p>
         ) : (
           filteredBooks.map((book) => (
-            <div className="book-card" key={book.id}>
+            <Link to={`/library/${book.id}`}className="book-card" key={book.id}>
               <img
                 src={
                   book.image || "https://via.placeholder.com/300x400?text=Book"
@@ -45,10 +45,7 @@ const Library = ({ books, addBook, currentUser }) => {
               <h4>{book.author}</h4>
               <p>{book.summary.slice(0, 100)}...</p>
 
-              <div className="book-actions">
-                <Link to={`/library/${book.id}`}>Read More</Link>
-              </div>
-            </div>
+            </Link>
           ))
         )}
       </div>

@@ -4,12 +4,12 @@ import "./Register.css";
 const Register = ({ onClose, openLogin }) => {
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     password: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -28,7 +28,7 @@ const Register = ({ onClose, openLogin }) => {
       });
       const data = await response.json();
       if (data.status === "success") {
-        alert("User registered successfully!");
+        alert("User registered successfully!"); 
         onClose();
       } else {
         alert("Error registering user.");

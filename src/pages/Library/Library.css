@@ -51,8 +51,12 @@
   padding: 0;
   box-shadow: none;
   border-radius: 0;
+  text-decoration: none;
 }
-
+.book-card:hover {
+  transform: translateY(-4px);
+  cursor: pointer;
+}
 .book-card img {
   width: 180px;
   height: 270px;
@@ -79,12 +83,6 @@
   display: none;
 }
 
-.book-actions {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  margin-top: 10px; 
-}
 
 .book-actions a {
   color: green;
