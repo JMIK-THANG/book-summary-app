@@ -5,6 +5,7 @@ const Register = ({ onClose, openLogin }) => {
   const [formData, setFormData] = useState({
     name: "",
     password: "",
+    emal:""
   });
 
   const handleChange = (e) => {
@@ -60,13 +61,13 @@ const Register = ({ onClose, openLogin }) => {
             onChange={handleChange}
           />
 
-          {/* <input
-            type="email"
+          <input
+            type="text"
             name="email"
             placeholder="Enter Email"
             value={formData.email}
             onChange={handleChange}
-          /> */}
+          />
 
           <input
             type="password"
