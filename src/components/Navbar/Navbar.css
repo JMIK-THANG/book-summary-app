@@ -2,13 +2,13 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding: 18px 8%;
-  /* background: rgba(250, 248, 244, 0.95); */
+  background: rgba(250, 248, 244, 0.7);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #e5e0d8;
 }
@@ -76,7 +76,7 @@
     display: block;
     transition: transform 0.3s ease;
   }
-  
+
   .nav-menu {
     position: absolute;
     top: 70px;

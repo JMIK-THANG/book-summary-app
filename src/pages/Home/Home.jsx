@@ -110,47 +110,69 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="category-section">
-        <h2>Popular Categories</h2>
+      <div className="category-list">
+  <div className="category-card">
+    <span>🌿</span>
+    <p>Self Growth</p>
+  </div>
 
-        <div className="category-list">
-          <div className="category-card">🌱 Self Growth</div>
-          <div className="category-card">🧠 Psychology</div>
-          <div className="category-card">💵 Finance</div>
-          <div className="category-card">📈 Productivity</div>
-          <div className="category-card">👥 Leadership</div>
-          <div className="category-card">❤️ Health</div>
-        </div>
-      </section>
+  <div className="category-card">
+    <span>🧠</span>
+    <p>Psychology</p>
+  </div>
 
+  <div className="category-card">
+    <span>💰</span>
+    <p>Finance</p>
+  </div>
+
+  <div className="category-card">
+    <span>📈</span>
+    <p>Productivity</p>
+  </div>
+
+  <div className="category-card">
+    <span>👥</span>
+    <p>Leadership</p>
+  </div>
+
+  <div className="category-card">
+    <span>❤️</span>
+    <p>Health</p>
+  </div>
+</div>
       <section className="how-section">
         <h2>How it works</h2>
 
-        <div className="how-grid">
-          <div className="how-card">
-            <span>1</span>
-            <h3>Explore</h3>
-            <p>Browse summaries by category or search for a book.</p>
-          </div>
+       <div className="how-grid">
+  <div className="how-card">
+    <span className="step-number">1</span>
+    <div className="how-icon">🔍</div>
+    <h3>Explore</h3>
+    <p>Browse summaries by category or search for a book.</p>
+  </div>
 
-          <div className="how-card">
-            <span>2</span>
-            <h3>Read</h3>
-            <p>Read key ideas and lessons in a clear, simple way.</p>
-          </div>
+  <div className="how-card">
+    <span className="step-number">2</span>
+    <div className="how-icon">📖</div>
+    <h3>Read</h3>
+    <p>Read key ideas and lessons in a clear, simple way.</p>
+  </div>
 
-          <div className="how-card">
-            <span>3</span>
-            <h3>Save</h3>
-            <p>Keep your favorite summaries to revisit anytime.</p>
-          </div>
+  <div className="how-card">
+    <span className="step-number">3</span>
+    <div className="how-icon">🔖</div>
+    <h3>Save</h3>
+    <p>Keep your favorite summaries to revisit anytime.</p>
+  </div>
 
-          <div className="how-card">
-            <span>4</span>
-            <h3>Apply</h3>
-            <p>Use what you learn to improve your daily life.</p>
-          </div>
-        </div>
+  <div className="how-card">
+    <span className="step-number">4</span>
+    <div className="how-icon">🎯</div>
+    <h3>Apply</h3>
+    <p>Use what you learn to improve your daily life.</p>
+  </div>
+</div>
       </section>
     </main>
   );
