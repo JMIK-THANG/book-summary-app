@@ -31,6 +31,12 @@ const AddBookModal = ({ onClose, addBook }) => {
     addBook(newBook);
     onClose();
   };
+  const handleImage = (e) => { 
+    const file = e.target.files[0]; 
+    setFormData((prev) => ({ 
+      ...prev, image: file, 
+    }))
+  }
 
   return (
     <div className="modal-overlay">
@@ -61,11 +67,11 @@ const AddBookModal = ({ onClose, addBook }) => {
           />
 
           <input
-            type="text"
+            type="file"
             name="image"
             placeholder="Book image URL"
-            value={formData.image}
-            onChange={handleChange}
+            // value={formData.image}
+            onChange={handleImage}
           />
 
           <textarea
