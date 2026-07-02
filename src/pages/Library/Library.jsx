@@ -9,18 +9,20 @@ const Library = ({ books, addBook, currentUser }) => {
   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [selectedAuthor, setSelectedAuthor] = useState("all");
+
   const isAdmin = currentUser?.role === "admin";
-  // const isAdmin = currentUser.role === "admin";
 
   const authors = ["all", ...new Set(books.map((book) => book.author))];
 
   const filteredBooks = books.filter((book) => {
-    const matchesSearch =
-      book.title.toLowerCase().includes(searchText.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchText.toLowerCase());
+    const title = book.title || "";
+    const author = book.author || "";
 
-    const matchesAuthor =
-      selectedAuthor === "all" || book.author === selectedAuthor;
+    const matchesSearch =
+      title.toLowerCase().includes(searchText.toLowerCase()) ||
+      author.toLowerCase().includes(searchText.toLowerCase());
+
+    const matchesAuthor = selectedAuthor === "all" || author === selectedAuthor;
 
     return matchesSearch && matchesAuthor;
   });
@@ -28,15 +30,24 @@ const Library = ({ books, addBook, currentUser }) => {
   return (
     <main className="library">
       <div className="library-header">
-        <h1>My Library</h1>
+        <div className="library-title-row">
+          <h1>My Library</h1>
+
+          {isAdmin && (
+            <button
+              className="add-book-btn"
+              onClick={() => setIsAddBookOpen(true)}
+            >
+              + Add Book
+            </button>
+          )}
+        </div>
 
         <div className="library-controls">
           <div className="control-box">
             <FiSearch className="control-icon" />
 
             <input
-              id="book-search"
-              name="searchText"
               type="text"
               placeholder="Search books..."
               value={searchText}
@@ -48,8 +59,6 @@ const Library = ({ books, addBook, currentUser }) => {
             <HiOutlineUserGroup className="control-icon" />
 
             <select
-              id="author-filter"
-              name="selectedAuthor"
               value={selectedAuthor}
               onChange={(e) => setSelectedAuthor(e.target.value)}
             >
@@ -62,39 +71,38 @@ const Library = ({ books, addBook, currentUser }) => {
           </div>
         </div>
       </div>
-     <div className="book-list">
-  {filteredBooks.length === 0 ? (
-    <p className="no-books">No books found.</p>
-  ) : (
-    filteredBooks.map((book) => (
-      <Link
-        key={book.id}
-        to={`/library/${book.id}`}
-        className="book-card"
-      >
-        <img
-          src={
-            book.image ||
-            "https://via.placeholder.com/300x400?text=Book"
-          }
-          alt={book.title}
-        />
 
-        <div className="book-info">
-          <h2>{book.title}</h2>
+      {filteredBooks.length === 0 ? (
+        <p className="no-books">No books found.</p>
+      ) : (
+        <div className="book-list">
+          {filteredBooks.map((book) => (
+            <Link
+              key={book.id}
+              to={`/library/${book.id}`}
+              className="book-card"
+            >
+              <img
+                src={
+                  book.image || "https://via.placeholder.com/300x400?text=Book"
+                }
+                alt={book.title}
+              />
 
-          <h4>{book.author}</h4>
+              <div className="book-info">
+                <h2>{book.title}</h2>
+                <h4>{book.author}</h4>
+                <p>{book.summary?.slice(0, 80)}...</p>
 
-          <p>{book.summary.slice(0, 80)}...</p>
-
-          <span className="read-more">
-            Read Summary <span className="arrow">→</span>
-          </span>
+                <div className="read-more">
+                  <span>Read Summary</span>
+                  <span className="arrow">→</span>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
-      </Link>
-    ))
-  )}
-</div>
+      )}
 
       {isAdmin && isAddBookOpen && (
         <AddBookModal
