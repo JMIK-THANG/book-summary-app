@@ -35,10 +35,16 @@ function App() {
   }, []);
 
   const addBook = async (newBooks) => {
+    const formData = new FormData();
+    formData.append("title", newBooks.title);
+    formData.append("author", newBooks.author);
+    formData.append("summary", newBooks.summary);
+    if (newBooks.image) {
+      formData.append("image", newBooks.image);
+    }
     const response = await fetch("http://localhost:5000/books", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newBooks),
+      body: formData,
     });
     const bookData = await response.json();
     if (bookData.status === "success") {

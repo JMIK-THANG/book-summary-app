@@ -5,7 +5,7 @@ const AddBookModal = ({ onClose, addBook }) => {
   const [formData, setFormData] = useState({
     title: "",
     author: "",
-    image: "",
+    image: "null",
     summary: "",
   });
 
@@ -21,14 +21,7 @@ const AddBookModal = ({ onClose, addBook }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newBook = {
-      title: formData.title,
-      author: formData.author,
-      image: formData.image,
-      summary: formData.summary,
-    };
-
-    addBook(newBook);
+    addBook(formData);
     onClose();
   };
   const handleImage = (e) => { 
