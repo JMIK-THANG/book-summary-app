@@ -33,14 +33,6 @@ const Library = ({ books, addBook, currentUser }) => {
         <div className="library-title-row">
           <h1>My Library</h1>
 
-          {isAdmin && (
-            <button
-              className="add-book-btn"
-              onClick={() => setIsAddBookOpen(true)}
-            >
-              + Add Book
-            </button>
-          )}
         </div>
 
         <div className="library-controls">

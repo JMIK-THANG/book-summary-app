@@ -8,6 +8,14 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+
+# Environment variables
+.env
+.env.*
+
+# Uploads (not needed with Cloudinary)
+uploads/
+
 dist
 dist-ssr
 *.local
