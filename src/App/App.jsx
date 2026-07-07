@@ -16,14 +16,16 @@ function App() {
   // const [currentUser, setCurrentUser] = useState({ role: "admin" });
   const [currentUser, setCurrentUser] = useState(null);
   const [books, setBooks] = useState([]);
-
+  const backendUrl = import.meta.env.BACKEND_URL;
+  
   const navigate = useNavigate();
   const logout = () => {
     setCurrentUser(null);
     navigate("/");
   };
+
   const getBooks = async () => {
-    const response = await fetch("http://localhost:5000/books");
+    const response = await fetch(backendUrl + "books");
     const bookData = await response.json();
 
     if (bookData.status === "success") {
@@ -42,7 +44,7 @@ function App() {
     if (newBooks.image) {
       formData.append("image", newBooks.image);
     }
-    const response = await fetch("http://localhost:5000/books", {
+    const response = await fetch(backendUrl +"/books", {
       method: "POST",
       body: formData,
     });
@@ -52,7 +54,7 @@ function App() {
     }
   };
   const editBook = async (id, updatedBook) => {
-    const response = await fetch(`http://localhost:5000/books/${id}`, {
+    const response = await fetch(`${backendUrl}+/books/+ ${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedBook),
@@ -68,7 +70,7 @@ function App() {
   };
   const deleteBook = async (id) => {
     console.log(id);
-    const response = await fetch(`http://localhost:5000/books/${id}`, {
+    const response = await fetch(`${backendUrl}+/books/+ ${id}`, {
       method: "DELETE",
     });
 
@@ -107,11 +109,12 @@ function App() {
           onClose={closeModals}
           openRegister={openRegister}
           setCurrentUser={setCurrentUser}
+          backendUrl={backendUrl}
         />
       )}
 
       {isRegisterOpen && (
-        <Register onClose={closeModals} openLogin={openLogin} />
+        <Register onClose={closeModals} openLogin={openLogin} backendUrl={backendUrl} />
       )}
 
       <Routes>
@@ -128,7 +131,7 @@ function App() {
         />
         <Route
           path="/library/:id"
-          element={<BookDetails books={books} currentUser={currentUser} />}
+          element={<BookDetails books={books} currentUser={currentUser} backendUrl={backendUrl}/>}
         />
 
         <Route
@@ -140,6 +143,7 @@ function App() {
                 addBook={addBook}
                 deleteBook={deleteBook}
                 editBook={editBook}
+               
               />
             ) : (
               <h1>Access Denied</h1>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import "./Login.css";
 
-const Login = ({ onClose, openRegister, setCurrentUser }) => {
+const Login = ({ onClose, openRegister, setCurrentUser,backendUrl}) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -12,7 +12,7 @@ const Login = ({ onClose, openRegister, setCurrentUser }) => {
   });
 
   const checkLogin = async () => {
-    const response = await fetch("http://localhost:5000/login", {
+    const response = await fetch(backendUrl +"/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

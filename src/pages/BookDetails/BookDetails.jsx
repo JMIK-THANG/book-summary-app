@@ -2,16 +2,17 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./BookDetails.css";
 
-const BookDetails = ({ books, currentUser }) => {
+const BookDetails = ({ books, currentUser, backendUrl}) => {
   const { id } = useParams();
   const book = books.find((book) => book.id === Number(id));
 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
+
   const getComments = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/comments/${id}`);
+      const response = await fetch(`${backendUrl}/comments/${id}`);
       const data = await response.json();
 
       if (data.status === "success") {
@@ -37,7 +38,7 @@ const BookDetails = ({ books, currentUser }) => {
     if (!comment.trim()) return;
 
     try {
-      const response = await fetch("http://localhost:5000/comments", {
+      const response = await fetch(backendUrl+"/comments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
