@@ -25,7 +25,8 @@ function App() {
   };
 
   const getBooks = async () => {
-    const response = await fetch(backendUrl + "/books");
+    console.log(backendUrl)
+    const response = await fetch(backendUrl +"/books");
     const bookData = await response.json();
 
     if (bookData.status === "success") {
