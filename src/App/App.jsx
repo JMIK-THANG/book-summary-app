@@ -16,7 +16,7 @@ function App() {
   // const [currentUser, setCurrentUser] = useState({ role: "admin" });
   const [currentUser, setCurrentUser] = useState(null);
   const [books, setBooks] = useState([]);
-  const backendUrl = import.meta.env.BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   
   const navigate = useNavigate();
   const logout = () => {
@@ -25,7 +25,7 @@ function App() {
   };
 
   const getBooks = async () => {
-    const response = await fetch(backendUrl + "books");
+    const response = await fetch(backendUrl + "/books");
     const bookData = await response.json();
 
     if (bookData.status === "success") {
