@@ -23,6 +23,13 @@ const Login = ({ onClose, openRegister, setCurrentUser }) => {
     const userDetail = await response.json();
 
     if (userDetail.status === "success") {
+      //save token
+      localStorage.setItem("token", userDetail.token);
+      //save data
+      localStorage.setItem("user", JSON.stringify(userDetail.data));
+
+      setCurrentUser(userDetail.data);
+      onClose();
       setCurrentUser(userDetail.data);
       onClose();
 
