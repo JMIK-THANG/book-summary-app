@@ -225,44 +225,76 @@
   color: white;
 }
 
-@media (max-width: 768px) {
-  .admin-page {
-    padding: 28px 12px;
+@media (max-width: 600px) {
+  .admin-table-wrapper {
+    overflow-x: hidden;
   }
 
-  .admin-hero {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 22px;
+  .admin-table {
+    width: 100%;
+    min-width: unset;
+    border-collapse: separate;
+    border-spacing: 0 14px;
   }
 
-  .admin-hero h1 {
-    font-size: 28px;
+  .admin-table thead {
+    display: none;
   }
 
-  .admin-add-btn {
+  .admin-table,
+  .admin-table tbody,
+  .admin-table tr,
+  .admin-table td {
+    display: block;
     width: 100%;
   }
 
-  .admin-stats {
-    grid-template-columns: 1fr;
+  .admin-table tr {
+    background: white;
+    border: 1px solid #edf0f2;
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 14px;
   }
 
-  .admin-books {
-    padding: 20px 12px;
+  .admin-table td {
+    border-bottom: none;
+    padding: 8px 0;
   }
 
-  .admin-books-header {
-    flex-direction: column;
-    align-items: stretch;
+  .admin-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: #667085;
+    font-weight: 800;
+    text-transform: uppercase;
   }
 
-  .admin-books-header input {
+  .admin-table td:first-child::before,
+  .admin-table td:last-child::before {
+    display: none;
+  }
+
+  .admin-table td:first-child {
+    text-align: center;
+  }
+
+  .admin-table img {
+    width: 90px;
+    height: 120px;
+  }
+
+  .book-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
     width: 100%;
   }
 
-  .pagination {
-    flex-direction: column;
-    align-items: flex-start;
+  .book-actions button {
+    width: 100%;
+    min-height: 42px;
   }
 }

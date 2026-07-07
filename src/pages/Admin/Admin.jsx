@@ -90,42 +90,41 @@ const Admin = ({ books, addBook, deleteBook, editBook }) => {
             </thead>
 
             <tbody>
-              {currentBooks.map((book) => (
-                <tr key={book.id}>
-                  <td>
-                    <img src={book.image} alt={book.title} />
-                  </td>
+  {currentBooks.map((book) => (
+    <tr key={book.id}>
+      <td data-label="Cover">
+        <img src={book.image} alt={book.title} />
+      </td>
 
-                  <td>{book.title}</td>
-                  <td>{book.author}</td>
+      <td data-label="Title">{book.title}</td>
 
-                  <td>
-                    <div className="book-actions">
-                      <button
-                        onClick={() => {
-                          setSelectedBook(book);
-                          setIsEditBookOpen(true);
-                        }}
-                      >
-                        Edit
-                      </button>
+      <td data-label="Author">{book.author}</td>
 
-                      <button onClick={() => deleteBook(book.id)}>
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+      <td data-label="Actions">
+        <div className="book-actions">
+          <button
+            onClick={() => {
+              setSelectedBook(book);
+              setIsEditBookOpen(true);
+            }}
+          >
+            Edit
+          </button>
 
-              {currentBooks.length === 0 && (
-                <tr>
-                  <td colSpan="4" className="empty-message">
-                    No books found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
+          <button onClick={() => deleteBook(book.id)}>Delete</button>
+        </div>
+      </td>
+    </tr>
+  ))}
+
+  {currentBooks.length === 0 && (
+    <tr>
+      <td colSpan="4" className="empty-message">
+        No books found.
+      </td>
+    </tr>
+  )}
+</tbody>
           </table>
         </div>
 
