@@ -71,7 +71,7 @@ function App() {
   };
   const deleteBook = async (id) => {
     console.log(id);
-    const response = await fetch(`${backendUrl}+/books/+ ${id}`, {
+    const response = await fetch(`${backendUrl}/books/${id}`, {
       method: "DELETE",
     });
 
