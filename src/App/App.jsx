@@ -14,13 +14,18 @@ function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   // const [currentUser, setCurrentUser] = useState({ role: "admin" });
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(() => { 
+    const savedUser = localStorage.getItem("user"); 
+    return savedUser ? JSON.parse(savedUser): null; 
+  })
   const [books, setBooks] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   
   const navigate = useNavigate();
   const logout = () => {
-    setCurrentUser(null);
+    localStorage.removeItem("user"); 
+    localStorage.removeItem("token"); 
+    setCurrentUser(null); 
     navigate("/");
   };
 
@@ -55,7 +60,7 @@ function App() {
     }
   };
   const editBook = async (id, updatedBook) => {
-    const response = await fetch(`${backendUrl}+/books/+ ${id}`, {
+    const response = await fetch(`${backendUrl}/books/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedBook),
