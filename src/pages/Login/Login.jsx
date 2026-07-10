@@ -53,31 +53,44 @@ const Login = ({ onClose, openRegister, setCurrentUser, backendUrl }) => {
 
   const googleResponse = async (authResult) => {
     try {
-      console.log(authResult["code"]);
-      const response = await fetch("http://localhost:5000/google-login", {
+      const response = await fetch(backendUrl + "/google-login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ code: authResult["code"] }),
+        body: JSON.stringify({
+          code: authResult.code,
+        }),
       });
+
       const userData = await response.json();
 
+      console.log("Google login response:", userData);
+
       if (userData.user) {
+        localStorage.setItem("user", JSON.stringify(userData.user));
+
         setCurrentUser(userData.user);
-        alert("Login successful!");
         onClose();
+
+        if (userData.user.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/library");
+        }
       } else {
-        alert("Failed to login with Google.");
+        alert(userData.message || "Failed to login with Google.");
       }
-      console.log(userData);
     } catch (error) {
-      console.error("Error occured while requesting google code", error);
+      console.error("Google login error:", error);
+      alert("Google login failed.");
     }
   };
   const googleLogin = useGoogleLogin({
     onSuccess: googleResponse,
-    onError: googleResponse,
+    onError: (error) => {
+      console.error("Google login failed:", error);
+    },
     flow: "auth-code",
   });
   return (
