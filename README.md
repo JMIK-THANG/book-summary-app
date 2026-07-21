@@ -1,58 +1,114 @@
-# Book Summary App
+# 📚 CabuSim - Book Summary App
 
-A React application for storing and managing book summaries.
+A full-stack web application that helps users discover books, read summaries, and share their thoughts through comments. The application includes secure authentication, an administrator dashboard, and a responsive user interface.
 
-## Features
+## 🌐 Live Demo
 
-- View book summaries
-- Add new book summaries
-- Browse your library
-- User login and registration pages
-- Responsive navigation bar
+🔗 https://your-frontend-url.onrender.com
 
-## Technologies
+> Replace with your deployed frontend URL.
+
+---
+
+## 📸 Screenshots
+
+### Home Page
+
+![Home Page](./screenshots/home.png)
+
+### Library
+
+![Library](./screenshots/library.png)
+
+### Book Details
+
+![Book Details](./screenshots/book-details.png)
+
+### Admin Dashboard
+
+![Admin Dashboard](./screenshots/admin-dashboard.png)
+
+> Create a folder named `screenshots` inside `src/assets` (or use an `images` folder in the root) and save your screenshots there.
+
+---
+
+## ✨ Features
+
+- 🔐 User Authentication
+- 🔑 Google OAuth Login
+- 📚 Browse Book Collection
+- 🔍 Search Books
+- 📝 Read Book Summaries
+- 💬 Comment on Books
+- 👨‍💼 Admin Dashboard
+- ➕ Add New Books
+- ✏️ Edit Books
+- 🗑️ Delete Books
+- 🖼️ Upload Book Covers
+- 📱 Responsive Design
+
+---
+
+## 🛠️ Built With
 
 - React
 - Vite
-- React Router DOM
+- JavaScript
+- React Router
 - CSS
+- Google OAuth
+- REST API
 
-## Project Structure
+---
 
-```txt
-src/
-├── App/
-├── components/
-├── pages/
-│   ├── Home/
-│   ├── Library/
-│   ├── Login/
-│   └── Register/
-├── main.jsx
-└── index.css
+## ⚙️ Getting Started
+
+### Clone the repository
+
+```bash
+git clone https://github.com/JMIK-THANG/book-summary-app.git
 ```
 
-## Installation
+### Install dependencies
 
 ```bash
 npm install
 ```
 
-## Run the Project
+### Create a `.env` file
+
+```env
+VITE_BACKEND_URL=your_backend_url
+VITE_GOOGLE_CLIENT_ID=your_google_client_id
+```
+
+### Start the development server
 
 ```bash
 npm run dev
 ```
 
-## Future Improvements
+---
 
-- Add book summaries
-- Edit summaries
-- Delete summaries
-- Search books
-- Local Storage support
-- Backend integration
+## 🔗 Backend Repository
 
-## Author
+https://github.com/JMIK-THANG/book-summary-app-backend
 
-Jmik Thang
+---
+
+## 🚀 Future Improvements
+
+- ❤️ Favorite Books
+- ⭐ Book Ratings
+- 🌙 Dark Mode
+- 📖 Reading History
+- 🔔 Notifications
+- 🧪 Unit Testing
+
+---
+
+## 👨‍💻 Author
+
+**Jmik Thang**
+
+GitHub: https://github.com/JMIK-THANG
