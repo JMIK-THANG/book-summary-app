@@ -5,7 +5,7 @@ const Register = ({ onClose, openLogin, backendUrl }) => {
   const [formData, setFormData] = useState({
     name: "",
     password: "",
-    emal:""
+    email:""
   });
 
   const handleChange = (e) => {

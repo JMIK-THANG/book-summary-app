@@ -12,7 +12,7 @@ const Login = ({ onClose, openRegister, setCurrentUser, backendUrl }) => {
   });
 
   const checkLogin = async () => {
-    const response = await fetch(backendUrl + "/login", {
+    const response = await fetch(`${backendUrl}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

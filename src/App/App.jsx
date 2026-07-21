@@ -42,55 +42,100 @@ function App() {
     getBooks();
   }, []);
 
-  const addBook = async (newBooks) => {
-    const formData = new FormData();
-    formData.append("title", newBooks.title);
-    formData.append("author", newBooks.author);
-    formData.append("summary", newBooks.summary);
-    if (newBooks.image) {
-      formData.append("image", newBooks.image);
-    }
-    const response = await fetch(backendUrl + "/books", {
+  const addBook = async (newBook) => {
+  const formData = new FormData();
+
+  formData.append("title", newBook.title);
+  formData.append("author", newBook.author);
+  formData.append("summary", newBook.summary);
+
+  if (newBook.image) {
+    formData.append("image", newBook.image);
+  }
+
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${backendUrl}/books`, {
       method: "POST",
       headers: {
-        Authorization: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        Authorization: `Bearer ${token}`,
       },
       body: formData,
     });
+
     const bookData = await response.json();
+
+    if (!response.ok) {
+      console.log(bookData);
+      return;
+    }
+
     if (bookData.status === "success") {
       setBooks((prevBooks) => [bookData.data, ...prevBooks]);
     }
-  };
+  } catch (error) {
+    console.error("Add book error:", error);
+  }
+};
   const editBook = async (id, updatedBook) => {
+  try {
+    const token = localStorage.getItem("token");
+
     const response = await fetch(`${backendUrl}/books/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(updatedBook),
     });
 
     const bookData = await response.json();
 
+    if (!response.ok) {
+      console.log(bookData);
+      return;
+    }
+
     if (bookData.status === "success") {
       setBooks((prevBooks) =>
-        prevBooks.map((book) => (book.id === id ? bookData.data : book)),
+        prevBooks.map((book) =>
+          book.id === id ? bookData.data : book
+        )
       );
     }
-  };
+  } catch (error) {
+    console.error("Edit book error:", error);
+  }
+};
   const deleteBook = async (id) => {
-    console.log(id);
+  try {
+    const token = localStorage.getItem("token");
+
     const response = await fetch(`${backendUrl}/books/${id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     const bookData = await response.json();
 
-    if (bookData.status === "success") {
-      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+    if (!response.ok) {
+      console.log(bookData);
+      return;
     }
-  };
+
+    if (bookData.status === "success") {
+      setBooks((prevBooks) =>
+        prevBooks.filter((book) => book.id !== id)
+      );
+    }
+  } catch (error) {
+    console.error("Delete book error:", error);
+  }
+};
   const openLogin = () => {
     setIsLoginOpen(true);
     setIsRegisterOpen(false);
