@@ -75,80 +75,86 @@
 
 .book-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
 }
 
 .book-card {
-  background: white;
-  border-radius: 24px;
+  min-width: 0;
   overflow: hidden;
-  text-decoration: none;
+  background: white;
   color: inherit;
-  border: 1px solid rgba(16, 42, 67, 0.08);
-  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.08);
-  transition: 0.25s ease;
+  text-decoration: none;
+  border: 1px solid #e4e8ec;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(16, 42, 67, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .book-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 44px rgba(16, 42, 67, 0.14);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(16, 42, 67, 0.14);
 }
 
 .book-card img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
   display: block;
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
   background: #e5e7eb;
 }
 
 .book-info {
-  padding: 18px;
+  padding: 14px;
 }
 
 .book-card h2 {
-  margin: 0 0 8px;
-  font-size: 1.05rem;
-  line-height: 1.3;
+  margin: 0 0 6px;
+  overflow: hidden;
   color: #102a43;
+  font-size: 1rem;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .book-card h4 {
-  margin: 0 0 12px;
-  font-size: 0.9rem;
+  margin: 0 0 10px;
+  overflow: hidden;
   color: #7b8794;
+  font-size: 0.82rem;
   font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .book-card p {
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  min-height: 42px;
+  min-height: 40px;
+  margin: 0 0 14px;
   overflow: hidden;
-  margin: 0 0 16px;
-  font-size: 0.9rem;
-  line-height: 1.5;
   color: #4b5563;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .read-more {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  margin-top: 14px;
-  padding: 11px 14px;
-  border-radius: 999px;
+  justify-content: space-between;
+  padding: 9px 12px;
+  border-radius: 10px;
   background: #f1f5f9;
   color: #102a43;
-  font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: 0.2s ease;
 }
 
 .arrow {
-  transition: transform 0.25s ease;
+  transition: transform 0.2s ease;
 }
 
 .book-card:hover .read-more {
@@ -157,9 +163,45 @@
 }
 
 .book-card:hover .arrow {
-  transform: translateX(5px);
+  transform: translateX(4px);
 }
 
+/* Four cards */
+@media (max-width: 1200px) {
+  .book-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Three cards */
+@media (max-width: 950px) {
+  .book-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Two cards */
+@media (max-width: 700px) {
+  .book-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .book-card img {
+    height: 190px;
+  }
+}
+
+/* One card */
+@media (max-width: 420px) {
+  .book-list {
+    grid-template-columns: 1fr;
+  }
+
+  .book-card img {
+    height: 240px;
+  }
+}
 .no-books {
   padding: 30px;
   background: white;

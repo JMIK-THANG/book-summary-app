@@ -30,19 +30,31 @@ function App() {
   };
 
   const getBooks = async () => {
-    console.log(backendUrl);
-    const response = await fetch(backendUrl + "/books");
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${backendUrl}/books`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     const bookData = await response.json();
 
-    if (bookData.status === "success") {
-      setBooks(bookData.data);
+    if (!response.ok) {
+      throw new Error(bookData.message || `Request failed: ${response.status}`);
     }
-  };
+
+    setBooks(bookData.data);
+  } catch (error) {
+    console.error("Get books error:", error.message);
+  }
+};
   useEffect(() => {
     getBooks();
   }, []);
 
-  const addBook = async (newBook) => {
+const addBook = async (newBook) => {
   const formData = new FormData();
 
   formData.append("title", newBook.title);
@@ -56,6 +68,11 @@ function App() {
   try {
     const token = localStorage.getItem("token");
 
+    if (!token) {
+      console.error("No token found. Please log in again.");
+      return;
+    }
+
     const response = await fetch(`${backendUrl}/books`, {
       method: "POST",
       headers: {
@@ -67,20 +84,26 @@ function App() {
     const bookData = await response.json();
 
     if (!response.ok) {
-      console.log(bookData);
+      console.error(bookData.message || "Unable to add book");
       return;
     }
 
-    if (bookData.status === "success") {
-      setBooks((prevBooks) => [bookData.data, ...prevBooks]);
-    }
+    setBooks((previousBooks) => [bookData.data, ...previousBooks]);
   } catch (error) {
     console.error("Add book error:", error);
   }
 };
-  const editBook = async (id, updatedBook) => {
+ const editBook = async (id, updatedBook) => {
   try {
     const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("No authentication token found.");
+      return {
+        success: false,
+        message: "Please log in again.",
+      };
+    }
 
     const response = await fetch(`${backendUrl}/books/${id}`, {
       method: "PUT",
@@ -94,19 +117,31 @@ function App() {
     const bookData = await response.json();
 
     if (!response.ok) {
-      console.log(bookData);
-      return;
+      console.error("Update failed:", bookData);
+
+      return {
+        success: false,
+        message: bookData.message || "Could not update the book.",
+      };
     }
 
-    if (bookData.status === "success") {
-      setBooks((prevBooks) =>
-        prevBooks.map((book) =>
-          book.id === id ? bookData.data : book
-        )
-      );
-    }
+    setBooks((prevBooks) =>
+      prevBooks.map((book) =>
+        Number(book.id) === Number(id) ? bookData.data : book,
+      ),
+    );
+
+    return {
+      success: true,
+      message: bookData.message,
+    };
   } catch (error) {
     console.error("Edit book error:", error);
+
+    return {
+      success: false,
+      message: "Could not connect to the server.",
+    };
   }
 };
   const deleteBook = async (id) => {
