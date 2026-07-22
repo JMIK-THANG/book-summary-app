@@ -4,9 +4,9 @@ A full-stack web application that helps users discover books, read summaries, an
 
 ## 🌐 Live Demo
 
-🔗 https://your-frontend-url.onrender.com
+🔗https://book-summary-app-qn7c.onrender.com
 
-> Replace with your deployed frontend URL.
+
 
 ---
 
