@@ -7,7 +7,8 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import Navbar from "../components/Navbar/Navbar";
 import Admin from "../pages/Admin/Admin";
-
+import ScrollToTop from "../components/ScrollToTop/SCrollToTop";
+import Footer from "../components/Footer/Footer";
 import "./App.css";
 
 function App() {
@@ -30,147 +31,161 @@ function App() {
   };
 
   const getBooks = async () => {
-  try {
-    const token = localStorage.getItem("token");
+    try {
+      const token = localStorage.getItem("token");
 
-    const response = await fetch(`${backendUrl}/books`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      const response = await fetch(`${backendUrl}/books`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    const bookData = await response.json();
+      const bookData = await response.json();
 
-    if (!response.ok) {
-      throw new Error(bookData.message || `Request failed: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(
+          bookData.message || `Request failed: ${response.status}`,
+        );
+      }
+
+      setBooks(bookData.data);
+    } catch (error) {
+      console.error("Get books error:", error.message);
     }
-
-    setBooks(bookData.data);
-  } catch (error) {
-    console.error("Get books error:", error.message);
-  }
-};
+  };
   useEffect(() => {
     getBooks();
   }, []);
 
-const addBook = async (newBook) => {
-  const formData = new FormData();
+  const addBook = async (newBook) => {
+    const formData = new FormData();
 
-  formData.append("title", newBook.title);
-  formData.append("author", newBook.author);
-  formData.append("summary", newBook.summary);
+    formData.append("title", newBook.title);
+    formData.append("author", newBook.author);
+    formData.append("summary", newBook.summary);
 
-  if (newBook.image) {
-    formData.append("image", newBook.image);
-  }
-
-  try {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      console.error("No token found. Please log in again.");
-      return;
+    if (newBook.image) {
+      formData.append("image", newBook.image);
     }
 
-    const response = await fetch(`${backendUrl}/books`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
+    try {
+      const token = localStorage.getItem("token");
 
-    const bookData = await response.json();
+      if (!token) {
+        return {
+          success: false,
+          message: "Please log in again.",
+        };
+      }
 
-    if (!response.ok) {
-      console.error(bookData.message || "Unable to add book");
-      return;
-    }
+      const response = await fetch(`${backendUrl}/books`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
 
-    setBooks((previousBooks) => [bookData.data, ...previousBooks]);
-  } catch (error) {
-    console.error("Add book error:", error);
-  }
-};
- const editBook = async (id, updatedBook) => {
-  try {
-    const token = localStorage.getItem("token");
+      const bookData = await response.json();
 
-    if (!token) {
-      console.error("No authentication token found.");
+      if (!response.ok) {
+        return {
+          success: false,
+          message: bookData.message || "Unable to add book.",
+        };
+      }
+
+      setBooks((previousBooks) => [bookData.data, ...previousBooks]);
+
       return {
-        success: false,
-        message: "Please log in again.",
+        success: true,
+        message: "Book added successfully.",
       };
-    }
-
-    const response = await fetch(`${backendUrl}/books/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(updatedBook),
-    });
-
-    const bookData = await response.json();
-
-    if (!response.ok) {
-      console.error("Update failed:", bookData);
+    } catch (error) {
+      console.error("Add book error:", error);
 
       return {
         success: false,
-        message: bookData.message || "Could not update the book.",
+        message: "Could not connect to the server.",
       };
     }
+  };
+  const editBook = async (id, updatedBook) => {
+    try {
+      const token = localStorage.getItem("token");
 
-    setBooks((prevBooks) =>
-      prevBooks.map((book) =>
-        Number(book.id) === Number(id) ? bookData.data : book,
-      ),
-    );
+      if (!token) {
+        console.error("No authentication token found.");
+        return {
+          success: false,
+          message: "Please log in again.",
+        };
+      }
 
-    return {
-      success: true,
-      message: bookData.message,
-    };
-  } catch (error) {
-    console.error("Edit book error:", error);
+      const response = await fetch(`${backendUrl}/books/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedBook),
+      });
 
-    return {
-      success: false,
-      message: "Could not connect to the server.",
-    };
-  }
-};
-  const deleteBook = async (id) => {
-  try {
-    const token = localStorage.getItem("token");
+      const bookData = await response.json();
 
-    const response = await fetch(`${backendUrl}/books/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      if (!response.ok) {
+        console.error("Update failed:", bookData);
 
-    const bookData = await response.json();
+        return {
+          success: false,
+          message: bookData.message || "Could not update the book.",
+        };
+      }
 
-    if (!response.ok) {
-      console.log(bookData);
-      return;
-    }
-
-    if (bookData.status === "success") {
       setBooks((prevBooks) =>
-        prevBooks.filter((book) => book.id !== id)
+        prevBooks.map((book) =>
+          Number(book.id) === Number(id) ? bookData.data : book,
+        ),
       );
+
+      return {
+        success: true,
+        message: bookData.message,
+      };
+    } catch (error) {
+      console.error("Edit book error:", error);
+
+      return {
+        success: false,
+        message: "Could not connect to the server.",
+      };
     }
-  } catch (error) {
-    console.error("Delete book error:", error);
-  }
-};
+  };
+  const deleteBook = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(`${backendUrl}/books/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const bookData = await response.json();
+
+      if (!response.ok) {
+        console.log(bookData);
+        return;
+      }
+
+      if (bookData.status === "success") {
+        setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+      }
+    } catch (error) {
+      console.error("Delete book error:", error);
+    }
+  };
   const openLogin = () => {
     setIsLoginOpen(true);
     setIsRegisterOpen(false);
@@ -211,7 +226,7 @@ const addBook = async (newBook) => {
           backendUrl={backendUrl}
         />
       )}
-
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -251,6 +266,7 @@ const addBook = async (newBook) => {
           }
         />
       </Routes>
+      <Footer />
     </>
   );
 }
