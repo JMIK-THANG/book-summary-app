@@ -20,6 +20,8 @@ function App() {
     return savedUser ? JSON.parse(savedUser) : null;
   });
   const [books, setBooks] = useState([]);
+  const [counts, setCounts] = useState({ totalBooks: 0, totalUsers: 0 });
+
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const navigate = useNavigate();
@@ -55,6 +57,7 @@ function App() {
   };
   useEffect(() => {
     getBooks();
+    getCounts();
   }, []);
 
   const addBook = async (newBook) => {
@@ -200,7 +203,23 @@ function App() {
     setIsLoginOpen(false);
     setIsRegisterOpen(false);
   };
+  const getCounts = async () => {
+    try {
+      const response = await fetch(`${backendUrl}/home/dashboard-stats`);
 
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch counts");
+      }
+
+      if (data.status === "success") {
+        setCounts(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching counts:", error);
+    }
+  };
   return (
     <>
       <Navbar
@@ -228,7 +247,7 @@ function App() {
       )}
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home counts={counts} />} />
         <Route
           path="/library"
           element={

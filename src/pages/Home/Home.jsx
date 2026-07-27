@@ -4,7 +4,7 @@ import "./Home.css";
 import homepage from "../../assets/homepage.jpg";
 import bookVideo from "../../assets/booksummaryapp-video.mp4";
 
-const Home = () => {
+const Home = ({counts}) => {
   return (
     <main className="home">
       <section className="hero">
@@ -31,33 +31,84 @@ const Home = () => {
           <img src={homepage} alt="A collection of books" />
         </div>
       </section>
-       <section className="how-section">
-        <p className="section-label">GET STARTED</p>
-        <h2>How it works</h2>
+      <section className="journey-section">
+  <div className="journey-header">
+    <p className="section-label">YOUR READING JOURNEY</p>
+    <h2>Discover ideas in three simple steps</h2>
+    <p className="section-description">
+      Explore concise book summaries, learn the key ideas, and join the
+      conversation.
+    </p>
+  </div>
 
-        <div className="how-grid">
-          <article className="how-card">
-            <span className="step-number">1</span>
-            <div className="how-icon" aria-hidden="true">🔍</div>
-            <h3>Explore</h3>
-            <p>Browse the library and discover an interesting book.</p>
-          </article>
+  <div className="stats-strip">
+    <div className="stat-item">
+      <span className="stat-icon" aria-hidden="true">
+        📚
+      </span>
 
-          <article className="how-card">
-            <span className="step-number">2</span>
-            <div className="how-icon" aria-hidden="true">📖</div>
-            <h3>Read</h3>
-            <p>Learn the book’s main ideas through a clear summary.</p>
-          </article>
+      <div>
+        <strong>{counts.totalBooks ?? 0}+</strong>
+        <span>Book Summaries</span>
+      </div>
+    </div>
 
-          <article className="how-card">
-            <span className="step-number">3</span>
-            <div className="how-icon" aria-hidden="true">💬</div>
-            <h3>Discuss</h3>
-            <p>Log in, leave a comment, and share what you learned.</p>
-          </article>
-        </div>
-      </section>
+    <div className="stat-divider" aria-hidden="true"></div>
+
+    <div className="stat-item">
+      <span className="stat-icon" aria-hidden="true">
+        👥
+      </span>
+
+      <div>
+        <strong>{counts.totalUsers ?? 0}+</strong>
+        <span>Active Readers</span>
+      </div>
+    </div>
+  </div>
+
+  <div className="journey-grid">
+    <article className="journey-card">
+      <span className="step-number">01</span>
+
+      <div className="journey-icon" aria-hidden="true">
+        🔍
+      </div>
+
+      <h3>Explore</h3>
+      <p>
+        Browse our growing library and discover a book that interests you.
+      </p>
+    </article>
+
+    <article className="journey-card featured-card">
+      <span className="step-number">02</span>
+
+      <div className="journey-icon" aria-hidden="true">
+        📖
+      </div>
+
+      <h3>Read</h3>
+      <p>
+        Understand the most important ideas through a clear and concise
+        summary.
+      </p>
+    </article>
+
+    <article className="journey-card">
+      <span className="step-number">03</span>
+
+      <div className="journey-icon" aria-hidden="true">
+        💬
+      </div>
+
+      <h3>Discuss</h3>
+      <p>
+        Sign in, share your perspective, and learn from other readers.
+      </p>
+    </article>
+  </div>
+</section>
 
       <section className="learn-section">
         <div className="learn-content">
