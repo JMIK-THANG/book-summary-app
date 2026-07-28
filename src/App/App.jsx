@@ -247,7 +247,7 @@ function App() {
       )}
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home counts={counts} />} />
+        <Route path="/" element={<Home counts={counts} books={books}/>} />
         <Route
           path="/library"
           element={

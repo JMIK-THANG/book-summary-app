@@ -4,7 +4,8 @@ import "./Home.css";
 import homepage from "../../assets/homepage.jpg";
 import bookVideo from "../../assets/booksummaryapp-video.mp4";
 
-const Home = ({counts}) => {
+const Home = ({ counts, books }) => {
+  const latestBooks = books.slice(0, 3);
   return (
     <main className="home">
       <section className="hero">
@@ -31,85 +32,55 @@ const Home = ({counts}) => {
           <img src={homepage} alt="A collection of books" />
         </div>
       </section>
-      <section className="journey-section">
-  <div className="journey-header">
-    <p className="section-label">YOUR READING JOURNEY</p>
-    <h2>Discover ideas in three simple steps</h2>
-    <p className="section-description">
-      Explore concise book summaries, learn the key ideas, and join the
-      conversation.
-    </p>
-  </div>
+      {latestBooks.length > 0 && (
+  <section className="latest-books-section">
+    <div className="latest-books-container">
+      <div className="latest-books-heading">
+        <p className="section-label">RECENTLY ADDED</p>
 
-  <div className="stats-strip">
-    <div className="stat-item">
-      <span className="stat-icon" aria-hidden="true">
-        📚
-      </span>
+        <h2>Fresh summaries for your reading list</h2>
 
-      <div>
-        <strong>{counts.totalBooks ?? 0}+</strong>
-        <span>Book Summaries</span>
+        <div className="latest-books-intro">
+          <p>
+            Explore the latest books added to CabuSim and discover their most
+            important ideas.
+          </p>
+
+          <Link to="/library" className="latest-books-library-link">
+            View the full library
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      </div>
+
+      <div className="latest-books-grid">
+        {latestBooks.map((book) => (
+          <Link
+            to={`/library/${book.id}`}
+            key={book.id}
+            className="latest-book-card"
+          >
+            <div className="latest-book-cover">
+              <img src={book.image} alt={`Cover of ${book.title}`} />
+            </div>
+
+            <div className="latest-book-information">
+              <span className="latest-book-badge">New</span>
+
+              <h3>{book.title}</h3>
+
+              <p className="latest-book-author">By {book.author}</p>
+
+              <span className="latest-book-read">
+                Read summary <span aria-hidden="true">→</span>
+              </span>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
-
-    <div className="stat-divider" aria-hidden="true"></div>
-
-    <div className="stat-item">
-      <span className="stat-icon" aria-hidden="true">
-        👥
-      </span>
-
-      <div>
-        <strong>{counts.totalUsers ?? 0}+</strong>
-        <span>Active Readers</span>
-      </div>
-    </div>
-  </div>
-
-  <div className="journey-grid">
-    <article className="journey-card">
-      <span className="step-number">01</span>
-
-      <div className="journey-icon" aria-hidden="true">
-        🔍
-      </div>
-
-      <h3>Explore</h3>
-      <p>
-        Browse our growing library and discover a book that interests you.
-      </p>
-    </article>
-
-    <article className="journey-card featured-card">
-      <span className="step-number">02</span>
-
-      <div className="journey-icon" aria-hidden="true">
-        📖
-      </div>
-
-      <h3>Read</h3>
-      <p>
-        Understand the most important ideas through a clear and concise
-        summary.
-      </p>
-    </article>
-
-    <article className="journey-card">
-      <span className="step-number">03</span>
-
-      <div className="journey-icon" aria-hidden="true">
-        💬
-      </div>
-
-      <h3>Discuss</h3>
-      <p>
-        Sign in, share your perspective, and learn from other readers.
-      </p>
-    </article>
-  </div>
-</section>
-
+  </section>
+)}
       <section className="learn-section">
         <div className="learn-content">
           <p className="section-label">WHY CABUSIM?</p>
@@ -162,8 +133,84 @@ const Home = ({counts}) => {
           />
         </div>
       </section>
+      <section className="journey-section">
+        <div className="journey-header">
+          <p className="section-label">YOUR READING JOURNEY</p>
+          <h2>Discover ideas in three simple steps</h2>
+          <p className="section-description">
+            Explore concise book summaries, learn the key ideas, and join the
+            conversation.
+          </p>
+        </div>
 
-     
+        <div className="stats-strip">
+          <div className="stat-item">
+            <span className="stat-icon" aria-hidden="true">
+              📚
+            </span>
+
+            <div>
+              <strong>{counts.totalBooks ?? 0}+</strong>
+              <span>Book Summaries</span>
+            </div>
+          </div>
+
+          <div className="stat-divider" aria-hidden="true"></div>
+
+          <div className="stat-item">
+            <span className="stat-icon" aria-hidden="true">
+              👥
+            </span>
+
+            <div>
+              <strong>{counts.totalUsers ?? 0}+</strong>
+              <span>Active Readers</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="journey-grid">
+          <article className="journey-card">
+            <span className="step-number">01</span>
+
+            <div className="journey-icon" aria-hidden="true">
+              🔍
+            </div>
+
+            <h3>Explore</h3>
+            <p>
+              Browse our growing library and discover a book that interests you.
+            </p>
+          </article>
+
+          <article className="journey-card featured-card">
+            <span className="step-number">02</span>
+
+            <div className="journey-icon" aria-hidden="true">
+              📖
+            </div>
+
+            <h3>Read</h3>
+            <p>
+              Understand the most important ideas through a clear and concise
+              summary.
+            </p>
+          </article>
+
+          <article className="journey-card">
+            <span className="step-number">03</span>
+
+            <div className="journey-icon" aria-hidden="true">
+              💬
+            </div>
+
+            <h3>Discuss</h3>
+            <p>
+              Sign in, share your perspective, and learn from other readers.
+            </p>
+          </article>
+        </div>
+      </section>
 
       <section className="home-cta">
         <div>
