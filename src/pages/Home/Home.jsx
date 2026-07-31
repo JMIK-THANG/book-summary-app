@@ -6,6 +6,11 @@ import bookVideo from "../../assets/booksummaryapp-video.mp4";
 
 const Home = ({ counts, books }) => {
   const latestBooks = books.slice(0, 3);
+    //most viewed book
+  const mostViewedBooks=[...books]
+                        .sort((a,b)=>b.views-a.views)
+                        .slice(0,3);
+
   return (
     <main className="home">
       <section className="hero">
@@ -32,6 +37,7 @@ const Home = ({ counts, books }) => {
           <img src={homepage} alt="A collection of books" />
         </div>
       </section>
+      
       {latestBooks.length > 0 && (
   <section className="latest-books-section">
     <div className="latest-books-container">
@@ -80,7 +86,53 @@ const Home = ({ counts, books }) => {
       </div>
     </div>
   </section>
+  
+  
 )}
+<section className="most-viewed-section">
+  <div className="most-viewed-container">
+    <div className="most-viewed-heading">
+      <p className="most-viewed-label">POPULAR BOOKS</p>
+      <h2>Most-read summaries</h2>
+      <p>Discover the books CabuSim readers are viewing most.</p>
+    </div>
+
+    <div className="most-viewed-list">
+      {mostViewedBooks.map((book, index) => (
+        <Link
+          to={`/library/${book.id}`}
+          key={book.id}
+          className="most-viewed-item"
+        >
+          <span className="most-viewed-rank">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+
+          <img
+            className="most-viewed-image"
+            src={book.image}
+            alt={`Cover of ${book.title}`}
+          />
+
+          <div className="most-viewed-information">
+            <h3>{book.title}</h3>
+            <p>By {book.author}</p>
+          </div>
+
+          <div className="most-viewed-stats">
+            <span className="most-viewed-count">
+              {book.views ?? 0} views
+            </span>
+
+            <span className="most-viewed-arrow" aria-hidden="true">
+              →
+            </span>
+          </div>
+        </Link>
+      ))}
+    </div>
+  </div>
+</section>
       <section className="learn-section">
         <div className="learn-content">
           <p className="section-label">WHY CABUSIM?</p>

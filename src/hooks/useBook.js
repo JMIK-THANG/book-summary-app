@@ -211,7 +211,31 @@ const useBook = () => {
       console.error("Error fetching counts:", error);
     }
   };
+const incrementBookView = async (id) => {
+  try {
+    const response = await fetch(`${backendUrl}/books/${id}/view`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to increment book view");
+    }
+
+    // Update the books state with the updated book
+    setBooks((previousBooks) =>
+      previousBooks.map((book) =>
+        Number(book.id) === Number(id) ? data.data : book
+      )
+    );
+  } catch (error) {
+    console.error("Error incrementing book view:", error);
+  }
+};
   useEffect(() => {
     getBooks();
     getCounts();
@@ -224,6 +248,7 @@ const useBook = () => {
     addBook,
     editBook,
     deleteBook,
+    incrementBookView
   };
 };
 

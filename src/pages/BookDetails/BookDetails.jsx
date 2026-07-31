@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./BookDetails.css";
 
-const BookDetails = ({ books, currentUser, backendUrl }) => {
+const BookDetails = ({ books, currentUser, backendUrl, incrementBookView }) => {
   const { id } = useParams();
   const book = books.find((book) => book.id === Number(id));
 
@@ -24,6 +24,12 @@ const BookDetails = ({ books, currentUser, backendUrl }) => {
 
   useEffect(() => {
     getComments();
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      incrementBookView(id);
+    }
   }, [id]);
 
   const addComment = async (e) => {

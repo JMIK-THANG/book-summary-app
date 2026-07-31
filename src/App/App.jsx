@@ -17,7 +17,7 @@ import useAuthenticate from "../hooks/useAuthenticate";
 
 function App() {
   // Custome hooks import
-  const { books, counts, backendUrl, addBook, editBook, deleteBook } =
+  const { books, counts, backendUrl, addBook, editBook, deleteBook, incrementBookView} =
     useBook();
   const { isLoginOpen, isRegisterOpen, openLogin, openRegister, closeModals } =
     useModal();
@@ -69,6 +69,7 @@ const { currentUser,
               books={books}
               currentUser={currentUser}
               backendUrl={backendUrl}
+              incrementBookView={incrementBookView}
             />
           }
         />
