@@ -17,7 +17,7 @@ import useAuthenticate from "../hooks/useAuthenticate";
 
 function App() {
   // Custome hooks import
-  const { books, counts, backendUrl, addBook, editBook, deleteBook, incrementBookView} =
+  const { books, counts, backendUrl, addBook, editBook, deleteBook, incrementBookView, isLoading} =
     useBook();
   const { isLoginOpen, isRegisterOpen, openLogin, openRegister, closeModals } =
     useModal();
@@ -59,6 +59,7 @@ const { currentUser,
               books={books}
               addBook={addBook}
               currentUser={currentUser}
+              isLoading={isLoading}
             />
           }
         />
@@ -70,6 +71,7 @@ const { currentUser,
               currentUser={currentUser}
               backendUrl={backendUrl}
               incrementBookView={incrementBookView}
+               isLoading={isLoading}
             />
           }
         />
@@ -83,6 +85,7 @@ const { currentUser,
                 addBook={addBook}
                 deleteBook={deleteBook}
                 editBook={editBook}
+                 isLoading={isLoading}
               />
             ) : (
               <h1>Access Denied</h1>

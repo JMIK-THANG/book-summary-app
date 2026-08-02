@@ -9,16 +9,14 @@ const useBook = () => {
     totalUsers: 0,
   });
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const getBooks = async () => {
     try {
       const token = localStorage.getItem("token");
 
       const response = await fetch(`${backendUrl}/books`, {
-        headers: token
-          ? {
-              Authorization: `Bearer ${token}`,
-            }
-          : {},
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
 
       const bookData = await response.json();
@@ -32,9 +30,10 @@ const useBook = () => {
       setBooks(bookData.data);
     } catch (error) {
       console.error("Get books error:", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
-
   const addBook = async (newBook) => {
     const formData = new FormData();
 
@@ -73,10 +72,7 @@ const useBook = () => {
         };
       }
 
-      setBooks((previousBooks) => [
-        bookData.data,
-        ...previousBooks,
-      ]);
+      setBooks((previousBooks) => [bookData.data, ...previousBooks]);
 
       return {
         success: true,
@@ -117,8 +113,7 @@ const useBook = () => {
       if (!response.ok) {
         return {
           success: false,
-          message:
-            bookData.message || "Could not update the book.",
+          message: bookData.message || "Could not update the book.",
         };
       }
 
@@ -130,8 +125,7 @@ const useBook = () => {
 
       return {
         success: true,
-        message:
-          bookData.message || "Book updated successfully.",
+        message: bookData.message || "Book updated successfully.",
       };
     } catch (error) {
       console.error("Edit book error:", error);
@@ -166,21 +160,17 @@ const useBook = () => {
       if (!response.ok) {
         return {
           success: false,
-          message:
-            bookData.message || "Could not delete the book.",
+          message: bookData.message || "Could not delete the book.",
         };
       }
 
       setBooks((previousBooks) =>
-        previousBooks.filter(
-          (book) => Number(book.id) !== Number(id),
-        ),
+        previousBooks.filter((book) => Number(book.id) !== Number(id)),
       );
 
       return {
         success: true,
-        message:
-          bookData.message || "Book deleted successfully.",
+        message: bookData.message || "Book deleted successfully.",
       };
     } catch (error) {
       console.error("Delete book error:", error);
@@ -194,9 +184,7 @@ const useBook = () => {
 
   const getCounts = async () => {
     try {
-      const response = await fetch(
-        `${backendUrl}/home/dashboard-stats`,
-      );
+      const response = await fetch(`${backendUrl}/home/dashboard-stats`);
 
       const data = await response.json();
 
@@ -211,31 +199,31 @@ const useBook = () => {
       console.error("Error fetching counts:", error);
     }
   };
-const incrementBookView = async (id) => {
-  try {
-    const response = await fetch(`${backendUrl}/books/${id}/view`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const incrementBookView = async (id) => {
+    try {
+      const response = await fetch(`${backendUrl}/books/${id}/view`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.message || "Failed to increment book view");
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to increment book view");
+      }
+
+      // Update the books state with the updated book
+      setBooks((previousBooks) =>
+        previousBooks.map((book) =>
+          Number(book.id) === Number(id) ? data.data : book,
+        ),
+      );
+    } catch (error) {
+      console.error("Error incrementing book view:", error);
     }
-
-    // Update the books state with the updated book
-    setBooks((previousBooks) =>
-      previousBooks.map((book) =>
-        Number(book.id) === Number(id) ? data.data : book
-      )
-    );
-  } catch (error) {
-    console.error("Error incrementing book view:", error);
-  }
-};
+  };
   useEffect(() => {
     getBooks();
     getCounts();
@@ -248,7 +236,8 @@ const incrementBookView = async (id) => {
     addBook,
     editBook,
     deleteBook,
-    incrementBookView
+    incrementBookView,
+    isLoading,
   };
 };
 

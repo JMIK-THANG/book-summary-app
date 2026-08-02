@@ -25,7 +25,11 @@
 .hero {
   padding: 6rem 0;
   background:
-    radial-gradient(circle at 85% 15%, rgba(226, 158, 85, 0.16), transparent 30%),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(226, 158, 85, 0.16),
+      transparent 30%
+    ),
     #f8f5ef;
 }
 
@@ -102,43 +106,6 @@
 
 .primary-button span {
   color: #eda15e;
-}
-
-.hero-language {
-  margin: 0;
-  color: #6c7482;
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.hero-stats {
-  display: flex;
-  margin-top: 3rem;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.hero-stats > div:not(.hero-stat-divider) {
-  display: flex;
-  flex-direction: column;
-}
-
-.hero-stats strong {
-  color: #14213d;
-  font-size: 1.45rem;
-  line-height: 1.1;
-}
-
-.hero-stats span {
-  margin-top: 0.3rem;
-  color: #777f8c;
-  font-size: 0.8rem;
-}
-
-.hero-stat-divider {
-  width: 1px;
-  height: 40px;
-  background: #d8d1c6;
 }
 
 /* Hero books */
@@ -378,17 +345,20 @@
   grid-template-columns: minmax(190px, 0.8fr) minmax(0, 1fr);
   align-items: center;
   gap: 2.5rem;
-  color: inherit;
-  background: #14213d;
+  color: #14213d;
+  background: #eee5d9;
+  border: 1px solid #ded2c3;
   border-radius: 10px;
   text-decoration: none;
   transition:
+    border-color 0.25s ease,
     box-shadow 0.25s ease,
     transform 0.25s ease;
 }
 
 .popular-featured:hover {
-  box-shadow: 0 20px 40px rgba(20, 33, 61, 0.2);
+  border-color: #cfc0ae;
+  box-shadow: 0 18px 36px rgba(20, 33, 61, 0.12);
   transform: translateY(-4px);
 }
 
@@ -424,36 +394,24 @@
   letter-spacing: 0.04em;
 }
 
-.popular-label {
-  margin: 0 0 0.85rem;
-  color: #eda15e;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-}
-
 .popular-featured-information h3 {
   margin: 0;
-  color: #ffffff;
+  color: #14213d;
   font-size: clamp(1.7rem, 3vw, 2.5rem);
   line-height: 1.15;
   letter-spacing: -0.035em;
 }
 
-.popular-author {
-  margin: 0.8rem 0 0;
-  color: #aeb7c5;
-  font-size: 0.92rem;
+.popular-featured .popular-label {
+  color: #bd561b;
 }
 
-.popular-read-link {
-  display: inline-flex;
-  margin-top: 2rem;
-  align-items: center;
-  gap: 0.55rem;
-  color: #eda15e;
-  font-size: 0.9rem;
-  font-weight: 750;
+.popular-featured .popular-author {
+  color: #697386;
+}
+
+.popular-featured .popular-read-link {
+  color: #bd561b;
 }
 
 .popular-read-link span {
@@ -727,10 +685,10 @@
   }
 
   .latest-books-section,
-.popular-section,
-.benefits-section {
-  padding: 4.5rem 0;
-}
+  .popular-section,
+  .benefits-section {
+    padding: 4.5rem 0;
+  }
 
   .section-heading-row {
     margin-bottom: 2rem;
