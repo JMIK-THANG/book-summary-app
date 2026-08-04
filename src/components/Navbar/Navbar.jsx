@@ -12,7 +12,7 @@ const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
 
   return (
     <nav className="navbar">
-      <Link to="/" className="logo logo-link" onClick={closeMenu}>
+      <Link to="/" className="logo logo-link" onClick={closeMenu}  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
         <h2>CabuSim</h2>
       </Link>
 
@@ -26,7 +26,7 @@ const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
       <div className={`nav-menu ${isMenuOpen ? "active" : ""}`}>
         <ul className="nav-center">
           <li>
-            <Link to="/" onClick={closeMenu}>
+            <Link to="/" onClick={closeMenu}  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
               Home
             </Link>
           </li>
