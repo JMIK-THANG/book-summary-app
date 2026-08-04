@@ -1,0 +1,91 @@
+/* Shared section heading */
+
+.section-heading-row {
+  display: flex;
+  margin-bottom: 2.75rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.section-heading-row h2,
+.most-viewed-heading h2,
+.benefits-heading h2,
+.home-cta h2 {
+  margin: 0.75rem 0;
+  font-size: clamp(2rem, 4vw, 3.15rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.section-heading-row > div > p:last-child,
+.benefits-heading > p:last-child {
+  max-width: 590px;
+  margin: 0;
+  color: #697386;
+  line-height: 1.7;
+}
+
+.text-link {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+  color: #14213d;
+  font-weight: 750;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
+}
+
+.text-link:hover {
+  gap: 0.75rem;
+  color: #bd561b;
+}
+/* Benefits */
+
+.benefits-section {
+  padding: 6rem 0;
+  background: #f8f5ef;
+}
+
+.benefits-heading {
+  max-width: 650px;
+  margin-bottom: 3rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid #dcd6cd;
+}
+
+.benefit {
+  padding: 2.5rem 2rem 1rem 0;
+}
+
+.benefit + .benefit {
+  padding-left: 2rem;
+  border-left: 1px solid #dcd6cd;
+}
+
+.benefit-number {
+  color: #bd561b;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.benefit h3 {
+  margin: 1.5rem 0 0.75rem;
+  color: #14213d;
+  font-size: 1.25rem;
+}
+
+.benefit p {
+  max-width: 310px;
+  margin: 0;
+  color: #697386;
+  line-height: 1.7;
+}

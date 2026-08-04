@@ -7,25 +7,19 @@ export const useHome = (books = []) => {
 
   const mostViewedBooks = useMemo(() => {
     return [...books]
-      .sort(
-        (a, b) =>
-          Number(b.views ?? 0) - Number(a.views ?? 0),
-      )
+      .sort((a, b) => Number(b.views ?? 0) - Number(a.views ?? 0))
       .slice(0, 3);
   }, [books]);
 
   const featuredBooks = useMemo(() => {
-    const featuredBookIds = [5, 8, 12];
+    const featuredBookIds = [40, 37, 35];
+    console.log();
 
     const selectedBooks = featuredBookIds
-      .map((id) =>
-        books.find((book) => Number(book.id) === id),
-      )
+      .map((id) => books.find((book) => Number(book.id) === id))
       .filter(Boolean);
 
-    return selectedBooks.length === 3
-      ? selectedBooks
-      : books.slice(0, 3);
+    return selectedBooks.length === 3 ? selectedBooks : books.slice(0, 3);
   }, [books]);
 
   return {

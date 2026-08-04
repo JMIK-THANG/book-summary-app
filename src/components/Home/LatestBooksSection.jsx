@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 
-{
-  /* Recently added */
-}
+import "./LatestBooksSection.css"; 
+
 export const LatestBooksSection = ({ latestBooks }) => {
   if (!latestBooks || latestBooks.length === 0) {
     return null;

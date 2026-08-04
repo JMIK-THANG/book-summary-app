@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-{
-  /* Popular summaries */
-}
+import "./PopularBooksSection.css"; 
 export const PopularBooksSection = ({ mostViewedBooks }) => {
   if (!mostViewedBooks || mostViewedBooks.length === 0) {
     return null;

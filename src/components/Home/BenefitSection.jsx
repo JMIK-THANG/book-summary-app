@@ -1,6 +1,4 @@
-{
-  /* Why CabuSim */
-}
+import "./BenefitSection.css";
 
 export const BenefitSection = () => {
   <section className="benefits-section">

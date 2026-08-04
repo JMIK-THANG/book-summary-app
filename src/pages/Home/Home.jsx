@@ -5,6 +5,7 @@ import { LatestBooksSection } from "../../components/Home/LatestBooksSection";
 import { PopularBooksSection } from "../../components/Home/PopularBooksSection";
 import { useHome } from "../../hooks/useHome";
 import "./Home.css";
+import CategorySection from "../../components/Home/CategorySection";
 
 const Home = ({ counts = {}, books = [] }) => {
   const { latestBooks, mostViewedBooks, featuredBooks } = useHome(books);
@@ -16,6 +17,7 @@ const Home = ({ counts = {}, books = [] }) => {
         books={books}
       />
       <LatestBooksSection latestBooks={latestBooks} />
+      <CategorySection/>
       <PopularBooksSection mostViewedBooks={mostViewedBooks} />
       <BenefitSection />
       <FinalCTA />

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import "./HeroSection.css"
 
 export const HeroSection = ({ featuredBooks = [] }) => {
   const displayedBooks = featuredBooks.slice(0, 3);
