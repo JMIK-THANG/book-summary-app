@@ -5,56 +5,73 @@ import "./Footer.css";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const scrollHomeToTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <footer className="footer">
-      <div className="footer-container">
-        <div className="footer-content">
-          <div className="footer-brand">
-            <Link to="/" className="footer-logo">
-              Cabu<span>Sim</span>
-            </Link>
+      <div className="footer-main">
+        <div className="footer-container">
+          <div className="footer-intro">
+            <div>
+              <Link
+                to="/"
+                className="footer-logo"
+                onClick={scrollHomeToTop}
+                aria-label="CabuSim home"
+              >
+                Cabu<span>Sim</span>
+              </Link>
 
-            <p className="footer-description">
-              Clear and practical book summaries designed to help curious
-              readers learn more in less time.
-            </p>
+              <p className="footer-tagline">
+                Big ideas from books, made simple.
+              </p>
+            </div>
 
-            <p className="footer-language">
-              Siar Mal <span>•</span> Zir Tam
-            </p>
+            <nav className="footer-navigation" aria-label="Footer navigation">
+              <Link to="/" onClick={scrollHomeToTop}>
+                Home
+              </Link>
+
+              <Link to="/library">Library</Link>
+            </nav>
           </div>
 
-          <nav className="footer-column" aria-label="Explore">
-            <h2>Explore</h2>
+          <div className="footer-category-area">
+            <p className="footer-category-title">Explore by category</p>
 
-            <Link
-              to="/"
-              onClick={() => window.scrollTo({ top: 0, vehavior: "smooth" })}
+            <nav
+              className="footer-category-list"
+              aria-label="Book categories"
             >
-              Home
-            </Link>
-            <Link to="/library">Library</Link>
-          </nav>
-
-          <nav className="footer-column" aria-label="Book categories">
-            <h2>Categories</h2>
-
-            {categories.map((category) => (
-              <Link
-                key={category.value}
-                to={`/library?category=${category.value}`}
-              >
-                {category.name}
-              </Link>
-            ))}
-          </nav>
+              {categories.map((category) => (
+                <Link
+                  key={category.value}
+                  to={`/library?category=${category.value}`}
+                >
+                  {category.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
         </div>
+      </div>
 
-        <div className="footer-bottom">
+      <div className="footer-bottom">
+        <div className="footer-container footer-bottom-content">
           <p>© {currentYear} CabuSim. All rights reserved.</p>
 
           <p>
-            Designed and built by{" "}
+            Siar Mal <span aria-hidden="true">•</span> Zir Tam
+          </p>
+
+          <p>
+            Built by{" "}
             <a
               href="https://portfolio-website-sx94.onrender.com/"
               target="_blank"
