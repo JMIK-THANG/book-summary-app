@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 import { categories } from "../../data/categories";
 import "./CategorySection.css";
 
-const normalizeCategory = (category = "") => {
-  return category.toLowerCase().trim().replace(/\s+/g, "-");
-};
+const normalizeCategory = (category) =>
+  (category ?? "").toLowerCase().trim().replace(/\s+/g, "-");
 
 const CategorySection = ({ books = [] }) => {
   const categoryCounts = useMemo(() => {
     const counts = new Map();
-    console.log(counts)
 
     books.forEach((book) => {
       const categoryValue = normalizeCategory(book.category);
