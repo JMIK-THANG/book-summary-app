@@ -15,7 +15,7 @@ const Admin = ({ books, addBook, deleteBook, editBook }) => {
   const filteredBooks = books.filter((book) =>
     `${book.title} ${book.author}`
       .toLowerCase()
-      .includes(searchText.toLowerCase())
+      .includes(searchText.toLowerCase()),
   );
 
   const totalPages = Math.ceil(filteredBooks.length / BOOKS_PER_PAGE);
@@ -23,7 +23,7 @@ const Admin = ({ books, addBook, deleteBook, editBook }) => {
   const startIndex = (currentPage - 1) * BOOKS_PER_PAGE;
   const currentBooks = filteredBooks.slice(
     startIndex,
-    startIndex + BOOKS_PER_PAGE
+    startIndex + BOOKS_PER_PAGE,
   );
 
   const handleSearch = (e) => {
@@ -90,41 +90,50 @@ const Admin = ({ books, addBook, deleteBook, editBook }) => {
             </thead>
 
             <tbody>
-  {currentBooks.map((book) => (
-    <tr key={book.id}>
-      <td data-label="Cover">
-        <img src={book.image} alt={book.title} />
-      </td>
+              {currentBooks.map((book) => (
+                <tr key={book.id}>
+                  <td data-label="Cover">
+                    <img src={book.image} alt={book.title} />
+                  </td>
 
-      <td data-label="Title">{book.title}</td>
+                  <td data-label="Title">{book.title}</td>
 
-      <td data-label="Author">{book.author}</td>
+               
+                  <td data-label="Author">{book.author}</td>
 
-      <td data-label="Actions">
-        <div className="book-actions">
-          <button
-            onClick={() => {
-              setSelectedBook(book);
-              setIsEditBookOpen(true);
-            }}
-          >
-            Edit
-          </button>
+                  <td data-label="Category">
+                    {book.category || "Uncategorized"}
+                  </td>
 
-          <button onClick={() => deleteBook(book.id)}>Delete</button>
-        </div>
-      </td>
-    </tr>
-  ))}
+                  <td data-label="Actions"></td>
 
-  {currentBooks.length === 0 && (
-    <tr>
-      <td colSpan="4" className="empty-message">
-        No books found.
-      </td>
-    </tr>
-  )}
-</tbody>
+                  <td data-label="Actions">
+                    <div className="book-actions">
+                      <button
+                        onClick={() => {
+                          setSelectedBook(book);
+                          setIsEditBookOpen(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+
+                      <button onClick={() => deleteBook(book.id)}>
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+
+              {currentBooks.length === 0 && (
+                <tr>
+                  <td colSpan="4" className="empty-message">
+                    No books found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
           </table>
         </div>
 

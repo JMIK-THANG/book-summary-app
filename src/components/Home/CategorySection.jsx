@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { categories } from "../../data/categories";
 import "./CategorySection.css";
@@ -7,11 +8,20 @@ const normalizeCategory = (category = "") => {
 };
 
 const CategorySection = ({ books = [] }) => {
-  const getBookCount = (categoryValue) => {
-    return books.filter(
-      (book) => normalizeCategory(book.category) === categoryValue,
-    ).length;
-  };
+  const categoryCounts = useMemo(() => {
+    const counts = new Map();
+    console.log(counts)
+
+    books.forEach((book) => {
+      const categoryValue = normalizeCategory(book.category);
+
+      if (!categoryValue) return;
+
+      counts.set(categoryValue, (counts.get(categoryValue) || 0) + 1);
+    });
+
+    return counts;
+  }, [books]);
 
   return (
     <section className="category-section">
@@ -35,14 +45,14 @@ const CategorySection = ({ books = [] }) => {
 
         <div className="category-grid">
           {categories.map((category) => {
-            const bookCount = getBookCount(category.value);
+            const bookCount = categoryCounts.get(category.value) || 0;
             const Icon = category.icon;
 
             return (
               <Link
+                key={category.value}
                 to={`/library?category=${category.value}`}
                 className="category-card"
-                key={category.value}
               >
                 <div className="category-icon" aria-hidden="true">
                   <Icon size={22} strokeWidth={2} />

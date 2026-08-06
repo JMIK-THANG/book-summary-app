@@ -17,7 +17,7 @@ const Home = ({ counts = {}, books = [] }) => {
         books={books}
       />
       <LatestBooksSection latestBooks={latestBooks} />
-      <CategorySection/>
+      <CategorySection books={books}/>
       <PopularBooksSection mostViewedBooks={mostViewedBooks} />
       <BenefitSection />
       <FinalCTA />

@@ -7,6 +7,7 @@ const AddBookModal = ({ onClose, addBook }) => {
     author: "",
     image: "null",
     summary: "",
+    category: "",
   });
 
   const handleChange = (e) => {
@@ -18,18 +19,24 @@ const AddBookModal = ({ onClose, addBook }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    addBook(formData);
-    onClose();
+    const result = await addBook(formData);
+
+    if (result.success) {
+      onClose();
+    } else {
+      alert(result.message);
+    }
   };
-  const handleImage = (e) => { 
-    const file = e.target.files[0]; 
-    setFormData((prev) => ({ 
-      ...prev, image: file, 
-    }))
-  }
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setFormData((prev) => ({
+      ...prev,
+      image: file,
+    }));
+  };
 
   return (
     <div className="modal-overlay">
@@ -58,7 +65,22 @@ const AddBookModal = ({ onClose, addBook }) => {
             onChange={handleChange}
             required
           />
-
+         <select
+            className="category-select"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>
+              Select a category
+            </option>
+            <option value="Harhdamnak">Harhdamnak</option>
+            <option value="Thiamzirnak">Thiamzirnak</option>
+            <option value="Santhuanthu">Santhuanthu</option>
+            <option value="Thinlungthiamnak">Thinlungthiamnak</option>
+            <option value="Nunthuanthu">Nunthuanthu</option>
+          </select>
           <input
             type="file"
             name="image"

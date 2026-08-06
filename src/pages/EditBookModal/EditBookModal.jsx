@@ -5,10 +5,10 @@ const EditBookModal = ({ book, editBook, onClose }) => {
   const [formData, setFormData] = useState({
     title: book?.title || "",
     author: book?.author || "",
-    image: book?.image || "",
     summary: book?.summary || "",
+    category: book?.category || "",
+    image: null,
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -62,9 +62,7 @@ const EditBookModal = ({ book, editBook, onClose }) => {
         <form onSubmit={handleSubmit}>
           <h2>Edit Book</h2>
 
-          {errorMessage && (
-            <p className="form-error">{errorMessage}</p>
-          )}
+          {errorMessage && <p className="form-error">{errorMessage}</p>}
 
           <input
             type="text"
@@ -83,7 +81,22 @@ const EditBookModal = ({ book, editBook, onClose }) => {
             onChange={handleChange}
             required
           />
-
+          <select
+            className="category-select"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>
+              Select a category
+            </option>
+            <option value="Harhdamnak">Harhdamnak</option>
+            <option value="Thiamzirnak">Thiamzirnak</option>
+            <option value="Santhuanthu">Santhuanthu</option>
+            <option value="Thinlungthiamnak">Thinlungthiamnak</option>
+            <option value="Nunthuanthu">Nunthuanthu</option>
+          </select>
           <input
             type="url"
             name="image"

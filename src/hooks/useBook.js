@@ -40,6 +40,7 @@ const useBook = () => {
     formData.append("title", newBook.title);
     formData.append("author", newBook.author);
     formData.append("summary", newBook.summary);
+    formData.append("category", newBook.category);
 
     if (newBook.image) {
       formData.append("image", newBook.image);
@@ -98,14 +99,23 @@ const useBook = () => {
           message: "Please log in again.",
         };
       }
+      const formData = new FormData();
+
+      formData.append("title", updatedBook.title);
+      formData.append("author", updatedBook.author);
+      formData.append("summary", updatedBook.summary);
+      formData.append("category", updatedBook.category);
+
+      if (updatedBook.image) {
+        formData.append("image", updatedBook.image);
+      }
 
       const response = await fetch(`${backendUrl}/books/${id}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(updatedBook),
+        body: formData,
       });
 
       const bookData = await response.json();
