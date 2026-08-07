@@ -82,42 +82,94 @@
   font-size: 0.88rem;
   font-weight: 750;
 }
-@media (max-width: 1000px) { 
-       .latest-books-grid {
+@media (max-width: 1000px) {
+  .latest-books-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: 3rem;
   }
 }
-@media (max-width: 650px) { 
-      .latest-books-grid {
+
+@media (max-width: 650px) {
+  .latest-books-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2rem 1rem;
-  }
-
-  .latest-book-information h3 {
-    font-size: 1rem;
-  }
-
-  .latest-book-information p {
-    font-size: 0.82rem;
-  }
-
-  .latest-book-read {
-    font-size: 0.8rem;
-  }
-}
-@media (max-width: 390px){ 
-       .latest-books-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .latest-book-card {
-    display: grid;
-    grid-template-columns: 105px minmax(0, 1fr);
     gap: 1rem;
   }
 
+  .latest-book-card {
+    display: flex;
+    min-width: 0;
+    height: 180px;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .latest-book-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+  }
+
   .latest-book-information {
-    padding-top: 0.5rem;
+    min-width: 0;
+    padding: 0.65rem;
+  }
+
+  .latest-book-information h3 {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .latest-book-information p {
+    margin-top: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.75rem;
+  }
+
+  .latest-book-read {
+    margin-top: auto;
+    font-size: 0.72rem;
+  }
+}
+
+/* Small mobile: remain two columns */
+@media (max-width: 390px) {
+  .latest-books-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .latest-book-card {
+    display: flex;
+    height: 170px;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .latest-book-card img {
+    height: 92px;
+  }
+
+  .latest-book-information {
+    padding: 0.55rem;
+  }
+
+  .latest-book-information h3 {
+    font-size: 0.82rem;
+  }
+
+  .latest-book-information p {
+    font-size: 0.7rem;
+  }
+
+  .latest-book-read {
+    font-size: 0.68rem;
   }
 }
