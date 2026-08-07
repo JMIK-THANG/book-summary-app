@@ -32,7 +32,6 @@ const Library = ({ books, addBook, currentUser }) => {
       <div className="library-header">
         <div className="library-title-row">
           <h1>My Library</h1>
-
         </div>
 
         <div className="library-controls">

@@ -1,26 +1,86 @@
 .navbar {
+  box-sizing: border-box;
   position: sticky;
   top: 0;
   z-index: 1000;
+
+  width: 100%;
   height: 70px;
+  padding: 0 8%;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 18px 8%;
-  background: rgba(250, 248, 244, 0.7);
+  background: rgba(250, 248, 244, 0.88);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
   border-bottom: 1px solid #e5e0d8;
 }
 
+/* Logo */
+
 .logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+
+  color: inherit;
+  line-height: 1;
   text-decoration: none;
 }
 
-.logo h2 {
-  color: #16213e;
-  font-size: 26px;
+.logo-year {
+  color: #102a43;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -2px;
 }
+
+.logo-accent {
+  color: #d8942f;
+}
+
+.logo-divider {
+  width: 1px;
+  height: 30px;
+  background: #d8d1c5;
+}
+
+.logo-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  color: #52616b;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+
+.logo-name {
+  color: #102a43;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+}
+
+.logo-accent {
+  color: #d8942f;
+}
+
+.logo-description {
+  margin-top: 3px;
+  color: #52616b;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+/* Navigation */
 
 .nav-menu {
   display: flex;
@@ -33,69 +93,135 @@
   display: flex;
   align-items: center;
   gap: 28px;
+
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
-.nav-center a {
-  text-decoration: none;
+.nav-center a,
+.nav-right a {
   color: #16213e;
   font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
+
+.nav-center a:hover,
+.nav-right a:hover {
+  color: #d8942f;
+}
+
+.user-name {
+  color: #52616b;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* Buttons */
 
 .login-btn,
 .register-btn {
   border: none;
-  background: none;
+  font-family: inherit;
   font-size: 16px;
   cursor: pointer;
 }
 
 .login-btn {
+  padding: 8px 0;
   color: #16213e;
+  background: none;
+}
+
+.login-btn:hover {
+  color: #d8942f;
 }
 
 .register-btn {
-  background: #16213e;
-  color: white;
   padding: 10px 18px;
+
+  color: #ffffff;
+  background: #16213e;
   border-radius: 999px;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
+
+.register-btn:hover {
+  background: #d8942f;
+  transform: translateY(-1px);
+}
+
+/* Mobile menu button */
 
 .menu-btn {
   display: none;
-  border: none;
-  background: none;
-  font-size: 28px;
-  cursor: pointer;
+  padding: 4px;
+
   color: #16213e;
+  background: none;
+  border: none;
+
+  cursor: pointer;
 }
 
-/* Mobile */
+/* Tablet and mobile */
+
 @media (max-width: 768px) {
+  .navbar {
+    height: 70px;
+    padding: 0 5%;
+  }
+
+  .logo-name {
+    font-size: 28px;
+  }
+
+  .logo-description {
+    font-size: 7px;
+    letter-spacing: 1.6px;
+  }
+
   .menu-btn {
-    display: block;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     transition: transform 0.3s ease;
+  }
+
+  .menu-btn.open {
+    transform: rotate(90deg);
   }
 
   .nav-menu {
     position: absolute;
     top: 70px;
     left: 0;
+
     width: 100%;
+    padding: 28px 0;
+
     flex-direction: column;
     align-items: center;
     gap: 24px;
 
-    padding: 28px 0;
     background: #f7f3ea;
     border-bottom: 1px solid #e5e0d8;
+    box-shadow: 0 12px 25px rgba(22, 33, 62, 0.08);
 
-    /* Animation */
     opacity: 0;
     visibility: hidden;
     transform: translateY(-15px);
 
-    transition: all 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease,
+      transform 0.3s ease;
   }
 
   .nav-menu.active {
@@ -110,3 +236,20 @@
     gap: 18px;
   }
 }
+
+@media (max-width: 480px) {
+  .logo-year {
+    font-size: 30px;
+  }
+
+  .logo-divider {
+    height: 27px;
+  }
+
+  .logo-title {
+    font-size: 7px;
+    letter-spacing: 1.4px;
+  }
+}
+
+This will look more like a

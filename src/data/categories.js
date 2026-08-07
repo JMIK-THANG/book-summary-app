@@ -8,8 +8,8 @@ import {
 
 export const categories = [
   {
-    name: "Hardamnak",
-    value: "hardamnak",
+    name: "Harhdamnak",
+    value: "harhdamnak",
     icon: HeartPulse,
   },
   {
