@@ -1,105 +1,327 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import AddBookModal from "../AddBookModal/AddBookModal";
-import { FiSearch } from "react-icons/fi";
-import { HiOutlineUserGroup } from "react-icons/hi2";
+import { useEffect, useMemo, useState } from "react";
+import {
+  Link,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 import "./Library.css";
 
-const Library = ({ books, addBook, currentUser }) => {
-  const [isAddBookOpen, setIsAddBookOpen] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const [selectedAuthor, setSelectedAuthor] = useState("all");
+const BOOKS_PER_PAGE = 15;
 
-  const isAdmin = currentUser?.role === "admin";
+const normalizeText = (value) =>
+  String(value ?? "")
+    .trim()
+    .toLowerCase();
 
-  const authors = ["all", ...new Set(books.map((book) => book.author))];
+const normalizeCategory = (value) =>
+  normalizeText(value).replace(/\s+/g, "-");
 
-  const filteredBooks = books.filter((book) => {
-    const title = book.title || "";
-    const author = book.author || "";
+const formatCategory = (value) =>
+  String(value ?? "")
+    .replaceAll("-", " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
 
-    const matchesSearch =
-      title.toLowerCase().includes(searchText.toLowerCase()) ||
-      author.toLowerCase().includes(searchText.toLowerCase());
+const Library = ({ books = [], isLoading = false }) => {
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-    const matchesAuthor = selectedAuthor === "all" || author === selectedAuthor;
+  const [search, setSearch] = useState("");
+  const [selectedAuthor, setSelectedAuthor] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-    return matchesSearch && matchesAuthor;
-  });
+  const selectedCategory =
+    searchParams.get("category") || "";
+
+  const authors = useMemo(() => {
+    const availableAuthors = books
+      .map((book) => book.author?.trim())
+      .filter(Boolean);
+
+    return [...new Set(availableAuthors)].sort(
+      (firstAuthor, secondAuthor) =>
+        firstAuthor.localeCompare(secondAuthor),
+    );
+  }, [books]);
+
+  const filteredBooks = useMemo(() => {
+    const normalizedSearch = normalizeText(search);
+
+    return books.filter((book) => {
+      const title = normalizeText(book.title);
+      const author = normalizeText(book.author);
+
+      const matchesSearch =
+        !normalizedSearch ||
+        title.includes(normalizedSearch) ||
+        author.includes(normalizedSearch);
+
+      const matchesAuthor =
+        !selectedAuthor ||
+        author === normalizeText(selectedAuthor);
+
+      const matchesCategory =
+        !selectedCategory ||
+        normalizeCategory(book.category) ===
+          normalizeCategory(selectedCategory);
+
+      return (
+        matchesSearch &&
+        matchesAuthor &&
+        matchesCategory
+      );
+    });
+  }, [
+    books,
+    search,
+    selectedAuthor,
+    selectedCategory,
+  ]);
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredBooks.length / BOOKS_PER_PAGE),
+  );
+
+  const paginatedBooks = useMemo(() => {
+    const startIndex =
+      (currentPage - 1) * BOOKS_PER_PAGE;
+
+    return filteredBooks.slice(
+      startIndex,
+      startIndex + BOOKS_PER_PAGE,
+    );
+  }, [filteredBooks, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, selectedAuthor, selectedCategory]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const clearCategory = () => {
+    const nextSearchParams = new URLSearchParams(
+      searchParams,
+    );
+
+    nextSearchParams.delete("category");
+    setSearchParams(nextSearchParams);
+  };
+
+  const currentLibraryLocation =
+    `${location.pathname}${location.search}`;
+
+  if (isLoading) {
+    return (
+      <main className="library">
+        <div className="library-header">
+          <p>Loading books...</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="library">
-      <div className="library-header">
+      <header className="library-header">
         <div className="library-title-row">
-          <h1>My Library</h1>
+          <div>
+            <h1>
+              {selectedCategory
+                ? formatCategory(selectedCategory)
+                : "Library"}
+            </h1>
+
+            <p className="library-count">
+              {filteredBooks.length}{" "}
+              {filteredBooks.length === 1
+                ? "summary"
+                : "summaries"}
+            </p>
+          </div>
+
+          {selectedCategory && (
+            <button
+              type="button"
+              className="clear-category-btn"
+              onClick={clearCategory}
+            >
+              View All Books
+            </button>
+          )}
         </div>
 
         <div className="library-controls">
-          <div className="control-box">
-            <FiSearch className="control-icon" />
+          <label className="control-box">
+            <span
+              className="control-icon"
+              aria-hidden="true"
+            >
+              ⌕
+            </span>
 
             <input
-              type="text"
-              placeholder="Search books..."
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
+              type="search"
+              value={search}
+              onChange={(event) =>
+                setSearch(event.target.value)
+              }
+              placeholder="Search by title or author..."
+              aria-label="Search by title or author"
             />
-          </div>
+          </label>
 
-          <div className="control-box">
-            <HiOutlineUserGroup className="control-icon" />
+          <label className="control-box">
+            <span
+              className="control-icon"
+              aria-hidden="true"
+            >
+              ◇
+            </span>
 
             <select
               value={selectedAuthor}
-              onChange={(e) => setSelectedAuthor(e.target.value)}
+              onChange={(event) =>
+                setSelectedAuthor(event.target.value)
+              }
+              aria-label="Filter by author"
             >
+              <option value="">All authors</option>
+
               {authors.map((author) => (
                 <option key={author} value={author}>
-                  {author === "all" ? "All Authors" : author}
+                  {author}
                 </option>
               ))}
             </select>
-          </div>
+          </label>
         </div>
-      </div>
+      </header>
 
-      {filteredBooks.length === 0 ? (
-        <p className="no-books">No books found.</p>
-      ) : (
-        <div className="book-list">
-          {filteredBooks.map((book) => (
-            <Link
-              key={book.id}
-              to={`/library/${book.id}`}
-              className="book-card"
-            >
-              <img
-                src={
-                  book.image || "https://via.placeholder.com/300x400?text=Book"
-                }
-                alt={book.title}
-              />
+      {paginatedBooks.length > 0 ? (
+        <>
+          <section className="book-list">
+            {paginatedBooks.map((book) => (
+              <Link
+                key={book.id}
+                to={`/books/${book.id}`}
+                state={{
+                  from: currentLibraryLocation,
+                }}
+                className="book-card"
+              >
+                {book.image ? (
+                  <img
+                    src={book.image}
+                    alt={`Cover of ${book.title}`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="book-image-placeholder">
+                    No cover
+                  </div>
+                )}
 
-              <div className="book-info">
-                <h2>{book.title}</h2>
-                <h4>{book.author}</h4>
-                <p>{book.summary?.slice(0, 80)}...</p>
+                <div className="book-info">
+                  <h2>{book.title}</h2>
 
-                <div className="read-more">
-                  <span>Read Summary</span>
-                  <span className="arrow">→</span>
+                  <h4>
+                    {book.author || "Unknown author"}
+                  </h4>
+
+                  <p>
+                    {book.summary ||
+                      "No summary is currently available."}
+                  </p>
+
+                  <div className="read-more">
+                    <span>Read Summary</span>
+                    <span className="arrow">→</span>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
+              </Link>
+            ))}
+          </section>
 
-      {isAdmin && isAddBookOpen && (
-        <AddBookModal
-          onClose={() => setIsAddBookOpen(false)}
-          addBook={addBook}
-        />
+          {totalPages > 1 && (
+            <nav
+              className="library-pagination"
+              aria-label="Library pages"
+            >
+              <button
+                type="button"
+                disabled={currentPage === 1}
+                onClick={() =>
+                  setCurrentPage((page) =>
+                    Math.max(1, page - 1),
+                  )
+                }
+              >
+                Previous
+              </button>
+
+              <div className="pagination-numbers">
+                {Array.from(
+                  { length: totalPages },
+                  (_, index) => index + 1,
+                ).map((page) => (
+                  <button
+                    key={page}
+                    type="button"
+                    className={
+                      currentPage === page
+                        ? "active"
+                        : ""
+                    }
+                    aria-current={
+                      currentPage === page
+                        ? "page"
+                        : undefined
+                    }
+                    onClick={() =>
+                      setCurrentPage(page)
+                    }
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                disabled={currentPage === totalPages}
+                onClick={() =>
+                  setCurrentPage((page) =>
+                    Math.min(totalPages, page + 1),
+                  )
+                }
+              >
+                Next
+              </button>
+            </nav>
+          )}
+        </>
+      ) : (
+        <div className="no-books">
+          <h2>No books found</h2>
+
+          <p>
+            Try another title, author, or category.
+          </p>
+
+          {selectedCategory && (
+            <button
+              type="button"
+              className="clear-category-btn"
+              onClick={clearCategory}
+            >
+              View All Books
+            </button>
+          )}
+        </div>
       )}
     </main>
   );

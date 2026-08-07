@@ -1,5 +1,4 @@
-
-import { Routes, Route} from "react-router-dom"; 
+import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import Library from "../pages/Library/Library";
 import BookDetails from "../pages/BookDetails/BookDetails";
@@ -17,13 +16,19 @@ import useAuthenticate from "../hooks/useAuthenticate";
 
 function App() {
   // Custome hooks import
-  const { books, counts, backendUrl, addBook, editBook, deleteBook, incrementBookView, isLoading} =
-    useBook();
+  const {
+    books,
+    counts,
+    backendUrl,
+    addBook,
+    editBook,
+    deleteBook,
+    incrementBookView,
+    isLoading,
+  } = useBook();
   const { isLoginOpen, isRegisterOpen, openLogin, openRegister, closeModals } =
     useModal();
-const { currentUser,
-    setCurrentUser,
-    logout,}= useAuthenticate(); 
+  const { currentUser, setCurrentUser, logout } = useAuthenticate();
   return (
     <>
       <Navbar
@@ -64,14 +69,14 @@ const { currentUser,
           }
         />
         <Route
-          path="/library/:id"
+          path="/books/:id"
           element={
             <BookDetails
               books={books}
               currentUser={currentUser}
               backendUrl={backendUrl}
               incrementBookView={incrementBookView}
-               isLoading={isLoading}
+              isLoading={isLoading}
             />
           }
         />
@@ -85,7 +90,7 @@ const { currentUser,
                 addBook={addBook}
                 deleteBook={deleteBook}
                 editBook={editBook}
-                 isLoading={isLoading}
+                isLoading={isLoading}
               />
             ) : (
               <h1>Access Denied</h1>

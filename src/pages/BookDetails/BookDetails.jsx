@@ -1,5 +1,14 @@
-import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {
+  Link,
+  useLocation,
+  useParams,
+} from "react-router-dom";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "./BookDetails.css";
 
 const BookDetails = ({
@@ -10,14 +19,29 @@ const BookDetails = ({
   isLoading = false,
 }) => {
   const { id } = useParams();
+  const location = useLocation();
+
+  const viewedBookId = useRef(null);
+
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+  const [commentsLoading, setCommentsLoading] =
+    useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [commentError, setCommentError] = useState("");
 
   const book = books.find(
     (item) => Number(item.id) === Number(id),
   );
 
-  const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState("");
-  const getComments = async () => {
+  // Returns to the filtered Library when state is available.
+  const backTo = location.state?.from || "/library";
+
+  const getComments = useCallback(async () => {
+    if (!id || !backendUrl) return;
+
+    setCommentsLoading(true);
+
     try {
       const response = await fetch(
         `${backendUrl}/comments/${id}`,
@@ -32,54 +56,86 @@ const BookDetails = ({
       }
 
       if (data.status === "success") {
-        setComments(data.data);
+        setComments(
+          Array.isArray(data.data) ? data.data : [],
+        );
+      } else {
+        setComments([]);
       }
     } catch (error) {
-      console.error("Error fetching comments:", error.message);
-    }
-  };
+      console.error(
+        "Error fetching comments:",
+        error.message,
+      );
 
-  useEffect(() => {
-    if (id && backendUrl) {
-      getComments();
+      setComments([]);
+    } finally {
+      setCommentsLoading(false);
     }
   }, [id, backendUrl]);
 
- useEffect(() => {
-  if (id) {
-    incrementBookView(id);
-  }
-}, [id]);
+  useEffect(() => {
+    getComments();
+  }, [getComments]);
 
-  const addComment = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (
+      !id ||
+      typeof incrementBookView !== "function" ||
+      viewedBookId.current === id
+    ) {
+      return;
+    }
+
+    viewedBookId.current = id;
+    incrementBookView(id);
+  }, [id, incrementBookView]);
+
+  const addComment = async (event) => {
+    event.preventDefault();
 
     if (!currentUser?.id) {
-      alert("Please log in first.");
+      setCommentError("Please log in first.");
       return;
     }
 
     const cleanComment = comment.trim();
 
-    if (!cleanComment) return;
+    if (!cleanComment) {
+      setCommentError("Please write a comment.");
+      return;
+    }
+
+    if (!backendUrl) {
+      setCommentError("Unable to connect to the server.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setCommentError("");
 
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(`${backendUrl}/comments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && {
-            Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${backendUrl}/comments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token
+              ? {
+                  Authorization: `Bearer ${token}`,
+                }
+              : {}),
+          },
+          body: JSON.stringify({
+            user_id: currentUser.id,
+            book_id: Number(id),
+            comment: cleanComment,
           }),
         },
-        body: JSON.stringify({
-          user_id: currentUser.id,
-          book_id: Number(id),
-          comment: cleanComment,
-        }),
-      });
+      );
 
       const data = await response.json();
 
@@ -94,11 +150,17 @@ const BookDetails = ({
         await getComments();
       }
     } catch (error) {
-      console.error("Error adding comment:", error.message);
+      console.error(
+        "Error adding comment:",
+        error.message,
+      );
+
+      setCommentError(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  // Loading must be checked before !book.
   if (isLoading) {
     return (
       <main className="book-details-page">
@@ -118,18 +180,22 @@ const BookDetails = ({
     return (
       <main className="book-details-page">
         <div className="book-details-container">
-          <Link to="/library" className="book-back-link">
+          <Link to={backTo} className="book-back-link">
             ‹ Back to Books
           </Link>
 
           <div className="book-not-found">
             <h1>Book not found</h1>
+
             <p>
               This book may have been removed or the address may
               be incorrect.
             </p>
 
-            <Link to="/library" className="book-library-button">
+            <Link
+              to="/library"
+              className="book-library-button"
+            >
               Explore Library
             </Link>
           </div>
@@ -141,21 +207,27 @@ const BookDetails = ({
   return (
     <main className="book-details-page">
       <div className="book-details-container">
-        <Link to="/library" className="book-back-link">
+        <Link to={backTo} className="book-back-link">
           ‹ Back to Books
         </Link>
 
         <section className="book-hero">
           <div className="book-hero-content">
-            <p className="book-label">BOOK SUMMARY</p>
+            <p className="book-label">
+              {book.category || "BOOK SUMMARY"}
+            </p>
 
             <h1>{book.title}</h1>
 
-            <p className="book-author">By {book.author}</p>
+            <p className="book-author">
+              By {book.author || "Unknown author"}
+            </p>
 
             <div className="book-meta">
               <span>{Number(book.views ?? 0)} views</span>
+
               <span aria-hidden="true">•</span>
+
               <span>
                 {comments.length}{" "}
                 {comments.length === 1
@@ -166,16 +238,26 @@ const BookDetails = ({
 
             <div className="book-summary">
               <h2>About the Book</h2>
-              <p>{book.summary}</p>
+
+              <p>
+                {book.summary ||
+                  "No summary is currently available."}
+              </p>
             </div>
           </div>
 
           <div className="book-cover-container">
             <div className="book-cover-background">
-              <img
-                src={book.image}
-                alt={`Cover of ${book.title}`}
-              />
+              {book.image ? (
+                <img
+                  src={book.image}
+                  alt={`Cover of ${book.title}`}
+                />
+              ) : (
+                <div className="book-cover-placeholder">
+                  <span>No cover available</span>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -190,12 +272,30 @@ const BookDetails = ({
             >
               <textarea
                 value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                onChange={(event) => {
+                  setComment(event.target.value);
+                  setCommentError("");
+                }}
                 placeholder="Share your thoughts about this book..."
                 aria-label="Write a comment"
+                maxLength={1000}
+                required
               />
 
-              <button type="submit">Post Comment</button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting
+                  ? "Posting..."
+                  : "Post Comment"}
+              </button>
+
+              {commentError && (
+                <p className="comment-error" role="alert">
+                  {commentError}
+                </p>
+              )}
             </form>
           ) : (
             <p className="login-message">
@@ -203,14 +303,23 @@ const BookDetails = ({
             </p>
           )}
 
-          {comments.length > 0 ? (
+          {commentsLoading ? (
+            <p className="comments-loading">
+              Loading comments...
+            </p>
+          ) : comments.length > 0 ? (
             <div className="comments-list">
               {comments.map((item) => (
                 <article
                   className="comment-card"
                   key={item.id}
                 >
-                  <h3>{item.name}</h3>
+                  <h3>
+                    {item.name ||
+                      item.username ||
+                      "Reader"}
+                  </h3>
+
                   <p>{item.comment}</p>
                 </article>
               ))}

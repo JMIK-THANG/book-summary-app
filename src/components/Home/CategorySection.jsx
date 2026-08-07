@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { categories } from "../../data/categories";
 import "./CategorySection.css";
 
-const normalizeCategory = (category) =>
-  String(category ?? "")
-    .toLowerCase()
+const normalizeCategory = (value) =>
+  String(value ?? "")
     .trim()
+    .toLowerCase()
     .replace(/\s+/g, "-");
 
 const CategorySection = ({ books = [] }) => {
@@ -14,51 +14,35 @@ const CategorySection = ({ books = [] }) => {
     const counts = new Map();
 
     books.forEach((book) => {
-      const categoryValue = normalizeCategory(book.category);
+      const categoryKey = normalizeCategory(
+        book.category,
+      );
 
-      if (!categoryValue) return;
+      if (!categoryKey) return;
 
       counts.set(
-        categoryValue,
-        (counts.get(categoryValue) || 0) + 1
+        categoryKey,
+        (counts.get(categoryKey) || 0) + 1,
       );
     });
 
     return counts;
   }, [books]);
-console.log("Number of books:", books.length);
 
-console.table(
-  books.map((book) => ({
-    title: book.title,
-    category: book.category,
-    normalizedCategory: normalizeCategory(book.category),
-  }))
-);
-
-console.table(
-  categories.map((category) => ({
-    name: category.name,
-    value: category.value,
-    normalizedValue: normalizeCategory(category.value),
-  }))
-);
-
-console.log(
-  "Category counts:",
-  Object.fromEntries(categoryCounts)
-);
   return (
     <section className="category-section">
       <div className="section-container">
         <div className="category-heading">
           <div>
-            <p className="section-label">BROWSE BY CATEGORY</p>
+            <p className="section-label">
+              BROWSE BY CATEGORY
+            </p>
 
             <h2>Find ideas that interest you</h2>
 
             <p>
-              Explore summaries organized by the topics you want to understand.
+              Explore summaries organized by the topics
+              you want to understand.
             </p>
           </div>
 
@@ -67,50 +51,65 @@ console.log(
             <span aria-hidden="true">→</span>
           </Link>
         </div>
+<div className="category-grid">
+  {categories.map((category) => {
+    const categoryTitle =
+      category.title ||
+      category.name ||
+      category.slug ||
+      category.value;
 
-        <div className="category-grid">
-          {categories.map((category) => {
-            const normalizedValue = normalizeCategory(category.value);
+    const categoryKey = normalizeCategory(
+      category.slug ||
+        category.value ||
+        categoryTitle,
+    );
 
-            const bookCount =
-              categoryCounts.get(normalizedValue) || 0;
+    const count =
+      categoryCounts.get(categoryKey) || 0;
 
-            const Icon = category.icon;
+    const CategoryIcon = category.icon;
 
-            return (
-              <Link
-                key={normalizedValue}
-                to={`/library?category=${normalizedValue}`}
-                className="category-card"
-              >
-                <div
-                  className="category-icon"
-                  aria-hidden="true"
-                >
-                  <Icon size={22} strokeWidth={2} />
-                </div>
-
-                <div className="category-information">
-                  <h3>{category.name}</h3>
-
-                  <p>
-                    {bookCount}{" "}
-                    {bookCount === 1
-                      ? "summary"
-                      : "summaries"}
-                  </p>
-                </div>
-
-                <span
-                  className="category-arrow"
-                  aria-hidden="true"
-                >
-                  →
-                </span>
-              </Link>
-            );
-          })}
+    return (
+      <Link
+        key={categoryKey}
+        to={`/library?category=${encodeURIComponent(
+          categoryKey,
+        )}`}
+        className="category-card"
+        aria-label={`Browse ${categoryTitle}: ${count} ${
+          count === 1 ? "summary" : "summaries"
+        }`}
+      >
+        <div className="category-icon">
+          {CategoryIcon && (
+            <CategoryIcon
+              size={26}
+              strokeWidth={1.8}
+              aria-hidden="true"
+            />
+          )}
         </div>
+
+        <h3>{categoryTitle}</h3>
+
+        <p>
+          {count}{" "}
+          {count === 1
+            ? "summary"
+            : "summaries"}
+        </p>
+
+        <span
+          className="category-arrow"
+          aria-hidden="true"
+        >
+          →
+        </span>
+      </Link>
+    );
+  })}
+</div>
       </div>
     </section>
   );
