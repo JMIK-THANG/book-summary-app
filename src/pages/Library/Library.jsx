@@ -1,20 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  Link,
-  useLocation,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { categories } from "../../data/categories";
 import "./Library.css";
 
-const BOOKS_PER_PAGE = 15;
+const BOOKS_PER_PAGE = 10;
 
 const normalizeText = (value) =>
   String(value ?? "")
     .trim()
     .toLowerCase();
 
-const normalizeCategory = (value) =>
-  normalizeText(value).replace(/\s+/g, "-");
+const normalizeCategory = (value) => normalizeText(value).replace(/\s+/g, "-");
 
 const formatCategory = (value) =>
   String(value ?? "")
@@ -29,17 +25,15 @@ const Library = ({ books = [], isLoading = false }) => {
   const [selectedAuthor, setSelectedAuthor] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const selectedCategory =
-    searchParams.get("category") || "";
+  const selectedCategory = searchParams.get("category") || "";
 
   const authors = useMemo(() => {
     const availableAuthors = books
       .map((book) => book.author?.trim())
       .filter(Boolean);
 
-    return [...new Set(availableAuthors)].sort(
-      (firstAuthor, secondAuthor) =>
-        firstAuthor.localeCompare(secondAuthor),
+    return [...new Set(availableAuthors)].sort((firstAuthor, secondAuthor) =>
+      firstAuthor.localeCompare(secondAuthor),
     );
   }, [books]);
 
@@ -56,26 +50,16 @@ const Library = ({ books = [], isLoading = false }) => {
         author.includes(normalizedSearch);
 
       const matchesAuthor =
-        !selectedAuthor ||
-        author === normalizeText(selectedAuthor);
+        !selectedAuthor || author === normalizeText(selectedAuthor);
 
       const matchesCategory =
         !selectedCategory ||
         normalizeCategory(book.category) ===
           normalizeCategory(selectedCategory);
 
-      return (
-        matchesSearch &&
-        matchesAuthor &&
-        matchesCategory
-      );
+      return matchesSearch && matchesAuthor && matchesCategory;
     });
-  }, [
-    books,
-    search,
-    selectedAuthor,
-    selectedCategory,
-  ]);
+  }, [books, search, selectedAuthor, selectedCategory]);
 
   const totalPages = Math.max(
     1,
@@ -83,13 +67,9 @@ const Library = ({ books = [], isLoading = false }) => {
   );
 
   const paginatedBooks = useMemo(() => {
-    const startIndex =
-      (currentPage - 1) * BOOKS_PER_PAGE;
+    const startIndex = (currentPage - 1) * BOOKS_PER_PAGE;
 
-    return filteredBooks.slice(
-      startIndex,
-      startIndex + BOOKS_PER_PAGE,
-    );
+    return filteredBooks.slice(startIndex, startIndex + BOOKS_PER_PAGE);
   }, [filteredBooks, currentPage]);
 
   useEffect(() => {
@@ -103,16 +83,13 @@ const Library = ({ books = [], isLoading = false }) => {
   }, [currentPage, totalPages]);
 
   const clearCategory = () => {
-    const nextSearchParams = new URLSearchParams(
-      searchParams,
-    );
+    const nextSearchParams = new URLSearchParams(searchParams);
 
     nextSearchParams.delete("category");
     setSearchParams(nextSearchParams);
   };
 
-  const currentLibraryLocation =
-    `${location.pathname}${location.search}`;
+  const currentLibraryLocation = `${location.pathname}${location.search}`;
 
   if (isLoading) {
     return (
@@ -123,6 +100,19 @@ const Library = ({ books = [], isLoading = false }) => {
       </main>
     );
   }
+  const handleCategoryChange = (event) => {
+    const category = event.target.value;
+
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (category) {
+      nextSearchParams.set("category", category);
+    } else {
+      nextSearchParams.delete("category");
+    }
+
+    setSearchParams(nextSearchParams);
+  };
 
   return (
     <main className="library">
@@ -130,16 +120,12 @@ const Library = ({ books = [], isLoading = false }) => {
         <div className="library-title-row">
           <div>
             <h1>
-              {selectedCategory
-                ? formatCategory(selectedCategory)
-                : "Library"}
+              {selectedCategory ? formatCategory(selectedCategory) : "Library"}
             </h1>
 
             <p className="library-count">
               {filteredBooks.length}{" "}
-              {filteredBooks.length === 1
-                ? "summary"
-                : "summaries"}
+              {filteredBooks.length === 1 ? "summary" : "summaries"}
             </p>
           </div>
 
@@ -153,52 +139,85 @@ const Library = ({ books = [], isLoading = false }) => {
             </button>
           )}
         </div>
-
         <div className="library-controls">
-          <label className="control-box">
-            <span
-              className="control-icon"
-              aria-hidden="true"
-            >
-              ⌕
-            </span>
+  {/* Full-width search */}
+  <label className="control-box search-control">
+    <span className="control-icon" aria-hidden="true">
+      ⌕
+    </span>
 
-            <input
-              type="search"
-              value={search}
-              onChange={(event) =>
-                setSearch(event.target.value)
-              }
-              placeholder="Search by title or author..."
-              aria-label="Search by title or author"
-            />
-          </label>
+    <input
+      type="search"
+      value={search}
+      onChange={(event) =>
+        setSearch(event.target.value)
+      }
+      placeholder="Search title or author..."
+      aria-label="Search by title or author"
+    />
+  </label>
 
-          <label className="control-box">
-            <span
-              className="control-icon"
-              aria-hidden="true"
-            >
-              ◇
-            </span>
+  {/* Author dropdown */}
+  <label className="control-box filter-control">
+    <span className="control-icon" aria-hidden="true">
+      ◇
+    </span>
 
-            <select
-              value={selectedAuthor}
-              onChange={(event) =>
-                setSelectedAuthor(event.target.value)
-              }
-              aria-label="Filter by author"
-            >
-              <option value="">All authors</option>
+    <select
+      value={selectedAuthor}
+      onChange={(event) =>
+        setSelectedAuthor(event.target.value)
+      }
+      aria-label="Filter by author"
+    >
+      <option value="">All authors</option>
 
-              {authors.map((author) => (
-                <option key={author} value={author}>
-                  {author}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+      {authors.map((author) => (
+        <option key={author} value={author}>
+          {author}
+        </option>
+      ))}
+    </select>
+  </label>
+
+  {/* Category dropdown */}
+  <label className="control-box filter-control">
+    <span className="control-icon" aria-hidden="true">
+      ◫
+    </span>
+
+    <select
+      value={normalizeCategory(selectedCategory)}
+      onChange={handleCategoryChange}
+      aria-label="Filter by category"
+    >
+      <option value="">All categories</option>
+
+      {categories.map((category) => {
+        const categoryTitle =
+          category.title ||
+          category.name ||
+          category.slug ||
+          category.value;
+
+        const categoryValue = normalizeCategory(
+          category.slug ||
+            category.value ||
+            categoryTitle,
+        );
+
+        return (
+          <option
+            key={categoryValue}
+            value={categoryValue}
+          >
+            {categoryTitle}
+          </option>
+        );
+      })}
+    </select>
+  </label>
+</div>
       </header>
 
       {paginatedBooks.length > 0 ? (
@@ -220,22 +239,15 @@ const Library = ({ books = [], isLoading = false }) => {
                     loading="lazy"
                   />
                 ) : (
-                  <div className="book-image-placeholder">
-                    No cover
-                  </div>
+                  <div className="book-image-placeholder">No cover</div>
                 )}
 
                 <div className="book-info">
                   <h2>{book.title}</h2>
 
-                  <h4>
-                    {book.author || "Unknown author"}
-                  </h4>
+                  <h4>{book.author || "Unknown author"}</h4>
 
-                  <p>
-                    {book.summary ||
-                      "No summary is currently available."}
-                  </p>
+                  <p>{book.summary || "No summary is currently available."}</p>
 
                   <div className="read-more">
                     <span>Read Summary</span>
@@ -247,18 +259,11 @@ const Library = ({ books = [], isLoading = false }) => {
           </section>
 
           {totalPages > 1 && (
-            <nav
-              className="library-pagination"
-              aria-label="Library pages"
-            >
+            <nav className="library-pagination" aria-label="Library pages">
               <button
                 type="button"
                 disabled={currentPage === 1}
-                onClick={() =>
-                  setCurrentPage((page) =>
-                    Math.max(1, page - 1),
-                  )
-                }
+                onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
               >
                 Previous
               </button>
@@ -271,19 +276,9 @@ const Library = ({ books = [], isLoading = false }) => {
                   <button
                     key={page}
                     type="button"
-                    className={
-                      currentPage === page
-                        ? "active"
-                        : ""
-                    }
-                    aria-current={
-                      currentPage === page
-                        ? "page"
-                        : undefined
-                    }
-                    onClick={() =>
-                      setCurrentPage(page)
-                    }
+                    className={currentPage === page ? "active" : ""}
+                    aria-current={currentPage === page ? "page" : undefined}
+                    onClick={() => setCurrentPage(page)}
                   >
                     {page}
                   </button>
@@ -294,9 +289,7 @@ const Library = ({ books = [], isLoading = false }) => {
                 type="button"
                 disabled={currentPage === totalPages}
                 onClick={() =>
-                  setCurrentPage((page) =>
-                    Math.min(totalPages, page + 1),
-                  )
+                  setCurrentPage((page) => Math.min(totalPages, page + 1))
                 }
               >
                 Next
@@ -308,9 +301,7 @@ const Library = ({ books = [], isLoading = false }) => {
         <div className="no-books">
           <h2>No books found</h2>
 
-          <p>
-            Try another title, author, or category.
-          </p>
+          <p>Try another title, author, or category.</p>
 
           {selectedCategory && (
             <button
