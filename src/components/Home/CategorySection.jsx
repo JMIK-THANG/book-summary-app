@@ -14,16 +14,11 @@ const CategorySection = ({ books = [] }) => {
     const counts = new Map();
 
     books.forEach((book) => {
-      const categoryKey = normalizeCategory(
-        book.category,
-      );
+      const categoryKey = normalizeCategory(book.category);
 
       if (!categoryKey) return;
 
-      counts.set(
-        categoryKey,
-        (counts.get(categoryKey) || 0) + 1,
-      );
+      counts.set(categoryKey, (counts.get(categoryKey) || 0) + 1);
     });
 
     return counts;
@@ -34,15 +29,12 @@ const CategorySection = ({ books = [] }) => {
       <div className="section-container">
         <div className="category-heading">
           <div>
-            <p className="section-label">
-              BROWSE BY CATEGORY
-            </p>
+            <p className="section-label">BROWSE BY CATEGORY</p>
 
             <h2>Find ideas that interest you</h2>
 
             <p>
-              Explore summaries organized by the topics
-              you want to understand.
+              Explore summaries organized by the topics you want to understand.
             </p>
           </div>
 
@@ -51,65 +43,47 @@ const CategorySection = ({ books = [] }) => {
             <span aria-hidden="true">→</span>
           </Link>
         </div>
-<div className="category-grid">
-  {categories.map((category) => {
-    const categoryTitle =
-      category.title ||
-      category.name ||
-      category.slug ||
-      category.value;
+        <div className="category-grid">
+          {categories.map((category) => {
+            const categoryKey = category.key;
+            const categoryValue = category.value;
+            const CategoryIcon = category.icon;
 
-    const categoryKey = normalizeCategory(
-      category.slug ||
-        category.value ||
-        categoryTitle,
-    );
+            const bookCount =
+              categoryCounts.get(normalizeCategory(categoryValue)) || 0;
 
-    const count =
-      categoryCounts.get(categoryKey) || 0;
+            return (
+              <Link
+                key={categoryValue}
+                to={`/library?category=${encodeURIComponent(categoryValue)}`}
+                className="category-card"
+                aria-label={`Browse ${categoryKey}: ${bookCount} ${
+                  bookCount === 1 ? "summary" : "summaries"
+                }`}
+              >
+                <div className="category-icon">
+                  {CategoryIcon && (
+                    <CategoryIcon
+                      size={26}
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
 
-    const CategoryIcon = category.icon;
+                <h3>{categoryKey}</h3>
 
-    return (
-      <Link
-        key={categoryKey}
-        to={`/library?category=${encodeURIComponent(
-          categoryKey,
-        )}`}
-        className="category-card"
-        aria-label={`Browse ${categoryTitle}: ${count} ${
-          count === 1 ? "summary" : "summaries"
-        }`}
-      >
-        <div className="category-icon">
-          {CategoryIcon && (
-            <CategoryIcon
-              size={26}
-              strokeWidth={1.8}
-              aria-hidden="true"
-            />
-          )}
+                <p>
+                  {bookCount} {bookCount === 1 ? "summary" : "summaries"}
+                </p>
+
+                <span className="category-arrow" aria-hidden="true">
+                  →
+                </span>
+              </Link>
+            );
+          })}
         </div>
-
-        <h3>{categoryTitle}</h3>
-
-        <p>
-          {count}{" "}
-          {count === 1
-            ? "summary"
-            : "summaries"}
-        </p>
-
-        <span
-          className="category-arrow"
-          aria-hidden="true"
-        >
-          →
-        </span>
-      </Link>
-    );
-  })}
-</div>
       </div>
     </section>
   );

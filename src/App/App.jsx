@@ -57,12 +57,23 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home counts={counts} books={books} />} />
+        import BookDetails from "./components/BookDetails/BookDetails";
         <Route
           path="/library"
           element={
             <Library
               books={books}
               addBook={addBook}
+              currentUser={currentUser}
+              isLoading={isLoading}
+            />
+          }
+        />
+        <Route
+          path="/library/:id"
+          element={
+            <BookDetails
+              books={books}
               currentUser={currentUser}
               isLoading={isLoading}
             />
@@ -80,7 +91,6 @@ function App() {
             />
           }
         />
-
         <Route
           path="/admin"
           element={
