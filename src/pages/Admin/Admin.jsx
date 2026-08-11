@@ -35,7 +35,7 @@ const Admin = ({ books, addBook, deleteBook, editBook }) => {
     <main className="admin-page">
       <section className="admin-hero">
         <div>
-          <p className="admin-label">CABUSIM ADMIN</p>
+          <p className="admin-label">1989 ADMIN</p>
           <h1>Manage Book Summaries</h1>
           <p>Add, edit, delete, and organize your book summaries.</p>
         </div>

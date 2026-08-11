@@ -23,16 +23,19 @@
 }
 
 .footer-logo {
-  display: inline-block;
+  display: inline-flex;
+  align-items: baseline;
   color: #14213d;
-  font-size: 1.8rem;
-  font-weight: 850;
-  letter-spacing: -0.045em;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.07em;
   text-decoration: none;
 }
 
 .footer-logo span {
   color: #d97835;
+  font-weight: 700;
 }
 
 .footer-tagline {

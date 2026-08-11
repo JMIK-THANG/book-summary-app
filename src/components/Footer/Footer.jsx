@@ -23,9 +23,9 @@ const Footer = () => {
                 to="/"
                 className="footer-logo"
                 onClick={scrollHomeToTop}
-                aria-label="CabuSim home"
+                aria-label="1989 home"
               >
-                Cabu<span>Sim</span>
+                19<span>89</span>
               </Link>
 
               <p className="footer-tagline">
@@ -64,7 +64,7 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <div className="footer-container footer-bottom-content">
-          <p>© {currentYear} CabuSim. All rights reserved.</p>
+          <p>© {currentYear} 1989. All rights reserved.</p>
 
           <p>
             Siar Mal <span aria-hidden="true">•</span> Zir Tam
