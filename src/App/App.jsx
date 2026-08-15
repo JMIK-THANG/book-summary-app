@@ -57,7 +57,6 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home counts={counts} books={books} />} />
-        import BookDetails from "./components/BookDetails/BookDetails";
         <Route
           path="/library"
           element={

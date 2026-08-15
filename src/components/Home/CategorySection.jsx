@@ -15,6 +15,7 @@ const CategorySection = ({ books = [] }) => {
 
     books.forEach((book) => {
       const categoryKey = normalizeCategory(book.category);
+      console.log(categoryKey);
 
       if (!categoryKey) return;
 
@@ -44,45 +45,48 @@ const CategorySection = ({ books = [] }) => {
           </Link>
         </div>
         <div className="category-grid">
-          {categories.map((category) => {
-            const categoryKey = category.key;
-            const categoryValue = category.value;
-            const CategoryIcon = category.icon;
+          {Array.from(categoryCounts.entries()).map(
+            ([categoryKey, categoryValue]) => {
+              // const categoryKey = category.key;
+              // const categoryValue = category.value;
+              // const CategoryIcon = category.icon;
 
-            const bookCount =
-              categoryCounts.get(normalizeCategory(categoryValue)) || 0;
+              // const bookCount =
+              //   categoryCounts.get(normalizeCategory(categoryValue)) || 0;
 
-            return (
-              <Link
-                key={categoryValue}
-                to={`/library?category=${encodeURIComponent(categoryValue)}`}
-                className="category-card"
-                aria-label={`Browse ${categoryKey}: ${bookCount} ${
-                  bookCount === 1 ? "summary" : "summaries"
-                }`}
-              >
-                <div className="category-icon">
-                  {CategoryIcon && (
-                    <CategoryIcon
-                      size={26}
-                      strokeWidth={1.8}
-                      aria-hidden="true"
-                    />
-                  )}
-                </div>
+              return (
+                <Link
+                  key={categoryKey}
+                  to={`/library?category=${encodeURIComponent(categoryValue)}`}
+                  className="category-card"
+                  aria-label={`Browse ${categoryKey}: ${categoryValue} ${
+                    categoryValue === 1 ? "summary" : "summaries"
+                  }`}
+                >
+                  <div className="category-icon">
+                    {/* {CategoryIcon && (
+                      <CategoryIcon
+                        size={26}
+                        strokeWidth={1.8}
+                        aria-hidden="true"
+                      />
+                    )} */}
+                  </div>
 
-                <h3>{categoryKey}</h3>
+                  <h3>{categoryKey}</h3>
 
-                <p>
-                  {bookCount} {bookCount === 1 ? "summary" : "summaries"}
-                </p>
+                  <p>
+                    {categoryValue}{" "}
+                    {categoryValue === 1 ? "summary" : "summaries"}
+                  </p>
 
-                <span className="category-arrow" aria-hidden="true">
-                  →
-                </span>
-              </Link>
-            );
-          })}
+                  <span className="category-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              );
+            },
+          )}
         </div>
       </div>
     </section>
