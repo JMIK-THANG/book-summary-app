@@ -14,7 +14,7 @@ A full-stack web application that helps users discover books, read summaries, an
 
 ### Home Page
 
-![Home Page](./screenshots/home.png)
+![Home Page](./screenshots/home.jpeg)
 
 ### Library
 
@@ -27,8 +27,6 @@ A full-stack web application that helps users discover books, read summaries, an
 ### Admin Dashboard
 
 ![Admin Dashboard](./screenshots/admin-dashboard.png)
-
-> Create a folder named `screenshots` inside `src/assets` (or use an `images` folder in the root) and save your screenshots there.
 
 ---
 
