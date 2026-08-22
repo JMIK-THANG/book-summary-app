@@ -20,65 +20,52 @@ const CategorySection = ({ books = [] }) => {
 
   books.forEach((book) => {
     const categoryKey = normalizeCategory(book.category);
-
     if (!categoryKey) return;
 
-    const currentCount =
-      categoryCounts.get(categoryKey) || 0;
+    const currentCount = categoryCounts.get(categoryKey) || 0;
 
     categoryCounts.set(categoryKey, currentCount + 1);
   });
 
   // Combine database counts with local category icons
-  const categoryItems = Array.from(
-    categoryCounts.entries(),
-  ).map(([categoryKey, bookCount]) => {
-    const categoryMetadata = categories.find((category) => {
-      const categoryValue =
-        category.value ||
-        category.slug ||
-        category.name ||
-        category.key;
+  const categoryItems = Array.from(categoryCounts.entries()).map(
+    ([categoryKey, bookCount]) => {
+      const categoryMetadata = categories.find((category) => {
+        const categoryValue =
+          category.value || category.slug || category.name || category.key;
 
-      return (
-        normalizeCategory(categoryValue) === categoryKey
-      );
-    });
+        return normalizeCategory(categoryValue) === categoryKey;
+      });
 
-    return {
-      key: categoryKey,
+      return {
+        key: categoryKey,
 
-      name:
-        categoryMetadata?.key ||
-        categoryMetadata?.name ||
-        categoryMetadata?.title ||
-        formatCategory(categoryKey),
+        name:
+          categoryMetadata?.key ||
+          categoryMetadata?.name ||
+          categoryMetadata?.title ||
+          formatCategory(categoryKey),
 
-      value:
-        categoryMetadata?.value ||
-        categoryMetadata?.slug ||
-        categoryKey,
+        value: categoryMetadata?.value || categoryMetadata?.slug || categoryKey,
 
-      icon: categoryMetadata?.icon || BookOpen,
+        icon: categoryMetadata?.icon || BookOpen,
 
-      bookCount,
-    };
-  });
+        bookCount,
+      };
+    },
+  );
 
   return (
     <section className="category-section">
       <div className="section-container">
         <div className="category-heading">
           <div>
-            <p className="section-label">
-              BROWSE BY CATEGORY
-            </p>
+            <p className="section-label">BROWSE BY CATEGORY</p>
 
             <h2>Find ideas that interest you</h2>
 
             <p>
-              Explore summaries organized by the topics you
-              want to understand.
+              Explore summaries organized by the topics you want to understand.
             </p>
           </div>
 
@@ -95,16 +82,10 @@ const CategorySection = ({ books = [] }) => {
             return (
               <Link
                 key={category.key}
-                to={`/library?category=${encodeURIComponent(
-                  category.value,
-                )}`}
+                to={`/library?category=${encodeURIComponent(category.value)}`}
                 className="category-card"
-                aria-label={`Browse ${category.name}: ${
-                  category.bookCount
-                } ${
-                  category.bookCount === 1
-                    ? "summary"
-                    : "summaries"
+                aria-label={`Browse ${category.name}: ${category.bookCount} ${
+                  category.bookCount === 1 ? "summary" : "summaries"
                 }`}
               >
                 <div className="category-icon">
@@ -119,15 +100,10 @@ const CategorySection = ({ books = [] }) => {
 
                 <p>
                   {category.bookCount}{" "}
-                  {category.bookCount === 1
-                    ? "summary"
-                    : "summaries"}
+                  {category.bookCount === 1 ? "summary" : "summaries"}
                 </p>
 
-                <span
-                  className="category-arrow"
-                  aria-hidden="true"
-                >
+                <span className="category-arrow" aria-hidden="true">
                   →
                 </span>
               </Link>
