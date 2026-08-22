@@ -1,4 +1,4 @@
-# 📚 CabuSim - Book Summary App
+# 📚 1989 - Book Summary App
 
 A full-stack web application that helps users discover books, read summaries, and share their thoughts through comments. The application includes secure authentication, an administrator dashboard, and a responsive user interface.
 
