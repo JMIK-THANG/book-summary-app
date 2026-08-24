@@ -14,6 +14,7 @@ import "./App.css";
 import useBook from "../hooks/useBook";
 import useModal from "../hooks/useModal";
 import useAuthenticate from "../hooks/useAuthenticate";
+import useShortReads from "../hooks/useShortReads";
 
 function App() {
   // Custome hooks import
@@ -27,6 +28,14 @@ function App() {
     incrementBookView,
     isLoading,
   } = useBook();
+  const {
+    shortReads,
+    shortReadsLoading,
+    shortReadsError,
+    addShortRead,
+    editShortRead,
+    deleteShortRead,
+  } = useShortReads(backendUrl);
   const { isLoginOpen, isRegisterOpen, openLogin, openRegister, closeModals } =
     useModal();
   const { currentUser, setCurrentUser, logout } = useAuthenticate();
@@ -69,7 +78,16 @@ function App() {
             />
           }
         />
-        <Route path="/short-reads" element={<ShortReads />} />
+        <Route
+          path="/short-reads"
+          element={
+            <ShortReads
+              shortReads={shortReads}
+              isLoading={shortReadsLoading}
+              error={shortReadsError}
+            />
+          }
+        />
         <Route
           path="/library/:id"
           element={
@@ -102,6 +120,10 @@ function App() {
                 deleteBook={deleteBook}
                 editBook={editBook}
                 isLoading={isLoading}
+                shortReads={shortReads}
+                addShortRead={addShortRead}
+                editShortRead={editShortRead}
+                deleteShortRead={deleteShortRead}
               />
             ) : (
               <h1>Access Denied</h1>

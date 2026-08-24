@@ -64,6 +64,17 @@
   gap: 28px;
 }
 
+.short-reads-status {
+  margin: 0;
+  padding: 34px;
+  border: 1px solid rgba(16, 42, 67, 0.08);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #667085;
+  text-align: center;
+}
+
+
 .short-read {
   position: relative;
   overflow: hidden;

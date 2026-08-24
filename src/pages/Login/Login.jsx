@@ -10,30 +10,44 @@ const Login = ({ onClose, openRegister, setCurrentUser, backendUrl }) => {
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const checkLogin = async () => {
-    const response = await fetch(`${backendUrl}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    setErrorMessage("");
+    setIsSubmitting(true);
 
-    const userDetail = await response.json();
+    try {
+      const response = await fetch(`${backendUrl}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email.trim().toLowerCase(),
+          password: formData.password,
+        }),
+      });
 
-    if (userDetail.status === "success") {
+      const userDetail = await response.json();
+
+      if (!response.ok || userDetail.status !== "success") {
+        setErrorMessage(userDetail.message || "Unable to log in.");
+        return;
+      }
+
       localStorage.setItem("token", userDetail.token);
       localStorage.setItem("user", JSON.stringify(userDetail.data));
 
       setCurrentUser(userDetail.data);
       onClose();
 
-      if (userDetail.data.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/library");
-      }
+      navigate(userDetail.data.role === "admin" ? "/admin" : "/library");
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrorMessage("Could not connect to the server.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -44,6 +58,7 @@ const Login = ({ onClose, openRegister, setCurrentUser, backendUrl }) => {
       ...prev,
       [name]: value,
     }));
+    setErrorMessage("");
   };
 
   const handleSubmit = (e) => {
@@ -105,6 +120,12 @@ const Login = ({ onClose, openRegister, setCurrentUser, backendUrl }) => {
 
           <p className="subtitle">Welcome back to your personal library.</p>
 
+          {errorMessage && (
+            <p className="login-error" role="alert">
+              {errorMessage}
+            </p>
+          )}
+
           <input
             type="text"
             name="email"
@@ -121,7 +142,9 @@ const Login = ({ onClose, openRegister, setCurrentUser, backendUrl }) => {
             onChange={handleChange}
           />
 
-          <button type="submit">Login</button>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Logging in..." : "Login"}
+          </button>
 
           <p className="auth-switch">
             New here?

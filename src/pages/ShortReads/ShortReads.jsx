@@ -1,24 +1,7 @@
 import { Link } from "react-router-dom";
 import "./ShortReads.css";
 
-const shortReads = [
-  {
-    id: 1,
-    title: "Lamzin Nuam Le Awlsam",
-    author: "",
-    content: `Tlansuah san ahcun neh ti mi hi a um dah kel zik lo
-
-Hmaitawn in pahtlang men ko-aw.
-Leilungtlun dan le a siningdan tepawl,
-Buai le harsatnakpawl ti mi cu
-Thazang cahnak tha hmuahhmuah sawmkhawm-in
-Pahtlang ngam le thei vivo asile
-Lan le kân ding mipawl hi
-A nuam in a awlsam sinsin a si men mai!`,
-  },
-];
-
-const ShortReads = () => {
+const ShortReads = ({ shortReads = [], isLoading, error }) => {
   return (
     <main className="short-reads-page">
       <div className="short-reads-shell">
@@ -36,7 +19,13 @@ const ShortReads = () => {
         </header>
 
         <section className="short-reads-list" aria-label="Short reads">
-          {shortReads.map((shortRead) => (
+          {isLoading ? (
+            <p className="short-reads-status">Loading Short Reads...</p>
+          ) : error ? (
+            <p className="short-reads-status" role="alert">{error}</p>
+          ) : shortReads.length === 0 ? (
+            <p className="short-reads-status">No Short Reads have been published yet.</p>
+          ) : shortReads.map((shortRead) => (
             <article className="short-read" key={shortRead.id}>
               <span className="short-read-quote" aria-hidden="true">
                 “
