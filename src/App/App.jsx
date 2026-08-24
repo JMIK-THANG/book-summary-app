@@ -4,6 +4,7 @@ import Library from "../pages/Library/Library";
 import BookDetails from "../pages/BookDetails/BookDetails";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import ShortReads from "../pages/ShortReads/ShortReads";
 import Navbar from "../components/Navbar/Navbar";
 import Admin from "../pages/Admin/Admin";
 import ScrollToTop from "../components/ScrollToTop/SCrollToTop";
@@ -68,6 +69,7 @@ function App() {
             />
           }
         />
+        <Route path="/short-reads" element={<ShortReads />} />
         <Route
           path="/library/:id"
           element={

@@ -74,6 +74,13 @@ const Navbar = ({
               Library
             </Link>
           </li>
+
+          <li>
+            <Link to="/short-reads" onClick={closeMenu}>
+              Short Reads
+            </Link>
+          </li>
+
         </ul>
 
         <ul className="nav-right">
