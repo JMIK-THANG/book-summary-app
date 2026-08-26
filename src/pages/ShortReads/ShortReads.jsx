@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ShortReads.css";
 
-const DESKTOP_PAGE_SIZE = 9;
+const DESKTOP_PAGE_SIZE =6;
 const MOBILE_PAGE_SIZE = 5;
 
 const ShortReads = ({ shortReads = [], isLoading, error }) => {
