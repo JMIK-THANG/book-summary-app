@@ -5,6 +5,7 @@ import BookDetails from "../pages/BookDetails/BookDetails";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import ShortReads from "../pages/ShortReads/ShortReads";
+import ShortReadDetail from "../pages/ShortReads/ShortReadDetail";
 import Navbar from "../components/Navbar/Navbar";
 import Admin from "../pages/Admin/Admin";
 import ScrollToTop from "../components/ScrollToTop/SCrollToTop";
@@ -82,6 +83,16 @@ function App() {
           path="/short-reads"
           element={
             <ShortReads
+              shortReads={shortReads}
+              isLoading={shortReadsLoading}
+              error={shortReadsError}
+            />
+          }
+        />
+        <Route
+          path="/short-reads/:id"
+          element={
+            <ShortReadDetail
               shortReads={shortReads}
               isLoading={shortReadsLoading}
               error={shortReadsError}

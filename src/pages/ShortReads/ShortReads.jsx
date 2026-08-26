@@ -1,7 +1,15 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ShortReads.css";
 
+const PAGE_SIZE = 9;
+
 const ShortReads = ({ shortReads = [], isLoading, error }) => {
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  const visibleShortReads = shortReads.slice(0, visibleCount);
+  const hasMore = visibleCount < shortReads.length;
+
   return (
     <main className="short-reads-page">
       <div className="short-reads-shell">
@@ -25,7 +33,7 @@ const ShortReads = ({ shortReads = [], isLoading, error }) => {
             <p className="short-reads-status" role="alert">{error}</p>
           ) : shortReads.length === 0 ? (
             <p className="short-reads-status">No Short Reads have been published yet.</p>
-          ) : shortReads.map((shortRead) => (
+          ) : visibleShortReads.map((shortRead) => (
             <article className="short-read" key={shortRead.id}>
               <span className="short-read-quote" aria-hidden="true">
                 “
@@ -42,14 +50,28 @@ const ShortReads = ({ shortReads = [], isLoading, error }) => {
                 )}
               </header>
 
-              <div className="short-read-divider" aria-hidden="true">
-                <span />
-              </div>
-
               <p className="short-read-content">{shortRead.content}</p>
+
+              <Link className="short-read-link" to={`/short-reads/${shortRead.id}`}>
+                Read full reflection <span aria-hidden="true">→</span>
+              </Link>
             </article>
           ))}
         </section>
+
+        {hasMore && !isLoading && !error && (
+          <div className="short-reads-more">
+            <button
+              type="button"
+              onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+            >
+              Load more
+            </button>
+            <p>
+              Showing {visibleShortReads.length} of {shortReads.length}
+            </p>
+          </div>
+        )}
       </div>
     </main>
   );
