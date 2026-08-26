@@ -13,16 +13,11 @@ const ShortReads = ({ shortReads = [], isLoading, error }) => {
   return (
     <main className="short-reads-page">
       <div className="short-reads-shell">
-        <Link className="short-reads-back" to="/library">
-          ‹ Back to Library
-        </Link>
-
         <header className="short-reads-intro">
           <p className="short-reads-kicker">Words for the journey</p>
           <h1>Short Reads</h1>
           <p className="short-reads-description">
-            A quiet place for brief thoughts, reflections, and
-            encouragement.
+            A quiet place for brief thoughts, reflections, and encouragement.
           </p>
         </header>
 
@@ -30,33 +25,40 @@ const ShortReads = ({ shortReads = [], isLoading, error }) => {
           {isLoading ? (
             <p className="short-reads-status">Loading Short Reads...</p>
           ) : error ? (
-            <p className="short-reads-status" role="alert">{error}</p>
+            <p className="short-reads-status" role="alert">
+              {error}
+            </p>
           ) : shortReads.length === 0 ? (
-            <p className="short-reads-status">No Short Reads have been published yet.</p>
-          ) : visibleShortReads.map((shortRead) => (
-            <article className="short-read" key={shortRead.id}>
-              <span className="short-read-quote" aria-hidden="true">
-                “
-              </span>
+            <p className="short-reads-status">
+              No Short Reads have been published yet.
+            </p>
+          ) : (
+            visibleShortReads.map((shortRead) => (
+              <article className="short-read" key={shortRead.id}>
+                <span className="short-read-quote" aria-hidden="true">
+                  “
+                </span>
 
-              <header className="short-read-header">
-                <p>Short reflection</p>
-                <h2>{shortRead.title}</h2>
+                <header className="short-read-header">
+                  <p>Short reflection</p>
+                  <h2>{shortRead.title}</h2>
 
-                {shortRead.author && (
-                  <p className="short-read-author">
-                    By {shortRead.author}
-                  </p>
-                )}
-              </header>
+                  {shortRead.author && (
+                    <p className="short-read-author">By {shortRead.author}</p>
+                  )}
+                </header>
 
-              <p className="short-read-content">{shortRead.content}</p>
+                <p className="short-read-content">{shortRead.content}</p>
 
-              <Link className="short-read-link" to={`/short-reads/${shortRead.id}`}>
-                Read full reflection <span aria-hidden="true">→</span>
-              </Link>
-            </article>
-          ))}
+                <Link
+                  className="short-read-link"
+                  to={`/short-reads/${shortRead.id}`}
+                >
+                  Read full reflection <span aria-hidden="true">→</span>
+                </Link>
+              </article>
+            ))
+          )}
         </section>
 
         {hasMore && !isLoading && !error && (
