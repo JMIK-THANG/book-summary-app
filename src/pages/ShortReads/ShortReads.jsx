@@ -2,10 +2,16 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ShortReads.css";
 
-const PAGE_SIZE = 9;
+const DESKTOP_PAGE_SIZE = 9;
+const MOBILE_PAGE_SIZE = 5;
 
 const ShortReads = ({ shortReads = [], isLoading, error }) => {
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [pageSize] = useState(() =>
+    window.matchMedia("(max-width: 600px)").matches
+      ? MOBILE_PAGE_SIZE
+      : DESKTOP_PAGE_SIZE,
+  );
+  const [visibleCount, setVisibleCount] = useState(pageSize);
 
   const visibleShortReads = shortReads.slice(0, visibleCount);
   const hasMore = visibleCount < shortReads.length;
@@ -65,7 +71,7 @@ const ShortReads = ({ shortReads = [], isLoading, error }) => {
           <div className="short-reads-more">
             <button
               type="button"
-              onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+              onClick={() => setVisibleCount((count) => count + pageSize)}
             >
               Load more
             </button>

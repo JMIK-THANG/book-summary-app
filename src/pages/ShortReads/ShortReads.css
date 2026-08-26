@@ -276,7 +276,7 @@
 
 @media (max-width: 600px) {
   .short-reads-page {
-    padding: 34px 14px 60px;
+    padding: 24px 14px 52px;
   }
 
   .short-reads-back {
@@ -284,12 +284,21 @@
   }
 
   .short-reads-intro {
-    margin-bottom: 30px;
+    margin-bottom: 22px;
+  }
+
+  .short-reads-intro h1 {
+    font-size: 2.65rem;
+  }
+
+  .short-reads-description {
+    margin-top: 14px;
+    line-height: 1.55;
   }
 
   .short-read {
-    min-height: 330px;
-    padding: 36px 24px 42px;
+    min-height: 285px;
+    padding: 28px 22px 30px;
     border-radius: 24px;
   }
 
@@ -299,7 +308,9 @@
   }
 
   .short-read-content {
-    line-height: 1.85;
+    margin: 18px 0 20px;
+    line-height: 1.7;
+    -webkit-line-clamp: 4;
   }
 
   .short-reads-list {
