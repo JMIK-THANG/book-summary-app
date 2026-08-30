@@ -81,6 +81,12 @@ const Navbar = ({
             </Link>
           </li>
 
+          <li>
+            <Link to="/about" onClick={closeMenu}>
+              About
+            </Link>
+          </li>
+
         </ul>
 
         <ul className="nav-right">

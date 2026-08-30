@@ -6,6 +6,7 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import ShortReads from "../pages/ShortReads/ShortReads";
 import ShortReadDetail from "../pages/ShortReads/ShortReadDetail";
+import About from "../pages/About/About";
 import Navbar from "../components/Navbar/Navbar";
 import Admin from "../pages/Admin/Admin";
 import ScrollToTop from "../components/ScrollToTop/SCrollToTop";
@@ -68,6 +69,7 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home counts={counts} books={books} />} />
+        <Route path="/about" element={<About />} />
         <Route
           path="/library"
           element={
