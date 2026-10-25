@@ -1,0 +1,8 @@
+user opens page
+-> frontend asks for data
+-> backend receives request
+-> backend asks database
+-> database returns data\
+-> backend sends data to frontend
+-> frontend stores data 
+-> UI dispalys data

@@ -4,7 +4,7 @@ export const BenefitSection = () => {
   <section className="benefits-section">
     <div className="section-container">
       <div className="benefits-heading">
-        <p className="section-label">WHY CABUSIM?</p>
+        <p className="section-label">Why 1989?</p>
         <h2>A simpler way to discover great books</h2>
         <p>
           Learn the central ideas before deciding what you want to read in full.

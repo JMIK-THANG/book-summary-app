@@ -13,7 +13,7 @@ export const LatestBooksSection = ({ latestBooks }) => {
           <div>
             <p className="section-label">RECENTLY ADDED</p>
             <h2>Start with something new</h2>
-            <p>Explore the newest summaries added to the CabuSim library.</p>
+            <p>Explore the newest summaries added to the library.</p>
           </div>
 
           <Link to="/library" className="text-link">
