@@ -18,7 +18,7 @@ const Login = ({ onClose, openRegister, setCurrentUser, backendUrl }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${backendUrl}/login`, {
+      const response = await fetch(`${backendUrl}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

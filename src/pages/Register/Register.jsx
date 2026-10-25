@@ -5,7 +5,7 @@ const Register = ({ onClose, openLogin, backendUrl }) => {
   const [formData, setFormData] = useState({
     name: "",
     password: "",
-    email:""
+    email: "",
   });
 
   const handleChange = (e) => {
@@ -20,7 +20,7 @@ const Register = ({ onClose, openLogin, backendUrl }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(backendUrl+"/register", {
+      const response = await fetch(`${backendUrl}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,7 +29,7 @@ const Register = ({ onClose, openLogin, backendUrl }) => {
       });
       const data = await response.json();
       if (data.status === "success") {
-        alert("User registered successfully!"); 
+        alert("User registered successfully!");
         onClose();
       } else {
         alert("Error registering user.");
