@@ -6,7 +6,33 @@ import "./Navbar.css";
 const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuDialogRef = useRef(null);
+  const menuSheetRef = useRef(null);
+  const openingAnimationRef = useRef(null);
   const closeMenu = () => menuDialogRef.current?.close();
+  const dismissMenu = () => {
+    const dialog = menuDialogRef.current;
+    if (!dialog?.open || dialog.dataset.closing) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      closeMenu();
+      return;
+    }
+
+    const start = window.getComputedStyle(dialog).clipPath;
+    openingAnimationRef.current?.cancel();
+    dialog.dataset.closing = "true";
+    const animation = dialog.animate(
+      [
+        { clipPath: start === "none" ? "circle(72% at 50% 50%)" : start },
+        { clipPath: "circle(0% at 50% 50%)" },
+      ],
+      { duration: 700, easing: "cubic-bezier(.8,0,.6,1)", fill: "forwards" },
+    );
+    animation.onfinish = () => {
+      closeMenu();
+      animation.cancel();
+      delete dialog.dataset.closing;
+    };
+  };
   const getNavLinkClass = ({ isActive }) =>
     isActive ? "nav-link active" : "nav-link";
 
@@ -59,10 +85,11 @@ const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
         <button type="button" className="menu-btn" onClick={() => {
           const dialog = menuDialogRef.current;
           dialog.showModal();
+          menuSheetRef.current?.focus({ preventScroll: true });
           setIsMenuOpen(true);
           if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-          dialog.animate(
+          openingAnimationRef.current = dialog.animate(
             [
               { clipPath: "circle(0% at 50% 50%)" },
               { clipPath: "circle(72% at 50% 50%)" },
@@ -74,16 +101,19 @@ const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
         </button>
 
         <dialog ref={menuDialogRef} id="mobile-navigation-menu" className="mobile-menu-dialog" aria-label="Navigation menu" onClose={() => setIsMenuOpen(false)} onClick={(event) => {
-          if (event.target === event.currentTarget) closeMenu();
+          if (event.target === event.currentTarget) dismissMenu();
+        }} onCancel={(event) => {
+          event.preventDefault();
+          dismissMenu();
         }}>
-          <div className="mobile-menu-sheet">
+          <div ref={menuSheetRef} tabIndex={-1} className="mobile-menu-sheet">
             <div className="mobile-menu-heading">
               <Link to="/" className="logo-link" onClick={handleHomeClick} aria-label="1989 Book Summaries home">
                 <span className="logo-year">198<span className="logo-accent">9</span></span>
                 <span className="logo-divider" aria-hidden="true" />
                 <span className="logo-title">Book<br />Summaries</span>
               </Link>
-              <button type="button" className="menu-btn" aria-label="Close navigation menu" onClick={closeMenu}>
+              <button type="button" className="menu-btn" aria-label="Close navigation menu" onClick={dismissMenu}>
                 <X aria-hidden="true" />
               </button>
             </div>

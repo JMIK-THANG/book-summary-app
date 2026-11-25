@@ -216,22 +216,14 @@
   background: #efdedb;
   box-shadow: none;
   opacity: 0;
-  transition: display 700ms allow-discrete, overlay 700ms allow-discrete;
 }
 .mobile-menu-dialog[open] {
   opacity: 1;
 }
-.mobile-menu-dialog:not([open]) {
-  animation: mobile-menu-pop-out 700ms cubic-bezier(.8,0,.6,1) both;
-}
-@keyframes mobile-menu-pop-out {
-  0% { opacity: 1; clip-path: circle(72% at 50% 50%); }
-  100% { opacity: 1; clip-path: circle(0% at 50% 50%); }
-}
 .mobile-menu-dialog[open] .mobile-menu-sheet > * {
   animation: mobile-menu-content-in 230ms ease 460ms both;
 }
-.mobile-menu-dialog:not([open]) .mobile-menu-sheet > * {
+.mobile-menu-dialog[data-closing="true"] .mobile-menu-sheet > * {
   animation: mobile-menu-content-in 230ms ease reverse both;
 }
 @keyframes mobile-menu-content-in {
@@ -244,6 +236,7 @@
   transition: opacity 700ms ease, display 700ms allow-discrete, overlay 700ms allow-discrete;
 }
 .mobile-menu-dialog[open]::backdrop { opacity: 1; }
+.mobile-menu-dialog[data-closing="true"]::backdrop { opacity: 0; }
 @starting-style {
   .mobile-menu-dialog[open]::backdrop { opacity: 0; }
 }
@@ -264,6 +257,7 @@
   background: url("../../assets/hero-paper-ribbons.png") 62% center / cover;
   filter: hue-rotate(43deg);
 }
+.mobile-menu-sheet:focus { outline: none; }
 .mobile-menu-sheet::after {
   content: "";
   position: absolute;
