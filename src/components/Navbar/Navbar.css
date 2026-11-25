@@ -153,12 +153,141 @@
   .logo-year { font-size: 1.9rem; }
   .logo-divider { margin: 0 2px; }
   .logo-title { font-size: 0.59rem; }
-  .mobile-nav-panel { right: -14px; left: -14px; }
+  .mobile-nav-panel { right: 0; left: 0; }
+}
+
+@media (max-width: 1040px) {
+  .navbar .menu-btn { color: white; background: #653574; }
+  .navbar .menu-btn[aria-expanded="true"] { color: #43244d; background: #eedfed; }
+  .navbar .mobile-nav-panel {
+    top: calc(100% + 8px);
+    right: 0;
+    left: auto;
+    width: min(100%, 28rem);
+    padding: 16px;
+    gap: 8px;
+    color: #30203d;
+    background: #fff5ec;
+    border: 1px solid #e4d0ca;
+    border-radius: 24px;
+    box-shadow: 0 14px 32px #39214330;
+    transform-origin: top right;
+    transform: translateY(-8px) scale(.98);
+    pointer-events: none;
+    transition: opacity 220ms ease, transform 220ms ease, visibility 0s linear 220ms;
+  }
+  .navbar .mobile-nav-panel.active {
+    transform: none;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+  .navbar .mobile-nav-panel .nav-link {
+    padding: 0 16px;
+    color: #30203d;
+    background: #f2e4f1;
+    border: 1px solid #e6d4e5;
+    border-radius: 999px;
+    box-shadow: none;
+  }
+  .navbar .mobile-nav-panel .nav-link.active,
+  .navbar .mobile-nav-panel .register-btn { color: white; background: #653574; }
+  .navbar .mobile-nav-panel .login-btn { color: #43244d; background: transparent; border-color: #b99bbd; }
+  .mobile-account-actions { padding-top: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .nav-link::after,
   .register-btn,
-  .mobile-nav-panel { transition: none; }
+  .navbar .mobile-nav-panel { transition: none; }
 }
 
+.mobile-menu-dialog {
+  position: fixed;
+  inset: 0;
+  width: calc(100% - 16px);
+  max-width: none;
+  height: calc(100dvh - 16px);
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 28px;
+  color: #30203d;
+  background: #efdedb;
+  box-shadow: 0 18px 48px #30203d50;
+  opacity: 0;
+  transition: display 260ms allow-discrete, overlay 260ms allow-discrete;
+}
+.mobile-menu-dialog[open] {
+  opacity: 1;
+}
+.mobile-menu-dialog:not([open]) {
+  animation: mobile-menu-pop-out 260ms cubic-bezier(.4,0,.8,.4) both;
+}
+@keyframes mobile-menu-pop-out {
+  0% { opacity: 1; clip-path: circle(72% at 50% 50%); }
+  100% { opacity: 0; clip-path: circle(0% at 50% 50%); }
+}
+.mobile-menu-dialog[open] .mobile-menu-sheet > * {
+  animation: mobile-menu-content-in 230ms ease 460ms both;
+}
+@keyframes mobile-menu-content-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.mobile-menu-dialog::backdrop {
+  background: #30203d66;
+  opacity: 0;
+  transition: opacity 280ms ease, display 280ms allow-discrete, overlay 280ms allow-discrete;
+}
+.mobile-menu-dialog[open]::backdrop { opacity: 1; }
+@starting-style {
+  .mobile-menu-dialog[open]::backdrop { opacity: 0; }
+}
+.mobile-menu-sheet {
+  position: relative;
+  isolation: isolate;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 24px;
+  padding: 20px clamp(16px, 5vw, 36px) max(24px, env(safe-area-inset-bottom));
+}
+.mobile-menu-sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("../../assets/hero-paper-ribbons.png") 62% center / cover;
+  filter: hue-rotate(43deg);
+}
+.mobile-menu-sheet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(155deg, #fff5ec55, #cba5ca30 55%, #a474ad40);
+  pointer-events: none;
+}
+.mobile-menu-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.mobile-menu-links { display: grid; place-content: center; justify-items: center; gap: 10px; }
+.navbar .mobile-menu-dialog :is(.nav-link, .login-btn) {
+  min-height: 52px;
+  padding-inline: 24px;
+  border: 1px solid #d8bddb;
+  border-radius: 999px;
+  background: #fff5ec;
+  color: #30203d;
+}
+.navbar .mobile-menu-dialog :is(.nav-link.active, .register-btn, .menu-btn) { color: white; background: #653574; }
+.navbar .mobile-menu-dialog .nav-link { font-size: 1.125rem; }
+.navbar .mobile-menu-dialog .nav-link::after { display: none; }
+.mobile-menu-dialog .mobile-account-actions { display: grid; justify-items: center; gap: 10px; }
+.mobile-menu-dialog .mobile-account-actions :is(.login-btn, .register-btn) { width: min(100%, 18rem); }
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-dialog,
+  .mobile-menu-dialog::backdrop,
+  .mobile-menu-dialog[open],
+  .mobile-menu-dialog:not([open]),
+  .mobile-menu-dialog[open] .mobile-menu-sheet > * { transition: none; animation: none; }
+}

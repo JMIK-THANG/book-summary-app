@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ArrowRight, Menu, X } from "lucide-react";
 import "./Navbar.css";
 
 const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const closeMenu = () => setIsMenuOpen(false);
+  const menuDialogRef = useRef(null);
+  const closeMenu = () => menuDialogRef.current?.close();
   const getNavLinkClass = ({ isActive }) =>
     isActive ? "nav-link active" : "nav-link";
 
@@ -55,16 +56,45 @@ const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
 
         <div className="nav-account">{accountActions}</div>
 
-        <button type="button" className="menu-btn" onClick={() => setIsMenuOpen((previous) => !previous)} aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"} aria-expanded={isMenuOpen} aria-controls="mobile-navigation-menu">
-          {isMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        <button type="button" className="menu-btn" onClick={() => {
+          const dialog = menuDialogRef.current;
+          dialog.showModal();
+          setIsMenuOpen(true);
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+          dialog.animate(
+            [
+              { clipPath: "circle(0% at 50% 50%)" },
+              { clipPath: "circle(72% at 50% 50%)" },
+            ],
+            { duration: 700, easing: "cubic-bezier(.4,0,.2,1)" },
+          );
+        }} aria-label="Open navigation menu" aria-haspopup="dialog" aria-expanded={isMenuOpen} aria-controls="mobile-navigation-menu">
+          <Menu aria-hidden="true" />
         </button>
 
-        <div id="mobile-navigation-menu" className={`mobile-nav-panel ${isMenuOpen ? "active" : ""}`}>
+        <dialog ref={menuDialogRef} id="mobile-navigation-menu" className="mobile-menu-dialog" aria-label="Navigation menu" onClose={() => setIsMenuOpen(false)} onClick={(event) => {
+          if (event.target === event.currentTarget) closeMenu();
+        }}>
+          <div className="mobile-menu-sheet">
+            <div className="mobile-menu-heading">
+              <Link to="/" className="logo-link" onClick={handleHomeClick} aria-label="1989 Book Summaries home">
+                <span className="logo-year">198<span className="logo-accent">9</span></span>
+                <span className="logo-divider" aria-hidden="true" />
+                <span className="logo-title">Book<br />Summaries</span>
+              </Link>
+              <button type="button" className="menu-btn" aria-label="Close navigation menu" onClick={closeMenu}>
+                <X aria-hidden="true" />
+              </button>
+            </div>
+            <div className="mobile-menu-links">
           <NavLink to="/library" className={getNavLinkClass} onClick={closeMenu}>Books</NavLink>
           <NavLink to="/short-reads" className={getNavLinkClass} onClick={closeMenu}>Short Reads</NavLink>
           <NavLink to="/about" className={getNavLinkClass} onClick={closeMenu}>About</NavLink>
+            </div>
           <div className="mobile-account-actions">{accountActions}</div>
-        </div>
+          </div>
+        </dialog>
       </nav>
     </header>
   );
