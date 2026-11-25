@@ -214,22 +214,25 @@
   border-radius: 28px;
   color: #30203d;
   background: #efdedb;
-  box-shadow: 0 18px 48px #30203d50;
+  box-shadow: none;
   opacity: 0;
-  transition: display 260ms allow-discrete, overlay 260ms allow-discrete;
+  transition: display 700ms allow-discrete, overlay 700ms allow-discrete;
 }
 .mobile-menu-dialog[open] {
   opacity: 1;
 }
 .mobile-menu-dialog:not([open]) {
-  animation: mobile-menu-pop-out 260ms cubic-bezier(.4,0,.8,.4) both;
+  animation: mobile-menu-pop-out 700ms cubic-bezier(.8,0,.6,1) both;
 }
 @keyframes mobile-menu-pop-out {
   0% { opacity: 1; clip-path: circle(72% at 50% 50%); }
-  100% { opacity: 0; clip-path: circle(0% at 50% 50%); }
+  100% { opacity: 1; clip-path: circle(0% at 50% 50%); }
 }
 .mobile-menu-dialog[open] .mobile-menu-sheet > * {
   animation: mobile-menu-content-in 230ms ease 460ms both;
+}
+.mobile-menu-dialog:not([open]) .mobile-menu-sheet > * {
+  animation: mobile-menu-content-in 230ms ease reverse both;
 }
 @keyframes mobile-menu-content-in {
   from { opacity: 0; }
@@ -238,7 +241,7 @@
 .mobile-menu-dialog::backdrop {
   background: #30203d66;
   opacity: 0;
-  transition: opacity 280ms ease, display 280ms allow-discrete, overlay 280ms allow-discrete;
+  transition: opacity 700ms ease, display 700ms allow-discrete, overlay 700ms allow-discrete;
 }
 .mobile-menu-dialog[open]::backdrop { opacity: 1; }
 @starting-style {
@@ -289,5 +292,5 @@
   .mobile-menu-dialog::backdrop,
   .mobile-menu-dialog[open],
   .mobile-menu-dialog:not([open]),
-  .mobile-menu-dialog[open] .mobile-menu-sheet > * { transition: none; animation: none; }
+  .mobile-menu-dialog .mobile-menu-sheet > * { transition: none; animation: none; }
 }

@@ -88,9 +88,9 @@ const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
               </button>
             </div>
             <div className="mobile-menu-links">
-          <NavLink to="/library" className={getNavLinkClass} onClick={closeMenu}>Books</NavLink>
+          <NavLink to="/library" className={getNavLinkClass} onClick={closeMenu}>All Book Summaries</NavLink>
           <NavLink to="/short-reads" className={getNavLinkClass} onClick={closeMenu}>Short Reads</NavLink>
-          <NavLink to="/about" className={getNavLinkClass} onClick={closeMenu}>About</NavLink>
+          <NavLink to="/about" className={getNavLinkClass} onClick={closeMenu}>About 1989</NavLink>
             </div>
           <div className="mobile-account-actions">{accountActions}</div>
           </div>
