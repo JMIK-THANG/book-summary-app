@@ -11,9 +11,9 @@ export const LatestBooksSection = ({ latestBooks }) => {
       <div className="section-container">
         <div className="section-heading-row">
           <div>
-            <p className="section-label">RECENTLY ADDED</p>
-            <h2>Start with something new</h2>
-            <p>Explore the newest summaries added to the library.</p>
+            <p className="section-label">NEW TO THE LIBRARY</p>
+            <h2>Freshly summarized</h2>
+            <p>New books, distilled with care and ready when you are.</p>
           </div>
 
           <Link to="/library" className="text-link">
@@ -36,12 +36,9 @@ export const LatestBooksSection = ({ latestBooks }) => {
 
               <div className="latest-book-information">
                 <h3>{book.title}</h3>
-                <p>By {book.author}</p>
+                <p>By {String(book.author || "Unknown author").replace(/^by\s+/i, "")}</p>
 
-                <span className="latest-book-read">
-                  Read summary
-                  <span aria-hidden="true">→</span>
-                </span>
+                <span className="latest-book-read">Read summary →</span>
               </div>
             </Link>
           ))}

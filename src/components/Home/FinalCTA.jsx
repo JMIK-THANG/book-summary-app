@@ -6,9 +6,9 @@ export const FinalCTA = () => {
     /* Final CTA */
     <section className="home-cta">
       <div className="home-cta-content">
-        <p className="section-label">KEEP LEARNING</p>
-        <h2>Your next great idea is waiting.</h2>
-        <p>Browse the library and choose your next summary.</p>
+        <p className="section-label">YOUR READING LIST STARTS HERE</p>
+        <h2>One good idea can change the way you see everything.</h2>
+        <p>Find the summary that speaks to where you are now.</p>
 
         <Link to="/library" className="primary-button">
           Explore all books

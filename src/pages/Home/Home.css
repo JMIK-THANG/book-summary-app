@@ -1,136 +1,123 @@
-.home {
-  min-height: 100vh;
-  overflow: hidden;
-  color: #14213d;
-  background: #ffffff;
+:root {
+  --home-ink: #211714;
+  --home-muted: #6f5b52;
+  --home-peach: #fce8d8;
+  --home-apricot: #f6c7a8;
+  --home-terracotta: #a63d28;
+  --home-terracotta-dark: #842e1e;
+  --home-white: #ffffff;
+  --home-line: #ead9cf;
+  --home-focus: #642317;
 }
 
-.section-container,
-.hero-container {
-  width: min(1200px, 88%);
+.home {
+  width: 100%;
+  min-height: 100vh;
+  margin-left: 0;
+  overflow: hidden;
+  color: var(--home-ink);
+  background: var(--home-white);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.section-container {
+  width: min(1240px, calc(100% - 80px));
   margin: 0 auto;
 }
 
 .section-label {
-  margin: 0;
-  color: #bd561b;
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
+  margin: 0 0 12px;
+  color: var(--home-terracotta);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
+.section-heading-row,
+.popular-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 48px;
+}
 
-.primary-button {
+.section-heading-row h2,
+.popular-heading h2,
+.home-cta h2 {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.section-heading-row > div > p:last-child,
+.popular-heading > div > p:last-child {
+  max-width: 600px;
+  margin: 16px 0 0;
+  color: var(--home-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.primary-button,
+.text-link {
   display: inline-flex;
-  min-height: 52px;
-  padding: 0.9rem 1.4rem;
+  min-height: 48px;
   align-items: center;
   justify-content: center;
-  gap: 0.7rem;
-  color: #ffffff;
-  background: #14213d;
-  border-radius: 8px;
-  box-shadow: 0 10px 24px rgba(20, 33, 61, 0.15);
-  font-weight: 750;
+  gap: 10px;
+  font-weight: 700;
   text-decoration: none;
-  transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
 }
 
-.primary-button:hover {
-  color: #ffffff;
-  background: #243657;
-  box-shadow: 0 14px 30px rgba(20, 33, 61, 0.2);
-  transform: translateY(-2px);
+.primary-button {
+  padding: 0 24px;
+  color: var(--home-white);
+  background: var(--home-terracotta);
+  border: 1px solid var(--home-terracotta);
+  border-radius: 999px;
+  transition: background-color 180ms ease;
 }
+
+.primary-button:hover { color: var(--home-white); background: var(--home-terracotta-dark); }
+
+.text-link {
+  flex-shrink: 0;
+  color: var(--home-ink);
+  border-bottom: 1px solid currentColor;
+  transition: color 180ms ease;
+}
+
+.text-link:hover { color: var(--home-terracotta); }
 
 .primary-button:focus-visible,
 .text-link:focus-visible,
 .latest-book-card:focus-visible,
-.most-viewed-item:focus-visible,
-.hero-book:focus-visible {
-  outline: 3px solid rgba(189, 86, 27, 0.4);
+.popular-book-row:focus-visible,
+.hero-category:focus-visible,
+.hero-category-arrow:focus-visible {
+  outline: 3px solid var(--home-focus);
   outline-offset: 4px;
 }
 
-.primary-button span {
-  color: #eda15e;
+@media (max-width: 760px) {
+  .section-container { width: min(100% - 32px, 1240px); }
+  .section-heading-row,
+  .popular-heading { align-items: flex-start; flex-direction: column; gap: 18px; margin-bottom: 32px; }
+  .section-heading-row h2,
+  .popular-heading h2,
+  .home-cta h2 { font-size: clamp(2rem, 11vw, 3rem); }
 }
-
-
-/* Mobile */
-
-@media (max-width: 650px) {
-  .section-container,
-  .hero-container {
-    width: 88%;
-  }
-
-  
-  .latest-books-section,
-  .popular-section,
-  .benefits-section {
-    padding: 4.5rem 0;
-  }
-
-  .section-heading-row {
-    margin-bottom: 2rem;
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  
-
-  .most-viewed-item {
-    grid-template-columns: 32px 50px minmax(0, 1fr);
-    gap: 0.8rem;
-  }
-
-  .most-viewed-image {
-    width: 46px;
-    height: 66px;
-  }
-
-  .most-viewed-information h3 {
-    font-size: 0.95rem;
-  }
-
-  .most-viewed-stats {
-    grid-column: 3;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-
-  .benefits-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .benefit,
-  .benefit + .benefit {
-    padding: 2rem 0;
-    border-left: 0;
-    border-bottom: 1px solid #dcd6cd;
-  }
-
-  .home-cta {
-    padding: 4.5rem 6%;
-  }
-}
-
-
-
-/* Reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
   .primary-button,
-  .hero-book,
-  .latest-book-cover img,
-  .most-viewed-item,
-  .most-viewed-arrow {
-    transition: none;
-  }
+  .text-link,
+  .latest-book-card,
+  .popular-book-row { transition: none; }
 }
+

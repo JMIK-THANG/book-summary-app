@@ -1,156 +1,72 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
+import { ArrowRight, Menu, X } from "lucide-react";
 import "./Navbar.css";
 
-const Navbar = ({
-  openLogin,
-  openRegister,
-  currentUser,
-  logout,
-}) => {
+const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
+  const closeMenu = () => setIsMenuOpen(false);
+  const getNavLinkClass = ({ isActive }) =>
+    isActive ? "nav-link active" : "nav-link";
 
   const handleHomeClick = () => {
     closeMenu();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  return (
-    <nav className="navbar">
-      <Link
-  to="/"
-  className="logo-link"
-  onClick={handleHomeClick}
-  aria-label="1989 Book Summaries home"
->
-  <span className="logo-year">
-    198<span className="logo-accent">9</span>
-  </span>
-
-  <span className="logo-divider" aria-hidden="true" />
-
-  <span className="logo-title">
-    <span>BOOK</span>
-    <span>SUMMARIES</span>
-  </span>
-</Link>
-
-      <button
-        type="button"
-        className={`menu-btn ${isMenuOpen ? "open" : ""}`}
-        onClick={() => setIsMenuOpen((previous) => !previous)}
-        aria-label={
-          isMenuOpen
-            ? "Close navigation menu"
-            : "Open navigation menu"
-        }
-        aria-expanded={isMenuOpen}
-        aria-controls="navigation-menu"
-      >
-        {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+  const accountActions = currentUser ? (
+    <>
+      {currentUser.role === "admin" && (
+        <NavLink to="/admin" className={getNavLinkClass} onClick={closeMenu}>
+          Admin
+        </NavLink>
+      )}
+      <span className="user-name">Hi, {currentUser.name}</span>
+      <button type="button" className="login-btn" onClick={() => { logout(); closeMenu(); }}>
+        Log out
       </button>
+    </>
+  ) : (
+    <>
+      <button type="button" className="login-btn" onClick={() => { openLogin(); closeMenu(); }}>
+        Sign in
+      </button>
+      <button type="button" className="register-btn" onClick={() => { openRegister(); closeMenu(); }}>
+        <span>Start reading</span>
+        <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+      </button>
+    </>
+  );
 
-      <div
-        id="navigation-menu"
-        className={`nav-menu ${isMenuOpen ? "active" : ""}`}
-      >
-        <ul className="nav-center">
-          <li>
-            <Link to="/" onClick={handleHomeClick}>
-              Home
-            </Link>
-          </li>
+  return (
+    <header className="site-header">
+      <nav className="navbar" aria-label="Main navigation">
+        <Link to="/" className="logo-link" onClick={handleHomeClick} aria-label="1989 Book Summaries home">
+          <span className="logo-year">198<span className="logo-accent">9</span></span>
+          <span className="logo-divider" aria-hidden="true" />
+          <span className="logo-title">Book<br />Summaries</span>
+        </Link>
 
-          <li>
-            <Link to="/library" onClick={closeMenu}>
-              Library
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/short-reads" onClick={closeMenu}>
-              Short Reads
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/about" onClick={closeMenu}>
-              About
-            </Link>
-          </li>
-
+        <ul className="nav-primary" id="navigation-menu">
+          <li><NavLink to="/library" className={getNavLinkClass}>Books</NavLink></li>
+          <li><NavLink to="/short-reads" className={getNavLinkClass}>Short Reads</NavLink></li>
+          <li><NavLink to="/about" className={getNavLinkClass}>About</NavLink></li>
         </ul>
 
-        <ul className="nav-right">
-          {currentUser ? (
-            <>
-              {currentUser.role === "admin" && (
-                <li>
-                  <Link to="/admin" onClick={closeMenu}>
-                    Admin
-                  </Link>
-                </li>
-              )}
+        <div className="nav-account">{accountActions}</div>
 
-              <li>
-                <span className="user-name">
-                  Hi, {currentUser.name}
-                </span>
-              </li>
+        <button type="button" className="menu-btn" onClick={() => setIsMenuOpen((previous) => !previous)} aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"} aria-expanded={isMenuOpen} aria-controls="mobile-navigation-menu">
+          {isMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        </button>
 
-              <li>
-                <button
-                  type="button"
-                  className="login-btn"
-                  onClick={() => {
-                    logout();
-                    closeMenu();
-                  }}
-                >
-                  Logout
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <button
-                  type="button"
-                  className="login-btn"
-                  onClick={() => {
-                    openLogin();
-                    closeMenu();
-                  }}
-                >
-                  Login
-                </button>
-              </li>
-
-              <li>
-                <button
-                  type="button"
-                  className="register-btn"
-                  onClick={() => {
-                    openRegister();
-                    closeMenu();
-                  }}
-                >
-                  Register
-                </button>
-              </li>
-            </>
-          )}
-        </ul>
-      </div>
-    </nav>
+        <div id="mobile-navigation-menu" className={`mobile-nav-panel ${isMenuOpen ? "active" : ""}`}>
+          <NavLink to="/library" className={getNavLinkClass} onClick={closeMenu}>Books</NavLink>
+          <NavLink to="/short-reads" className={getNavLinkClass} onClick={closeMenu}>Short Reads</NavLink>
+          <NavLink to="/about" className={getNavLinkClass} onClick={closeMenu}>About</NavLink>
+          <div className="mobile-account-actions">{accountActions}</div>
+        </div>
+      </nav>
+    </header>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useMatch } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import Library from "../pages/Library/Library";
 import BookDetails from "../pages/BookDetails/BookDetails";
@@ -19,6 +19,7 @@ import useAuthenticate from "../hooks/useAuthenticate";
 import useShortReads from "../hooks/useShortReads";
 
 function App() {
+  const isHome = useMatch("/");
   // Custome hooks import
   const {
     books,
@@ -41,14 +42,18 @@ function App() {
   const { isLoginOpen, isRegisterOpen, openLogin, openRegister, closeModals } =
     useModal();
   const { currentUser, setCurrentUser, logout } = useAuthenticate();
+  const navigation = (
+    <Navbar
+      openLogin={openLogin}
+      openRegister={openRegister}
+      currentUser={currentUser}
+      logout={logout}
+    />
+  );
+
   return (
     <>
-      <Navbar
-        openLogin={openLogin}
-        openRegister={openRegister}
-        currentUser={currentUser}
-        logout={logout}
-      />
+      {!isHome && navigation}
 
       {isLoginOpen && (
         <Login
@@ -68,7 +73,7 @@ function App() {
       )}
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home counts={counts} books={books} />} />
+        <Route path="/" element={<Home counts={counts} books={books} navigation={navigation} />} />
         <Route path="/about" element={<About />} />
         <Route
           path="/library"
