@@ -1,14 +1,6 @@
-import {
-  Link,
-  useLocation,
-  useParams,
-} from "react-router-dom";
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { BookOpen, Eye, MessageCircle } from "lucide-react";
 import "./BookDetails.css";
 
 const BookDetails = ({
@@ -213,23 +205,24 @@ const BookDetails = ({
 
         <section className="book-hero">
           <div className="book-hero-content">
-            <p className="book-author">By {book.author || "Unknown author"}</p>
+            <p className="book-label">
+              <BookOpen size={17} aria-hidden="true" />
+              {book.category || "Book summary"}
+            </p>
 
             <h1>{book.title}</h1>
 
-            <p className="book-label">{book.category || "Book summary"}</p>
+            <p className="book-author">By {book.author || "Unknown author"}</p>
 
             <div className="book-meta">
-              <span>{Number(book.views ?? 0)} views</span>
-
-              <span aria-hidden="true">•</span>
+              <span><Eye size={17} aria-hidden="true" /> {Number(book.views ?? 0)} views</span>
 
               <span>
+                <MessageCircle size={17} aria-hidden="true" />
                 {comments.length}{" "}
                 {comments.length === 1 ? "comment" : "comments"}
               </span>
             </div>
-
           </div>
 
           <div className="book-cover-container">
@@ -246,7 +239,10 @@ const BookDetails = ({
         </section>
 
         <section className="book-summary" aria-labelledby="book-summary-title">
-          <h2 id="book-summary-title">Book Summary</h2>
+          <h2 id="book-summary-title">
+            <BookOpen aria-hidden="true" />
+            <span>Book Summary</span>
+          </h2>
           <div className="book-summary-paper">
             <p>{book.summary || "No summary is currently available."}</p>
           </div>

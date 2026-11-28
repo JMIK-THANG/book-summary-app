@@ -433,12 +433,15 @@
 }
 .book-details-page.book-reading-page {
   --reading-ink: #211820;
-  --reading-paper: #fffaf5;
   --reading-plum: #653574;
+  --reading-line: #dfd5d0;
   padding-top: 12px;
+  background: #fbf7ef;
   color: var(--reading-ink);
+  font-family: Georgia, "Times New Roman", serif;
 }
 
+.book-reading-page .book-details-container { max-width: 920px; }
 .book-reading-page .book-back-link {
   min-height: 44px;
   margin-bottom: 8px;
@@ -448,54 +451,60 @@
 .book-reading-page .book-hero { display: block; }
 .book-reading-page .book-hero-content {
   display: grid;
-  justify-items: center;
-  gap: 12px;
-  padding: clamp(24px, 4vw, 48px) 18px 92px;
-  border-radius: 28px;
-  background: linear-gradient(145deg, #f5dfd5, #e6cbe7);
-  text-align: center;
+  justify-items: start;
+  gap: 10px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid var(--reading-line);
 }
 .book-reading-page .book-hero-content > * { order: 0; }
 .book-reading-page .book-hero-content > h1 {
-  max-width: 23ch;
+  max-width: 26ch;
   margin: 0;
   color: var(--reading-ink);
-  font: 800 clamp(2rem, 5.4vw, 4.6rem)/1.05 Arial, Helvetica, sans-serif;
-  letter-spacing: -.045em;
-  text-wrap: balance;
+  font-size: clamp(1.8rem, 5.6vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -.025em;
 }
-.book-reading-page .book-author { color: #513b50; font-size: 1rem; }
+.book-reading-page .book-author { color: var(--reading-ink); font-size: clamp(1rem, 2.3vw, 1.25rem); font-weight: 400; }
 .book-reading-page .book-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   margin: 0;
-  padding: 6px 14px;
+  padding: 6px 11px;
   border-radius: 999px;
-  background: var(--reading-paper);
-  color: var(--reading-plum);
+  background: #efdce8;
+  color: var(--reading-ink);
   letter-spacing: normal;
 }
-.book-reading-page .book-meta { justify-content: center; margin: 0; color: #513b50; }
-.book-reading-page .book-cover-container {
-  width: min(68%, 290px);
-  margin: -64px auto 0;
-  position: relative;
+.book-reading-page .book-meta { margin-top: 3px; color: var(--reading-ink); font-weight: 400; }
+.book-reading-page .book-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.book-reading-page .book-meta span + span { padding-left: 10px; border-left: 1px solid var(--reading-line); }
+.book-reading-page .book-cover-container { width: 100%; margin: clamp(14px, 3vw, 24px) 0 0; }
+.book-reading-page .book-cover-background {
+  min-height: 0;
+  padding: 0;
+  aspect-ratio: 2.38 / 1;
+  border-radius: clamp(9px, 1.8vw, 16px);
+  background: #efe7df;
 }
-.book-reading-page .book-cover-background { min-height: 0; padding: 0; background: none; overflow: visible; }
-.book-reading-page .book-cover-background img { width: 100%; max-height: 420px; object-fit: contain; box-shadow: none; }
-.book-reading-page .book-cover-placeholder { padding: 24px; background: var(--reading-paper); border-radius: 12px; }
-.book-reading-page .book-summary {
-  max-width: none;
-  margin-top: clamp(28px, 5vw, 64px);
-  padding: clamp(18px, 4vw, 48px);
-  border-radius: 28px;
-  background: radial-gradient(ellipse at 100% 0%, #d9b7dd, transparent 65%), #f0dce6;
+.book-reading-page .book-cover-background img { width: 100%; height: 100%; max-height: none; object-fit: cover; box-shadow: none; border-radius: 0; }
+.book-reading-page .book-summary { max-width: none; margin-top: clamp(18px, 4vw, 36px); }
+.book-reading-page .book-summary h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: var(--reading-ink);
+  font-size: clamp(1.3rem, 3vw, 2rem);
 }
-.book-reading-page .book-summary h2 { color: var(--reading-ink); text-align: center; }
-.book-summary-paper {
-  max-width: 76ch;
-  margin-inline: auto;
-  padding: clamp(16px, 4vw, 40px);
-  border-radius: 16px;
-  background: var(--reading-paper);
+.book-reading-page .book-summary h2 svg { width: 1.25em; height: 1.25em; color: var(--reading-plum); }
+.book-reading-page .book-summary h2 span { flex: 1; padding: 0 0 7px; border-bottom: 2px solid #e8d4e3; }
+.book-summary-paper { max-width: 70ch; }
+.book-reading-page .book-summary p {
+  color: var(--reading-ink);
+  font-size: clamp(1rem, 2.3vw, 1.3rem);
+  line-height: 1.52;
+  white-space: pre-wrap;
 }
-.book-reading-page .book-summary p { color: var(--reading-ink); line-height: 1.8; }
-.book-reading-page .book-comments { margin-inline: auto; }
+.book-reading-page .book-comments { max-width: 70ch; border-top-color: var(--reading-line); }
