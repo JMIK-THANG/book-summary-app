@@ -205,7 +205,7 @@ const BookDetails = ({
   }
 
   return (
-    <main className="book-details-page">
+    <main className="book-details-page book-reading-page">
       <div className="book-details-container">
         <Link to={backTo} className="book-back-link">
           ‹ Back to Books
@@ -213,15 +213,11 @@ const BookDetails = ({
 
         <section className="book-hero">
           <div className="book-hero-content">
-            <p className="book-label">
-              {book.category || "BOOK SUMMARY"}
-            </p>
+            <p className="book-author">By {book.author || "Unknown author"}</p>
 
             <h1>{book.title}</h1>
 
-            <p className="book-author">
-              By {book.author || "Unknown author"}
-            </p>
+            <p className="book-label">{book.category || "Book summary"}</p>
 
             <div className="book-meta">
               <span>{Number(book.views ?? 0)} views</span>
@@ -230,29 +226,16 @@ const BookDetails = ({
 
               <span>
                 {comments.length}{" "}
-                {comments.length === 1
-                  ? "comment"
-                  : "comments"}
+                {comments.length === 1 ? "comment" : "comments"}
               </span>
             </div>
 
-            <div className="book-summary">
-              <h2>About the Book</h2>
-
-              <p>
-                {book.summary ||
-                  "No summary is currently available."}
-              </p>
-            </div>
           </div>
 
           <div className="book-cover-container">
             <div className="book-cover-background">
               {book.image ? (
-                <img
-                  src={book.image}
-                  alt={`Cover of ${book.title}`}
-                />
+                <img src={book.image} alt={`Cover of ${book.title}`} />
               ) : (
                 <div className="book-cover-placeholder">
                   <span>No cover available</span>
@@ -262,14 +245,18 @@ const BookDetails = ({
           </div>
         </section>
 
+        <section className="book-summary" aria-labelledby="book-summary-title">
+          <h2 id="book-summary-title">Book Summary</h2>
+          <div className="book-summary-paper">
+            <p>{book.summary || "No summary is currently available."}</p>
+          </div>
+        </section>
+
         <section className="book-comments">
           <h2>Comments</h2>
 
           {currentUser ? (
-            <form
-              className="comment-form"
-              onSubmit={addComment}
-            >
+            <form className="comment-form" onSubmit={addComment}>
               <textarea
                 value={comment}
                 onChange={(event) => {

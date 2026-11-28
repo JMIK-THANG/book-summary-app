@@ -431,3 +431,71 @@
     max-height: 275px;
   }
 }
+.book-details-page.book-reading-page {
+  --reading-ink: #211820;
+  --reading-paper: #fffaf5;
+  --reading-plum: #653574;
+  padding-top: 12px;
+  color: var(--reading-ink);
+}
+
+.book-reading-page .book-back-link {
+  min-height: 44px;
+  margin-bottom: 8px;
+  color: var(--reading-plum);
+}
+
+.book-reading-page .book-hero { display: block; }
+.book-reading-page .book-hero-content {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: clamp(24px, 4vw, 48px) 18px 92px;
+  border-radius: 28px;
+  background: linear-gradient(145deg, #f5dfd5, #e6cbe7);
+  text-align: center;
+}
+.book-reading-page .book-hero-content > * { order: 0; }
+.book-reading-page .book-hero-content > h1 {
+  max-width: 23ch;
+  margin: 0;
+  color: var(--reading-ink);
+  font: 800 clamp(2rem, 5.4vw, 4.6rem)/1.05 Arial, Helvetica, sans-serif;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+.book-reading-page .book-author { color: #513b50; font-size: 1rem; }
+.book-reading-page .book-label {
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--reading-paper);
+  color: var(--reading-plum);
+  letter-spacing: normal;
+}
+.book-reading-page .book-meta { justify-content: center; margin: 0; color: #513b50; }
+.book-reading-page .book-cover-container {
+  width: min(68%, 290px);
+  margin: -64px auto 0;
+  position: relative;
+}
+.book-reading-page .book-cover-background { min-height: 0; padding: 0; background: none; overflow: visible; }
+.book-reading-page .book-cover-background img { width: 100%; max-height: 420px; object-fit: contain; box-shadow: none; }
+.book-reading-page .book-cover-placeholder { padding: 24px; background: var(--reading-paper); border-radius: 12px; }
+.book-reading-page .book-summary {
+  max-width: none;
+  margin-top: clamp(28px, 5vw, 64px);
+  padding: clamp(18px, 4vw, 48px);
+  border-radius: 28px;
+  background: radial-gradient(ellipse at 100% 0%, #d9b7dd, transparent 65%), #f0dce6;
+}
+.book-reading-page .book-summary h2 { color: var(--reading-ink); text-align: center; }
+.book-summary-paper {
+  max-width: 76ch;
+  margin-inline: auto;
+  padding: clamp(16px, 4vw, 40px);
+  border-radius: 16px;
+  background: var(--reading-paper);
+}
+.book-reading-page .book-summary p { color: var(--reading-ink); line-height: 1.8; }
+.book-reading-page .book-comments { margin-inline: auto; }
