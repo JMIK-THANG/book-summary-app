@@ -9,7 +9,7 @@ export const PopularBooksSection = ({ mostViewedBooks }) => {
 
   const setCardSpread = (list, spread) => {
     if (spread === isSpread) return;
-    if (window.matchMedia("(min-width: 851px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)").matches) {
+    if (window.matchMedia("(min-width: 851px) and (any-hover: hover) and (any-pointer: fine) and (prefers-reduced-motion: no-preference)").matches) {
       pendingMotion.current = Array.from(list.children, (card) => ({
         card,
         from: getComputedStyle(card).transform,
@@ -24,7 +24,7 @@ export const PopularBooksSection = ({ mostViewedBooks }) => {
     runningMotion.current = pendingMotion.current.map(({ card, from }) =>
       card.animate(
         [{ transform: from }, { transform: getComputedStyle(card).transform }],
-        { duration: 700, easing: isSpread ? "cubic-bezier(.4,0,.2,1)" : "cubic-bezier(.8,0,.6,1)" },
+        { duration: 700, easing: "cubic-bezier(.4,0,.2,1)" },
       ),
     );
     pendingMotion.current = null;
@@ -67,7 +67,7 @@ export const PopularBooksSection = ({ mostViewedBooks }) => {
           data-spread={isSpread}
           onScroll={updateActiveCard}
           onPointerMove={(event) => {
-            if (event.pointerType === "mouse" && event.target.closest(".popular-book-row")) {
+            if (event.pointerType !== "touch" && event.target.closest(".popular-book-row")) {
               setCardSpread(event.currentTarget, true);
             }
           }}

@@ -48,17 +48,21 @@
   .popular-list { gap: clamp(16px, 2vw, 28px); }
 }
 
-@media (min-width: 851px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 851px) and (any-hover: hover) and (any-pointer: fine) {
   .popular-list { --stack-overlap: 43%; }
   .popular-list:has(> :nth-child(2)) .popular-book-row:first-child { --card-offset: var(--stack-overlap); }
   .popular-list:has(> :nth-child(3)) .popular-book-row:nth-child(3) { --card-offset: calc(-1 * var(--stack-overlap)); }
   .popular-book-row {
-    transform: translate(var(--card-offset, 0px), var(--card-lift, 0px)) rotate(var(--card-tilt));
-    transition: none;
+    transform: translateX(var(--card-offset, 0px)) rotate(var(--card-tilt));
+    translate: 0 var(--card-lift, 0px);
+    transition: translate 700ms cubic-bezier(.4,0,.2,1);
   }
   .popular-list:is([data-spread="true"], :focus-within) { --stack-overlap: 0%; }
   .popular-list:is([data-spread="true"], :focus-within) .popular-book-row { --card-tilt: 0deg; }
-  .popular-list[data-spread="true"] .popular-book-row:hover { z-index: 1; --card-lift: -6px; }
+  .popular-list[data-spread="true"]:has(> .popular-book-row:hover) > .popular-book-row:not(:hover) { --card-lift: 22px; }
+  .popular-list[data-spread="true"]:has(> .popular-book-row:hover) > .popular-book-row:first-child:not(:hover),
+  .popular-list[data-spread="true"]:has(> .popular-book-row:first-child:hover) > .popular-book-row:nth-child(2) { --card-lift: -22px; }
+  .popular-list[data-spread="true"] .popular-book-row:hover { z-index: 1; --card-lift: 0px; }
 }
 
 @media (max-width: 850px) {
@@ -79,9 +83,11 @@
     flex: 0 0 min(82%, 28rem);
     min-height: 19rem;
     scroll-snap-align: start;
+    transform: rotate(var(--card-tilt)) scale(.96);
+    transition: transform 700ms cubic-bezier(.4,0,.2,1);
   }
   .popular-book-row:nth-child(even) { --card-tilt: -2deg; }
-  .popular-book-row[data-in-view="true"] { transform: rotate(0); }
+  .popular-book-row[data-in-view="true"] { transform: rotate(0) scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
