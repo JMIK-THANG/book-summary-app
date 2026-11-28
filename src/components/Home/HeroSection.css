@@ -100,7 +100,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 38%, #fff0df35 20%, #cf99b92e 58%, #9c609268 100%);
+  background: radial-gradient(ellipse at 50% 38%, #fff0df72 20%, #cf99b998 58%, #9c6092c2 100%);
 }
 .hero h1 { color: var(--masthead-ink); }
 .hero-content > p { color: var(--masthead-ink); max-width: 36ch; }

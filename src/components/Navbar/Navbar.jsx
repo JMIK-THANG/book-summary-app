@@ -17,13 +17,13 @@ const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
       return;
     }
 
-    const { opacity } = window.getComputedStyle(dialog);
+    const { clipPath } = window.getComputedStyle(dialog);
     openingAnimationRef.current?.cancel();
     dialog.dataset.closing = "true";
     const animation = dialog.animate(
       [
-        { clipPath: "circle(72% at 50% 50%)", opacity },
-        { clipPath: "circle(0% at 50% 50%)", opacity },
+        { clipPath: clipPath === "none" ? "circle(72% at 50% 50%)" : clipPath },
+        { clipPath: "circle(0% at 50% 50%)" },
       ],
       { duration: 700, easing: "cubic-bezier(.8,0,.6,1)", fill: "forwards" },
     );
@@ -91,10 +91,10 @@ const Navbar = ({ openLogin, openRegister, currentUser, logout }) => {
 
           openingAnimationRef.current = dialog.animate(
             [
-              { opacity: 0 },
-              { opacity: 1 },
+              { clipPath: "circle(0% at 50% 50%)" },
+              { clipPath: "circle(72% at 50% 50%)" },
             ],
-            { duration: 250, easing: "ease-out" },
+            { duration: 700, easing: "cubic-bezier(.4,0,.2,1)" },
           );
         }} aria-label="Open navigation menu" aria-haspopup="dialog" aria-expanded={isMenuOpen} aria-controls="mobile-navigation-menu">
           <Menu aria-hidden="true" />

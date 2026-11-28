@@ -221,6 +221,9 @@
 .mobile-menu-dialog[open] {
   opacity: 1;
 }
+.mobile-menu-dialog[open]:not([data-closing]) .mobile-menu-sheet > * {
+  animation: mobile-menu-content-in 230ms ease 460ms both;
+}
 .mobile-menu-dialog[data-closing="true"] .mobile-menu-sheet > * {
   animation: mobile-menu-content-in 230ms ease reverse both;
 }
@@ -286,5 +289,6 @@
   .mobile-menu-dialog::backdrop,
   .mobile-menu-dialog[open],
   .mobile-menu-dialog:not([open]),
-  .mobile-menu-dialog .mobile-menu-sheet > * { transition: none; animation: none; }
+  .mobile-menu-dialog[open] .mobile-menu-sheet > *,
+  .mobile-menu-dialog[open]:not([data-closing]) .mobile-menu-sheet > * { transition: none; animation: none; }
 }
