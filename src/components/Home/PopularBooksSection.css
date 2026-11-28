@@ -23,7 +23,7 @@
   color: var(--home-ink);
   text-decoration: none;
   transform: rotate(var(--card-tilt));
-  transition: transform 340ms cubic-bezier(.2,.75,.25,1);
+  transition: transform 520ms cubic-bezier(.22,.61,.36,1);
 }
 .popular-book-row:nth-child(3n + 2) { --card-tilt: 5deg; background: #ead9e9; }
 .popular-book-row:nth-child(3n) { --card-tilt: -4deg; background: #dbe7ed; }
@@ -45,18 +45,19 @@
 .popular-author { margin-top: auto; padding-top: 12px; font-size: .95rem; font-style: italic; }
 
 @media (min-width: 851px) {
-  .popular-list { --stack-overlap: 43%; gap: clamp(16px, 2vw, 28px); }
-  .popular-list:has(> :nth-child(2)) .popular-book-row:first-child { --card-offset: var(--stack-overlap); }
-  .popular-list:has(> :nth-child(3)) .popular-book-row:nth-child(3) { --card-offset: calc(-1 * var(--stack-overlap)); }
-  .popular-book-row { transform: translateX(var(--card-offset, 0px)) rotate(var(--card-tilt)); }
-  .popular-list:focus-within { --stack-overlap: 0%; }
-  .popular-list:focus-within .popular-book-row { --card-tilt: 0deg; }
+  .popular-list { gap: clamp(16px, 2vw, 28px); }
 }
 
 @media (min-width: 851px) and (hover: hover) and (pointer: fine) {
-  .popular-list:hover { --stack-overlap: 0%; }
-  .popular-list:hover .popular-book-row { --card-tilt: 0deg; }
-  .popular-list .popular-book-row:hover { transform: translateY(-6px); }
+  .popular-list { --stack-overlap: 43%; }
+  .popular-list:has(> :nth-child(2)) .popular-book-row:first-child { --card-offset: var(--stack-overlap); }
+  .popular-list:has(> :nth-child(3)) .popular-book-row:nth-child(3) { --card-offset: calc(-1 * var(--stack-overlap)); }
+  .popular-book-row {
+    transform: translate(var(--card-offset, 0px), var(--card-lift, 0px)) rotate(var(--card-tilt));
+  }
+  .popular-list:is([data-spread="true"], :focus-within) { --stack-overlap: 0%; }
+  .popular-list:is([data-spread="true"], :focus-within) .popular-book-row { --card-tilt: 0deg; }
+  .popular-list[data-spread="true"] .popular-book-row:hover { z-index: 1; --card-lift: -6px; }
 }
 
 @media (max-width: 850px) {
@@ -83,7 +84,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .popular-list .popular-book-row { transform: none; transition: none; }
+  .popular-list .popular-book-row { transition: none; }
   .popular-list { scroll-snap-type: x proximity; }
 }
 

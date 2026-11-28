@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./PopularBooksSection.css"; 
 export const PopularBooksSection = ({ mostViewedBooks }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isSpread, setIsSpread] = useState(false);
 
   const updateActiveCard = (event) => {
     const list = event.currentTarget;
@@ -32,7 +33,17 @@ export const PopularBooksSection = ({ mostViewedBooks }) => {
           <h2 id="most-read-title">Most Read</h2>
         </div>
 
-        <div className="popular-list" onScroll={updateActiveCard}>
+        <div
+          className="popular-list"
+          data-spread={isSpread}
+          onScroll={updateActiveCard}
+          onPointerMove={(event) => {
+            if (event.pointerType === "mouse" && event.target.closest(".popular-book-row")) {
+              setIsSpread(true);
+            }
+          }}
+          onPointerLeave={() => setIsSpread(false)}
+        >
           {mostViewedBooks.map((book, index) => (
             <Link
               to={`/library/${book.id}`}
