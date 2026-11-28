@@ -1,9 +1,38 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./PopularBooksSection.css"; 
 export const PopularBooksSection = ({ mostViewedBooks }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isSpread, setIsSpread] = useState(false);
+  const pendingMotion = useRef(null);
+  const runningMotion = useRef([]);
+
+  const setCardSpread = (list, spread) => {
+    if (spread === isSpread) return;
+    if (window.matchMedia("(min-width: 851px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)").matches) {
+      pendingMotion.current = Array.from(list.children, (card) => ({
+        card,
+        from: getComputedStyle(card).transform,
+      }));
+    }
+    setIsSpread(spread);
+  };
+
+  useLayoutEffect(() => {
+    if (!pendingMotion.current) return;
+    runningMotion.current.forEach((animation) => animation.cancel());
+    runningMotion.current = pendingMotion.current.map(({ card, from }) =>
+      card.animate(
+        [{ transform: from }, { transform: getComputedStyle(card).transform }],
+        { duration: 700, easing: isSpread ? "cubic-bezier(.4,0,.2,1)" : "cubic-bezier(.8,0,.6,1)" },
+      ),
+    );
+    pendingMotion.current = null;
+  }, [isSpread]);
+
+  useLayoutEffect(() => () => {
+    runningMotion.current.forEach((animation) => animation.cancel());
+  }, []);
 
   const updateActiveCard = (event) => {
     const list = event.currentTarget;
@@ -39,10 +68,10 @@ export const PopularBooksSection = ({ mostViewedBooks }) => {
           onScroll={updateActiveCard}
           onPointerMove={(event) => {
             if (event.pointerType === "mouse" && event.target.closest(".popular-book-row")) {
-              setIsSpread(true);
+              setCardSpread(event.currentTarget, true);
             }
           }}
-          onPointerLeave={() => setIsSpread(false)}
+          onPointerLeave={(event) => setCardSpread(event.currentTarget, false)}
         >
           {mostViewedBooks.map((book, index) => (
             <Link

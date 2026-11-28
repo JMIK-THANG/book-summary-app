@@ -54,6 +54,7 @@
   .popular-list:has(> :nth-child(3)) .popular-book-row:nth-child(3) { --card-offset: calc(-1 * var(--stack-overlap)); }
   .popular-book-row {
     transform: translate(var(--card-offset, 0px), var(--card-lift, 0px)) rotate(var(--card-tilt));
+    transition: none;
   }
   .popular-list:is([data-spread="true"], :focus-within) { --stack-overlap: 0%; }
   .popular-list:is([data-spread="true"], :focus-within) .popular-book-row { --card-tilt: 0deg; }
