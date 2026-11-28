@@ -236,36 +236,81 @@
   font-size: 0.82rem;
 }
 
-.short-read-detail-shell {
-  width: min(100%, 820px);
+.short-reads-page.short-read-detail-page {
+  --reflection-ink: #211820;
+  --reflection-plum: #653574;
+  padding: 12px clamp(16px, 5vw, 48px) 64px;
+  color: var(--reflection-ink);
+  background: #fbf7ef;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
-.short-read-detail {
-  display: block;
-  min-height: 0;
-  padding: clamp(38px, 7vw, 68px);
+.short-read-detail-shell { width: min(100%, 920px); }
+.short-read-detail-page .short-reads-back {
+  min-height: 44px;
+  align-items: center;
+  margin-bottom: 8px;
+  color: var(--reflection-plum);
 }
-
-.short-read-detail:hover {
-  transform: none;
+.short-read-detail-page .short-reads-back:hover { text-decoration: underline; }
+.short-read-detail .short-read-header {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #dfd5d0;
+  text-align: left;
+}
+.short-read-detail .short-read-header > .short-read-detail-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: #efdce8;
+  color: var(--reflection-ink);
+  font-size: .875rem;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .short-read-detail .short-read-header h1 {
   margin: 0;
-  color: #102a43;
+  max-width: 26ch;
+  color: var(--reflection-ink);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  line-height: 1.16;
+  font-size: clamp(1.8rem, 5.6vw, 3.4rem);
+  line-height: 1.08;
   letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
 }
 
+.short-read-detail .short-read-author {
+  margin: 0;
+  color: var(--reflection-ink);
+  font: 400 clamp(1rem, 2.3vw, 1.25rem)/1.4 Georgia, "Times New Roman", serif;
+}
+.short-read-body { margin-top: clamp(18px, 4vw, 36px); }
+.short-read-body h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+}
+.short-read-body h2 svg { width: 1.25em; height: 1.25em; color: var(--reflection-plum); }
+.short-read-body h2 span { flex: 1; padding-bottom: 7px; border-bottom: 2px solid #e8d4e3; }
+
 .short-read-detail-content {
-  margin: 0 auto;
-  color: #364152;
+  max-width: 70ch;
+  margin: 0;
+  color: var(--reflection-ink);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.05rem, 2.2vw, 1.2rem);
-  line-height: 1.95;
-  white-space: pre-line;
+  font-size: clamp(1rem, 2.3vw, 1.3rem);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 900px) {
@@ -341,7 +386,4 @@
     grid-template-columns: 1fr;
   }
 
-  .short-read-detail {
-    min-height: 0;
-  }
 }

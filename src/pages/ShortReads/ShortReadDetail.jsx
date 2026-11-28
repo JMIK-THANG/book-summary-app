@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 import "./ShortReads.css";
 
 const ShortReadDetail = ({ shortReads = [], isLoading, error }) => {
@@ -19,17 +20,25 @@ const ShortReadDetail = ({ shortReads = [], isLoading, error }) => {
         ) : !shortRead ? (
           <p className="short-reads-status">This Short Read could not be found.</p>
         ) : (
-          <article className="short-read short-read-detail">
+          <article className="short-read-detail">
             <header className="short-read-header">
-              <p>Short reflection</p>
+              <p className="short-read-detail-label">
+                <BookOpen size={17} aria-hidden="true" />
+                Short reflection
+              </p>
               <h1>{shortRead.title}</h1>
               {shortRead.author && (
                 <p className="short-read-author">By {shortRead.author}</p>
               )}
             </header>
 
-            <div className="short-read-divider" aria-hidden="true"><span /></div>
-            <p className="short-read-detail-content">{shortRead.content}</p>
+            <section className="short-read-body" aria-labelledby="short-read-body-title">
+              <h2 id="short-read-body-title">
+                <BookOpen aria-hidden="true" />
+                <span>Reflection</span>
+              </h2>
+              <p className="short-read-detail-content">{shortRead.content}</p>
+            </section>
           </article>
         )}
       </div>
