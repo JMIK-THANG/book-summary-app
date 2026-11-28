@@ -98,8 +98,7 @@
   padding: 10px clamp(14px, 2.4vw, 36px);
   border: 1px solid #fff9f2;
   border-radius: 999px;
-  background: #fff5eceb;
-  box-shadow: 0 10px 24px #48304424;
+  background: #fff5ec;
 }
 .home-masthead .logo-link { color: var(--masthead-ink); }
 .home-masthead .logo-accent { color: inherit; }
@@ -108,7 +107,6 @@
   color: var(--masthead-ink);
   background: #fff5ec;
   border-color: var(--masthead-line);
-  box-shadow: 0 3px 7px #48304412;
 }
 .home-masthead .nav-primary .nav-link { padding-inline: clamp(18px, 2.2vw, 36px); }
 .home-masthead .nav-primary li:first-child .nav-link,
@@ -214,7 +212,7 @@
   border: 0;
   border-radius: 28px;
   color: #000;
-  background: #e1c9e3;
+  background: #fff5ec;
   box-shadow: none;
   opacity: 0;
 }
@@ -256,17 +254,8 @@
   inset: 0;
   z-index: -1;
   background: url("../../assets/hero-paper-ribbons.png") 62% center / cover;
-  filter: hue-rotate(43deg);
 }
 .mobile-menu-sheet:focus { outline: none; }
-.mobile-menu-sheet::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(155deg, #9062bdad, #d9b8eab0 48%, #71419ec2);
-  pointer-events: none;
-}
 .mobile-menu-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .navbar .mobile-menu-dialog :is(.logo-link, .logo-accent, .user-name) { color: #000; }
 .mobile-menu-links { display: grid; place-content: center; justify-items: center; gap: 10px; }
