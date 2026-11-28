@@ -387,3 +387,154 @@
   }
 
 }
+.short-reads-page.short-reads-index {
+  padding: 0 0 64px;
+  background: #fbf7ef;
+  color: #211820;
+}
+.short-reads-index .short-reads-shell { width: 100%; }
+.short-reads-index .short-reads-intro {
+  max-width: none;
+  margin: 0;
+  padding: clamp(30px, 6vw, 76px) clamp(20px, 6vw, 76px);
+  border-radius: 0 0 24px 24px;
+  background: #f5dfd5 url("../../assets/hero-paper-ribbons.png") center 61% / cover;
+  text-align: left;
+}
+.short-reads-index .short-reads-kicker { color: #63385f; letter-spacing: .14em; }
+.short-reads-index .short-reads-intro h1 { color: #211820; font-size: clamp(2.75rem, 8vw, 5.75rem); }
+.short-reads-index .short-reads-intro em { color: #653574; }
+.short-reads-index .short-reads-description {
+  max-width: 35ch;
+  margin: 16px 0 0;
+  color: #211820;
+  font: clamp(1rem, 2vw, 1.25rem)/1.5 Georgia, serif;
+}
+.short-reads-index .reflection-filters,
+.short-reads-index .short-reads-list { width: min(calc(100% - 28px), 960px); margin-inline: auto; }
+.reflection-filters { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0; }
+.reflection-filters button {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid #e4d0ca;
+  border-radius: 999px;
+  background: #fffaf5;
+  color: #211820;
+  font: inherit;
+  cursor: pointer;
+}
+.reflection-filters button[aria-pressed="true"] { background: #653574; border-color: #653574; color: #fff; }
+.short-reads-index .short-reads-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.short-reads-index .short-read {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  border: 1px solid #efe3da;
+  border-radius: 18px;
+  background: #fffaf5;
+  box-shadow: none;
+}
+.reflection-card-link {
+  display: grid;
+  grid-template-columns: clamp(72px, 25%, 176px) minmax(0, 1fr);
+  gap: clamp(10px, 3vw, 24px);
+  padding: clamp(10px, 2.5vw, 22px);
+  color: inherit;
+  text-decoration: none;
+}
+.reflection-card-link:focus-visible { outline: 2px solid #653574; outline-offset: -4px; border-radius: 18px; }
+.short-reads-index .short-read::after { display: none; }
+.short-reads-index .short-read:hover { transform: none; box-shadow: none; }
+.reflection-thumbnail {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 88px;
+  overflow: hidden;
+  border-radius: 10px;
+  color: #3b2740;
+  background: #efdce8 url("../../assets/hero-paper-ribbons.png") center / cover;
+}
+.reflection-thumbnail img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.reflection-card-copy { min-width: 0; }
+.short-reads-index .short-read-header { text-align: left; }
+.short-reads-index .short-read-header > p:first-child {
+  display: inline-block;
+  margin: 0 38px 6px 0;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #efdce8;
+  color: #653574;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.short-reads-index .short-read-header h2 { margin-right: 36px; color: #211820; font-size: clamp(1.2rem, 4.8vw, 2rem); overflow-wrap: anywhere; }
+.short-reads-index .short-read-author { margin: 4px 0 0; }
+.short-reads-index .short-read-content {
+  margin: 6px 0;
+  color: #211820;
+  -webkit-line-clamp: 2;
+  overflow-wrap: anywhere;
+}
+.reflection-bookmark {
+  position: absolute;
+  z-index: 2;
+  inset: 6px 6px auto auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: #653574;
+  cursor: pointer;
+}
+.reflection-bookmark[aria-pressed="true"] svg { fill: #e3bde0; }
+
+.short-reads-page.short-read-detail-page { min-height: 0; }
+.short-read-detail-page .short-read-detail-shell { max-width: 780px; }
+.short-read-detail-page .short-read-detail {
+  overflow: hidden;
+  border: 1px solid #eadbd1;
+  border-radius: clamp(16px, 3vw, 24px);
+  background: #fffdf8;
+}
+.short-read-detail-page .short-read-detail::before {
+  display: block;
+  height: clamp(50px, 10vw, 108px);
+  background: #f5dfd5 url("../../assets/hero-paper-ribbons.png") center 76% / cover;
+  content: "";
+}
+.short-read-detail-page .short-read-header {
+  justify-items: center;
+  gap: 12px;
+  padding: clamp(24px, 5vw, 46px) clamp(18px, 6vw, 52px) 0;
+  border: 0;
+  text-align: center;
+}
+.short-read-detail-page .short-read-header h1 {
+  max-width: 24ch;
+  font-size: clamp(2rem, 5.7vw, 3.5rem);
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.short-read-detail-page .short-read-author { color: #653574; font-style: italic; }
+.short-read-detail-page .short-read-body {
+  width: min(calc(100% - clamp(36px, 12vw, 104px)), 37rem);
+  margin: clamp(22px, 4vw, 36px) auto 0;
+  padding-bottom: clamp(28px, 6vw, 56px);
+}
+.short-read-detail-page .short-read-body::before {
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin: 0 auto clamp(19px, 4vw, 30px);
+  border-radius: 999px;
+  background: #b48ab2;
+  content: "";
+}
+.short-read-detail-page .short-read-detail-content {
+  font-size: clamp(1.18rem, 2.7vw, 1.55rem);
+  line-height: 1.68;
+  letter-spacing: .008em;
+}
