@@ -1,12 +1,88 @@
-.popular-section { padding: clamp(88px, 10vw, 144px) 0; background: #fff8f3; }
-.popular-list { border-top: 1px solid var(--home-line); }
-.popular-book-row { display: grid; grid-template-columns: 72px 96px minmax(0, 1fr) auto; align-items: center; gap: 28px; padding: 28px 0; color: var(--home-ink); border-bottom: 1px solid var(--home-line); text-decoration: none; transition: color 180ms ease; }
-.popular-book-row:hover { color: var(--home-terracotta); }
-.popular-rank { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.04em; }
-.popular-row-cover { width: 72px; aspect-ratio: 2 / 3; overflow: hidden; background: var(--home-peach); }
-.popular-row-cover img { width: 100%; height: 100%; display: block; object-fit: cover; }
-.popular-row-information h3 { margin: 0; font-size: clamp(1.35rem, 2.2vw, 2rem); font-weight: 750; line-height: 1.12; letter-spacing: -0.035em; }
-.popular-row-information p { margin: 10px 0 0; color: var(--home-muted); font-size: 0.92rem; }
-.popular-read-link { min-height: 44px; display: inline-flex; align-items: center; color: inherit; font-weight: 700; white-space: nowrap; }
-@media (max-width: 700px) { .popular-section { padding: 72px 0; } .popular-book-row { grid-template-columns: 40px 64px minmax(0, 1fr); gap: 14px; padding: 22px 0; } .popular-rank { font-size: 1.2rem; } .popular-row-cover { width: 56px; } .popular-row-information h3 { font-size: 1.05rem; } .popular-row-information p { margin-top: 6px; font-size: 0.8rem; } .popular-read-link { display: none; } }
+.popular-section { padding: clamp(48px, 7vw, 92px) 0; background: #fff; }
+.popular-section .popular-heading { margin-bottom: clamp(12px, 3vw, 30px); }
+
+.popular-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  isolation: isolate;
+  padding: 28px clamp(14px, 4vw, 54px) 32px;
+}
+
+.popular-book-row {
+  --card-tilt: -3deg;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+  min-height: 20rem;
+  padding: clamp(20px, 2.7vw, 32px);
+  border-radius: 26px;
+  background: #f4dbca;
+  color: var(--home-ink);
+  text-decoration: none;
+  transform: rotate(var(--card-tilt));
+  transition: transform 240ms cubic-bezier(.2,.75,.25,1);
+}
+.popular-book-row:nth-child(3n + 2) { --card-tilt: 5deg; background: #ead9e9; }
+.popular-book-row:nth-child(3n) { --card-tilt: -4deg; background: #dbe7ed; }
+.popular-book-row:focus-visible { z-index: 1; transform: translateY(-6px) rotate(0); }
+@media (hover: hover) and (pointer: fine) {
+  .popular-book-row:hover { z-index: 1; transform: translateY(-6px) rotate(0); }
+}
+
+.popular-row-information h3 { margin: 0; font-size: clamp(1.1rem, 2vw, 1.55rem); line-height: 1.18; overflow-wrap: anywhere; }
+.popular-excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+.popular-author { margin-top: auto; padding-top: 12px; font-size: .95rem; font-style: italic; }
+
+@media (min-width: 851px) {
+  .popular-list { gap: 16px; }
+  .popular-list:has(> :nth-child(2)) .popular-book-row:first-child { --card-offset: clamp(30px, 6vw, 84px); }
+  .popular-list:has(> :nth-child(3)) .popular-book-row:nth-child(3) { --card-offset: clamp(-84px, -6vw, -30px); }
+  .popular-book-row { transform: translateX(var(--card-offset, 0px)) rotate(var(--card-tilt)); }
+  .popular-list:focus-within .popular-book-row { --card-offset: 0px; }
+  .popular-list .popular-book-row:focus-visible { transform: translateY(-6px) rotate(0); }
+}
+
+@media (min-width: 851px) and (hover: hover) and (pointer: fine) {
+  .popular-list:hover .popular-book-row { --card-offset: 0px; }
+  .popular-list .popular-book-row:hover { transform: translateY(-6px) rotate(0); }
+}
+
+@media (max-width: 850px) {
+  .popular-list {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding: 16px 10px 22px;
+    scroll-padding-inline: 10px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .popular-list::-webkit-scrollbar { display: none; }
+  .popular-book-row {
+    --card-tilt: 2deg;
+    flex: 0 0 min(82%, 28rem);
+    min-height: 19rem;
+    scroll-snap-align: start;
+  }
+  .popular-book-row:nth-child(even) { --card-tilt: -2deg; }
+  .popular-book-row[data-in-view="true"] { transform: rotate(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .popular-list .popular-book-row { transform: none; transition: none; }
+  .popular-list { scroll-snap-type: x proximity; }
+}
 
